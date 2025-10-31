@@ -1,0 +1,32 @@
+:root {
+  /* 取 hsl 的值 去除中间的逗号，方便tailwindcss控制透明度 */
+  --color-primary: 215 100% 50%; /* #0069FF */
+  --color-primary-foreground: 0 0% 100%; /* #fff */
+  --color-secondary: 215 100% 64%; /* #4994FF */
+  --color-secondary-foreground: 0 0% 100%; /* #fff */
+
+  --color-info: 215 100% 64%; /* #4994FF */
+  --color-info-background: 215 100% 93%; /* #DBEAFF */
+  --color-success: 134 100% 35%; /* #00B42A */
+  --color-success-background: 125 100% 95%; /* #E8FFEA */
+  --color-destructive: 0 90% 60%; /* #F53F3F */
+  --color-destructive-background: 10 100% 95%; /* #FFECE8 */
+  --color-warning: 29 100% 50%; /* #FF7D00 */
+  --color-warning-background: 39 100% 95%; /* #FFF7E8 */
+
+  --color-overlay: rgba(51, 51, 51, 0.1); /* #3333331a */
+
+  /* input */
+  --color-input-bg: 215 100% 64%; /* #4994FF */
+  --color-input-border: 0 0% 100%; /* #fff */
+  --color-input-border-focus: var(--color-primary);
+
+  /* text */
+  --color-text-primary: 0 0% 20%; /* #333333 */
+  --color-text-secondary: 0 0% 33%; /* #555555 */
+  --color-text-tertiary: 0 0% 60%; /* #999999 */
+  --color-text-disabled: 218 11% 81%; /* #C9CDD4 */
+
+  /* border */
+  --color-border: 0 0% 33%; /* #555555 */
+}
