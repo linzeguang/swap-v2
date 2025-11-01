@@ -18,13 +18,15 @@
   "dependencies": {
     "@lingui/core": "^5.5.1",
     "@lingui/react": "^5.5.1",
+    "@reown/appkit": "^1.8.12",
+    "@reown/appkit-adapter-wagmi": "^1.8.12",
     "@tanstack/react-query": "^5.90.5",
     "clsx": "^2.1.1",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
     "tailwind-merge": "^3.3.1",
     "tailwindcss-animate": "^1.0.7",
-    "viem": "2.x",
+    "viem": "^2.38.5",
     "wagmi": "^2.19.1"
   },
   "devDependencies": {

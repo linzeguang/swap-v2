@@ -1,25 +1,22 @@
+import { useAppKitAccount, useAppKitNetwork } from '@reown/appkit/react'
 import React from 'react'
-import { useAccount, useBalance, useChainId, useSwitchChain } from 'wagmi'
-
-import { useEvm } from './hooks/useNetwork'
+import { useSwitchChain } from 'wagmi'
 
 const App: React.FC = () => {
-  useEvm()
+  const { address, isConnected } = useAppKitAccount()
+  const network = useAppKitNetwork()
   const { chains, switchChain } = useSwitchChain()
-
-  const chainId = useChainId()
-  const account = useAccount()
-  const balance = useBalance({ address: account.address })
 
   return (
     <div className="overlay xs:text-sm">
-      <p>account: {account.address}</p>
-      <p>chainId: {chainId}</p>
-      <p>balance: {balance.data?.formatted}</p>
+      <appkit-button />
+      <p>network: {network.chainId}</p>
+      <p>isConnected: {isConnected.toString()}</p>
+      <p>address: {address}</p>
 
       <div>
         {chains.map((chain) => (
-          <button className="w-20" onClick={() => switchChain({ chainId: chain.id })}>
+          <button key={chain.id} className="w-20" onClick={() => switchChain({ chainId: chain.id })}>
             {chain.id}
           </button>
         ))}
