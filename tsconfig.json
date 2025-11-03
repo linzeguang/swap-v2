@@ -1,5 +1,7 @@
 {
   "files": [],
-  "lib": ["WebWorker"],
+  "compilerOptions": {
+    "lib": ["WebWorker"]
+  },
   "references": [{ "path": "./tsconfig.app.json" }, { "path": "./tsconfig.node.json" }]
 }

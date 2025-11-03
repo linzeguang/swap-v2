@@ -43,11 +43,17 @@ module.exports = {
           }
         },
         text: {
-          primary: 'hsl(var(--color-text-primary)',
-          secondary: 'hsl(var(--color-text-secondary)',
-          tertiary: 'hsl(var(--color-text-tertiary)',
-          disabled: 'hsl(var(--color-text-disabled)'
+          primary: 'hsl(var(--color-text-primary))',
+          secondary: 'hsl(var(--color-text-secondary))',
+          tertiary: 'hsl(var(--color-text-tertiary))',
+          disabled: 'hsl(var(--color-text-disabled))'
+        },
+        border: {
+          DEFAULT: 'hsl(var(--color-border))'
         }
+      },
+      fontFamily: {
+        Kanit: ['Kanit', 'sans-serif']
       }
     }
   },

@@ -22,11 +22,11 @@
   --color-input-border-focus: var(--color-primary);
 
   /* text */
-  --color-text-primary: 0 0% 20%; /* #333333 */
+  --color-text-primary: 194 98% 56%; /* #23C9FD */
   --color-text-secondary: 0 0% 33%; /* #555555 */
   --color-text-tertiary: 0 0% 60%; /* #999999 */
   --color-text-disabled: 218 11% 81%; /* #C9CDD4 */
 
   /* border */
-  --color-border: 0 0% 33%; /* #555555 */
+  --color-border: 208 55% 89%; /* #D2E3F2 */
 }

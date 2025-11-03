@@ -1,7 +1,7 @@
 import { defineConfig } from '@lingui/cli'
 
 export default defineConfig({
-  sourceLocale: 'zh',
+  sourceLocale: 'en',
   locales: ['en', 'zh'],
   compileNamespace: 'json',
   catalogs: [

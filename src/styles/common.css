@@ -1,3 +1,7 @@
+.viewport {
+  @apply mx-auto w-full max-w-[1440px] px-4;
+}
+
 .overlay {
   @apply bg-overlay backdrop-blur-2xl;
 }

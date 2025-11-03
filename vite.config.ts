@@ -1,8 +1,8 @@
-import { defineConfig, loadEnv } from 'vite'
-import react from '@vitejs/plugin-react'
 import { lingui } from '@lingui/vite-plugin'
-import svgr from 'vite-plugin-svgr'
+import react from '@vitejs/plugin-react'
 import path from 'path'
+import { defineConfig, loadEnv } from 'vite'
+import svgr from 'vite-plugin-svgr'
 
 // https://vite.dev/config/
 export default defineConfig((env) => {
@@ -12,7 +12,15 @@ export default defineConfig((env) => {
   console.log('>>>>>> processEnv: ', processEnv)
 
   return {
-    plugins: [react(), lingui(), svgr()],
+    plugins: [
+      react({
+        babel: {
+          plugins: ['@lingui/babel-plugin-lingui-macro']
+        }
+      }),
+      lingui(),
+      svgr()
+    ],
     define: {
       __BUILD_TIME__
     },

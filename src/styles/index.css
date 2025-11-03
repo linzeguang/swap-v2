@@ -1,3 +1,15 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+html {
+  @apply bg-[#E6F3FF];
+}
+
+header {
+  @apply border-border border-b bg-white;
+}
+
+footer {
+  @apply bg-[#27262C];
+}
