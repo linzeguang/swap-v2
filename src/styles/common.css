@@ -5,3 +5,7 @@
 .overlay {
   @apply bg-overlay backdrop-blur-2xl;
 }
+
+.card {
+  @apply border-border rounded-3xl border bg-white p-4;
+}

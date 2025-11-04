@@ -12,6 +12,11 @@ export const Viewport = React.forwardRef<ComponentRef<typeof Box>, ComponentProp
 )
 Viewport.displayName = 'Viewport'
 
+export const Card = React.forwardRef<ComponentRef<typeof Box>, ComponentPropsWithoutRef<typeof Box>>((props, ref) => (
+  <Box ref={ref} {...props} className={cn('card', props.className)} />
+))
+Card.displayName = 'Card'
+
 export const Flex = React.forwardRef<ComponentRef<typeof Box>, ComponentPropsWithoutRef<typeof Box>>((props, ref) => (
   <Box ref={ref} {...props} className={cn('flex', props.className)} />
 ))

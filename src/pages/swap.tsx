@@ -1,6 +1,16 @@
+import { Trans } from '@lingui/react/macro'
 import { useAppKitAccount, useAppKitNetwork } from '@reown/appkit/react'
-import React from 'react'
+import React, { useState } from 'react'
 import { useAccount, useSwitchChain } from 'wagmi'
+
+import { Card } from '@/components/ui/Box'
+import { ButtonRadioGroup } from '@/components/ui/Button'
+
+enum TRADE {
+  Swap,
+  TWAP,
+  Limit
+}
 
 const Swap: React.FC = () => {
   const { address, isConnected } = useAppKitAccount()
@@ -8,6 +18,9 @@ const Swap: React.FC = () => {
   const { chains, switchChain } = useSwitchChain()
 
   const account = useAccount()
+
+  const [trade, setTrade] = useState(TRADE.Swap)
+
   return (
     <div>
       <div className="overlay xs:text-sm">
@@ -25,6 +38,27 @@ const Swap: React.FC = () => {
           ))}
         </div>
       </div>
+
+      <Card>
+        <ButtonRadioGroup
+          value={trade}
+          options={[
+            {
+              label: <Trans>Swap</Trans>,
+              value: TRADE.Swap
+            },
+            {
+              label: <Trans>TWAP</Trans>,
+              value: TRADE.TWAP
+            },
+            {
+              label: <Trans>Limit</Trans>,
+              value: TRADE.Limit
+            }
+          ]}
+          onChangeValue={setTrade}
+        />
+      </Card>
     </div>
   )
 }
