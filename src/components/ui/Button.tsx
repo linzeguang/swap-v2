@@ -96,7 +96,7 @@ export function ButtonRadioGroup<V>(props: {
   const { options, value: currentValue, onChangeValue } = props
 
   return (
-    <Flex className="border-border rounded-2xl border bg-input-bg">
+    <Flex className="rounded-2xl border border-border bg-input-bg">
       {options.map(({ label, value, className, onClick, ...buttonProps }) => (
         <Button
           key={value?.toString()}
