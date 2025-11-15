@@ -4,7 +4,8 @@ import { createBrowserRouter } from 'react-router'
 import RootLayout from '@/layouts'
 
 export enum ROUTE_PATH {
-  Swap = '/'
+  Swap = '/',
+  Pool = '/pool'
 }
 
 export const router = createBrowserRouter([
@@ -16,6 +17,10 @@ export const router = createBrowserRouter([
         index: true,
         path: ROUTE_PATH.Swap,
         Component: lazy(() => import('@/pages/swap'))
+      },
+      {
+        path: ROUTE_PATH.Pool,
+        Component: lazy(() => import('@/pages/pool'))
       }
     ]
   }

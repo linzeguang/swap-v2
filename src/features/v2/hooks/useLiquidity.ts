@@ -12,12 +12,11 @@ import { getRemoveLiquidityMinAmounts } from '../utils'
 
 const slippage = new Percent(0.5 * 100, 10000) // 默认 0.5%
 const deadlineMinutes = 10
+const deadline = Math.floor(Date.now() / 1000) + 60 * deadlineMinutes // 10分钟后过期
 
 export const useLiquidity = (pairAddress: Address, reserveA: bigint, reserveB: bigint, totalSupply: bigint) => {
   const { address } = useAppKitAccount()
   const { writeContractAsync } = useWriteContract()
-
-  const deadline = Math.floor(Date.now() / 1000) + 60 * deadlineMinutes // 10分钟后过期
 
   const liquidity = useReadContract({
     address: pairAddress,
@@ -30,38 +29,65 @@ export const useLiquidity = (pairAddress: Address, reserveA: bigint, reserveB: b
   })
 
   const addLiquidity = useCallback(
-    (
+    async (
       currencyAmountA: CurrencyAmount<Token | NativeCurrency>,
       currencyAmountB: CurrencyAmount<Token | NativeCurrency>
     ) => {
       if (!address) return
-      const amountADesired = jsbiToBigInt(currencyAmountA.quotient)
-      const amountBDesired = jsbiToBigInt(currencyAmountB.quotient)
 
-      const amountAMin = jsbiToBigInt(currencyAmountA.multiply(one.subtract(slippage)).quotient)
-      const amountBMin = jsbiToBigInt(currencyAmountB.multiply(one.subtract(slippage)).quotient)
+      let txHash: Address
 
-      writeContractAsync({
-        abi: ROUTER_02_ABI,
-        address: ROUTER_02_ADDRESS,
-        functionName: 'addLiquidity',
-        args: [
-          currencyAmountA.currency.wrapped.address as Address,
-          currencyAmountB.currency.wrapped.address as Address,
-          amountADesired,
-          amountBDesired,
-          amountAMin,
-          amountBMin,
-          address as Address,
-          BigInt(deadline)
-        ]
-      })
+      if (currencyAmountA.currency.isNative || currencyAmountB.currency.isNative) {
+        const [nativeAmount, tokenAmount] = currencyAmountA.currency.isNative
+          ? [currencyAmountA, currencyAmountB]
+          : [currencyAmountB, currencyAmountA]
+        const amountTokenDesired = jsbiToBigInt(tokenAmount.quotient)
+        const amountTokenMin = jsbiToBigInt(tokenAmount.multiply(one.subtract(slippage)).quotient)
+        const amountETHMin = jsbiToBigInt(nativeAmount.multiply(one.subtract(slippage)).quotient)
+
+        txHash = await writeContractAsync({
+          abi: ROUTER_02_ABI,
+          address: ROUTER_02_ADDRESS,
+          functionName: 'addLiquidityETH',
+          args: [
+            tokenAmount.currency.wrapped.address as Address,
+            amountTokenDesired,
+            amountTokenMin,
+            amountETHMin,
+            address as Address,
+            BigInt(deadline)
+          ]
+        })
+      } else {
+        const amountADesired = jsbiToBigInt(currencyAmountA.quotient)
+        const amountBDesired = jsbiToBigInt(currencyAmountB.quotient)
+        const amountAMin = jsbiToBigInt(currencyAmountA.multiply(one.subtract(slippage)).quotient)
+        const amountBMin = jsbiToBigInt(currencyAmountB.multiply(one.subtract(slippage)).quotient)
+
+        txHash = await writeContractAsync({
+          abi: ROUTER_02_ABI,
+          address: ROUTER_02_ADDRESS,
+          functionName: 'addLiquidity',
+          args: [
+            currencyAmountA.currency.wrapped.address as Address,
+            currencyAmountB.currency.wrapped.address as Address,
+            amountADesired,
+            amountBDesired,
+            amountAMin,
+            amountBMin,
+            address as Address,
+            BigInt(deadline)
+          ]
+        })
+      }
+
+      console.log('>>>>>> txHash: ', txHash)
     },
-    [address, deadline, writeContractAsync]
+    [address, writeContractAsync]
   )
 
   const removeLiquidity = useCallback(
-    (tokenA: Token | NativeCurrency, tokenB: Token | NativeCurrency, liquidity: bigint) => {
+    async (tokenA: Token | NativeCurrency, tokenB: Token | NativeCurrency, liquidity: bigint) => {
       const { amountAMin, amountBMin } = getRemoveLiquidityMinAmounts({
         liquidity,
         reserveA,
@@ -69,22 +95,49 @@ export const useLiquidity = (pairAddress: Address, reserveA: bigint, reserveB: b
         totalSupply,
         slippage
       })
-      writeContractAsync({
-        abi: ROUTER_02_ABI,
-        address: ROUTER_02_ADDRESS,
-        functionName: 'removeLiquidity',
-        args: [
-          tokenA.wrapped.address as Address,
-          tokenB.wrapped.address as Address,
-          liquidity,
-          amountAMin,
-          amountBMin,
-          address as Address,
-          BigInt(deadline)
-        ]
-      })
+      const currencyAmountAMin = CurrencyAmount.fromRawAmount(tokenA, amountAMin.toString())
+      const currencyAmountBMin = CurrencyAmount.fromRawAmount(tokenB, amountAMin.toString())
+
+      let txHash: Address
+      if (currencyAmountAMin.currency.isNative || currencyAmountBMin.currency.isNative) {
+        const [nativeAmountMin, tokenAmountMin] = currencyAmountAMin.currency.isNative
+          ? [currencyAmountAMin, currencyAmountBMin]
+          : [currencyAmountBMin, currencyAmountAMin]
+        const amountTokenMin = jsbiToBigInt(tokenAmountMin.quotient)
+        const amountETHMin = jsbiToBigInt(nativeAmountMin.quotient)
+
+        txHash = await writeContractAsync({
+          abi: ROUTER_02_ABI,
+          address: ROUTER_02_ADDRESS,
+          functionName: 'removeLiquidityETH',
+          args: [
+            tokenAmountMin.currency.wrapped.address as Address,
+            liquidity,
+            amountTokenMin,
+            amountETHMin,
+            address as Address,
+            BigInt(deadline)
+          ]
+        })
+      } else {
+        txHash = await writeContractAsync({
+          abi: ROUTER_02_ABI,
+          address: ROUTER_02_ADDRESS,
+          functionName: 'removeLiquidity',
+          args: [
+            tokenA.wrapped.address as Address,
+            tokenB.wrapped.address as Address,
+            liquidity,
+            amountAMin,
+            amountBMin,
+            address as Address,
+            BigInt(deadline)
+          ]
+        })
+      }
+      console.log('>>>>>> txHash: ', txHash)
     },
-    [address, deadline, reserveA, reserveB, totalSupply, writeContractAsync]
+    [address, reserveA, reserveB, totalSupply, writeContractAsync]
   )
 
   return {

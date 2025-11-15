@@ -12,6 +12,10 @@ const Navs: React.FC = () => {
       {
         name: <Trans>Swap</Trans>,
         path: ROUTE_PATH.Swap
+      },
+      {
+        name: <Trans>Pool</Trans>,
+        path: ROUTE_PATH.Pool
       }
     ],
     []
@@ -22,7 +26,7 @@ const Navs: React.FC = () => {
         <NavLink
           key={path}
           to={path}
-          className={cn('text-text-primary font-Kanit p-4', pathname === path ? 'font-semibold' : 'font-normal')}
+          className={cn('p-4 font-Kanit text-text-primary', pathname === path ? 'font-semibold' : 'font-normal')}
         >
           {name}
         </NavLink>

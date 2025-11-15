@@ -1,4 +1,4 @@
-import { useAppKitAccount } from '@reown/appkit/react'
+import { useAppKitAccount, useDisconnect } from '@reown/appkit/react'
 import React from 'react'
 
 import { formatAddress } from '@/lib/format'
@@ -10,6 +10,7 @@ import { DrawerContent, DrawerRoot, DrawerTrigger } from './ui/Drawer'
 
 const ConnectWallet: React.FC = () => {
   const { isConnected, address } = useAppKitAccount()
+  const { disconnect } = useDisconnect()
 
   if (!isConnected) return <Button notConnected={!isConnected} variant={'primary'} />
 
@@ -21,7 +22,12 @@ const ConnectWallet: React.FC = () => {
         </Button>
       </DrawerTrigger>
       <DrawerContent className="w-[20rem]">
-        <Card className="h-full !rounded-r-none border-r-0" />
+        <Card className="h-full !rounded-r-none border-r-0">
+          <appkit-button />
+          <Button variant={'primary'} onClick={() => disconnect()}>
+            disconnect
+          </Button>
+        </Card>
       </DrawerContent>
     </DrawerRoot>
   )

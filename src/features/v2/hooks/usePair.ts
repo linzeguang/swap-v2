@@ -31,7 +31,7 @@ export const usePair = (pairAddress: Address) => {
   })
 
   return useMemo(() => {
-    if (!data) return
+    if (!data) return {}
     const [{ result: totalSupply }, { result: reserves }, { result: token0Address }, { result: token1Address }] = data
     if (!reserves || !token0Address || !token1Address) return {}
     const [reserve0, reserve1] = reserves
