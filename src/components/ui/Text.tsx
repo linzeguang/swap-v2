@@ -7,6 +7,7 @@ import { cn } from '@/lib/utils'
 const textVariants = cva('', {
   variants: {
     variant: {
+      default: '',
       primary: 'text-text-primary',
       secondary: 'text-text-secondary',
       tertiary: 'text-text-tertiary',
@@ -18,7 +19,7 @@ const textVariants = cva('', {
     }
   },
   defaultVariants: {
-    variant: 'primary'
+    variant: 'default'
   }
 })
 

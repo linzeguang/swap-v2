@@ -21,3 +21,8 @@ export const Flex = React.forwardRef<ComponentRef<typeof Box>, ComponentPropsWit
   <Box ref={ref} {...props} className={cn('flex', props.className)} />
 ))
 Flex.displayName = 'Flex'
+
+export const Grid = React.forwardRef<ComponentRef<typeof Box>, ComponentPropsWithoutRef<typeof Box>>((props, ref) => (
+  <Box ref={ref} {...props} className={cn('grid', props.className)} />
+))
+Grid.displayName = 'Grid'

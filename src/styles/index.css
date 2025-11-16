@@ -17,3 +17,10 @@ header {
 footer {
   @apply bg-[#27262C];
 }
+
+.dividing-wieght {
+  --dividing-wieght: 1px; /* 分割线粗细 */
+}
+.dividing-wieght-bold {
+  --dividing-wieght: 2px; /* 分割线粗细 */
+}

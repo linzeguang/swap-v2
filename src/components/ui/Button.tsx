@@ -11,7 +11,8 @@ const buttonVariants = cva(cn('flex items-center justify-center rounded-2xl text
   variants: {
     variant: {
       primary: 'bg-primary text-primary-foreground',
-      secondary: 'bg-secondary text-secondary-foreground'
+      secondary: 'bg-secondary text-secondary-foreground',
+      radio: 'bg-input-bg text-secondary hover:bg-secondary hover:text-secondary-foreground'
     },
     size: {
       sm: 'h-6 px-3 space-x-1.5',
