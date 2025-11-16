@@ -2,10 +2,14 @@
   @apply mx-auto w-full max-w-[1440px] px-4;
 }
 
+.popover {
+  @apply border border-border bg-white;
+}
+
 .overlay {
   @apply bg-overlay backdrop-blur-2xl;
 }
 
 .card {
-  @apply border-border rounded-3xl border bg-white p-4;
+  @apply rounded-3xl border border-border bg-white p-4;
 }

@@ -1,1 +1,5 @@
 export { default as ArrowDown } from './arrowdown.svg?react'
+export { default as ArrowDownFill } from './arrowdown-fill.svg?react'
+export { default as ArrowRight } from './arrowright.svg?react'
+export { default as Close } from './close.svg?react'
+export { default as Setting } from './setting.svg?react'

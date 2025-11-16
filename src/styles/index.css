@@ -2,12 +2,16 @@
 @tailwind components;
 @tailwind utilities;
 
+:focus-visible {
+  outline: none;
+}
+
 html {
   @apply bg-[#E6F3FF];
 }
 
 header {
-  @apply border-border border-b bg-white;
+  @apply border-b border-border bg-white;
 }
 
 footer {

@@ -18,8 +18,8 @@
 
   /* input */
   --color-input-bg: 208 100% 97%; /* #F0F8FF */
-  --color-input-border: 0 0% 100%; /* #fff */
-  --color-input-border-focus: var(--color-primary);
+  --color-input-border: var(--color-border); /* #fff */
+  --color-input-border-focus: var(--color-secondary);
 
   /* text */
   --color-text-primary: 194 98% 56%; /* #23C9FD */

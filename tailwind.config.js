@@ -52,6 +52,9 @@ module.exports = {
           DEFAULT: 'hsl(var(--color-border))'
         }
       },
+      borderRadius: {
+        '4xl': 32
+      },
       fontFamily: {
         Kanit: ['Kanit', 'sans-serif']
       }
