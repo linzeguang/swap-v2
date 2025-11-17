@@ -1,5 +1,5 @@
 import { Trans } from '@lingui/react/macro'
-import { Currency, TradeType } from '@uniswap/sdk-core'
+import { Currency } from '@uniswap/sdk-core'
 import React, { useCallback, useState } from 'react'
 
 import { BNB } from '@/features/token/testnet/bsc'
@@ -8,8 +8,6 @@ import TokenAmountInput from '../common/TokenAmountInput'
 import { Swap as SwapIcon } from '../svgr/icons'
 import { Card } from '../ui/Box'
 import { Dividing } from '../ui/Dividing'
-
-TradeType
 
 const SwapForm: React.FC = () => {
   const [fromToken, setFromToken] = useState<Currency | undefined>(BNB)
