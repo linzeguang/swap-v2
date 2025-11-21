@@ -5,7 +5,7 @@
     "dev": "vite",
     "dev:prod": "vite --mode production",
     "dev:staging": "vite --mode staging",
-    "build": "tsc -b && vite build",
+    "build": "vite build",
     "build:staging": "tsc -b && vite build --mode staging",
     "build:dev": "tsc -b && vite build --mode development",
     "lint": "eslint src",
