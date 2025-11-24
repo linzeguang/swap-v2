@@ -29,7 +29,7 @@ export interface TextProps extends React.HTMLAttributes<HTMLElement>, VariantPro
 }
 
 export const Text = React.forwardRef<any, TextProps>(
-  ({ className, children, as: Tag = 'p', asChild, variant, ...rest }, ref) => (
+  ({ className, children, as: Tag = 'div', asChild, variant, ...rest }, ref) => (
     <Slot.Root ref={ref} className={cn(textVariants({ variant, className }))} {...rest}>
       {asChild ? children : <Tag>{children}</Tag>}
     </Slot.Root>
@@ -40,3 +40,16 @@ Text.displayName = 'Text'
 export const KanitText = React.forwardRef<React.ComponentRef<typeof Text>, React.ComponentPropsWithoutRef<typeof Text>>(
   (props, ref) => <Text {...props} ref={ref} className={cn('font-Kanit', props.className)} />
 )
+KanitText.displayName = 'KanitText'
+
+export const PageTitle = React.forwardRef<React.ComponentRef<typeof Text>, React.ComponentPropsWithoutRef<typeof Text>>(
+  (props, ref) => (
+    <Text
+      {...props}
+      ref={ref}
+      as="h2"
+      className={cn('font-Kanit text-4xl font-semibold text-secondary-foreground', props.className)}
+    />
+  )
+)
+PageTitle.displayName = 'PageTitle'

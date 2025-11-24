@@ -3,7 +3,7 @@
 }
 
 .popover {
-  @apply border border-border bg-white;
+  @apply bg-content border border-border;
 }
 
 .overlay {
@@ -11,5 +11,15 @@
 }
 
 .card {
-  @apply rounded-3xl border border-border bg-white p-4;
+  @apply bg-content rounded-3xl border border-border p-4;
+}
+
+.tip-card {
+  @apply bg-content rounded-xl border border-border p-2;
+}
+
+.pool {
+  background-image: linear-gradient(92deg, #8de4ff 0%, #ffdccd 100%);
+  background-size: auto 235px;
+  background-repeat: no-repeat;
 }

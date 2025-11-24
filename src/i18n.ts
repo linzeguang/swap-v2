@@ -1,22 +1,22 @@
 import { i18n } from '@lingui/core'
 
-export enum LOCALE {
+export enum Locale {
   EN = 'en',
   ZH = 'zh'
 }
 
-export const LOCALES: Record<LOCALE, { name: string; locale: LOCALE }> = {
-  [LOCALE.EN]: {
+export const LOCALES: Record<Locale, { name: string; locale: Locale }> = {
+  [Locale.EN]: {
     name: 'English',
-    locale: LOCALE.EN
+    locale: Locale.EN
   },
-  [LOCALE.ZH]: {
+  [Locale.ZH]: {
     name: '简体中文',
-    locale: LOCALE.ZH
+    locale: Locale.ZH
   }
 }
 
-export const importLocale = async (locale: LOCALE) => {
+export const importLocale = async (locale: Locale) => {
   const res = await fetch(`/locales/${locale}/messages.json`)
   const data = await res.json()
 

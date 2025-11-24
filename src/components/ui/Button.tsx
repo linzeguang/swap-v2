@@ -7,12 +7,13 @@ import { cn } from '@/lib/utils'
 
 import { Flex } from './Box'
 
-const buttonVariants = cva(cn('flex items-center justify-center rounded-2xl text-base font-Kanit'), {
+const buttonVariants = cva(cn('flex items-center justify-center rounded-2xl text-base font-Kanit border'), {
   variants: {
     variant: {
-      primary: 'bg-primary text-primary-foreground',
-      secondary: 'bg-secondary text-secondary-foreground',
-      radio: 'bg-input-bg text-secondary hover:bg-secondary hover:text-secondary-foreground'
+      default: 'bg-content text-secondary border-content',
+      primary: 'bg-primary text-primary-foreground border-primary',
+      secondary: 'bg-secondary text-secondary-foreground border-secondary',
+      radio: 'bg-input-bg text-secondary border-input-bg hover:bg-secondary hover:text-secondary-foreground'
     },
     size: {
       sm: 'h-6 px-3 space-x-1.5',
@@ -21,6 +22,9 @@ const buttonVariants = cva(cn('flex items-center justify-center rounded-2xl text
       xl: 'h-12 px-6 space-x-4'
     },
     ghost: {
+      true: 'bg-transparent border-transparent'
+    },
+    outline: {
       true: 'bg-transparent'
     }
   },
@@ -34,9 +38,15 @@ const buttonVariants = cva(cn('flex items-center justify-center rounded-2xl text
       ghost: true,
       variant: 'secondary',
       className: 'text-secondary'
+    },
+    {
+      outline: true,
+      variant: 'secondary',
+      className: 'text-secondary'
     }
   ],
   defaultVariants: {
+    variant: 'default',
     size: 'md'
   }
 })
@@ -52,7 +62,20 @@ export const Button = React.forwardRef<
     }
 >(
   (
-    { children, className, notConnected, isLoading, prefixNode, suffixNode, variant, size, ghost, onClick, ...props },
+    {
+      children,
+      className,
+      notConnected,
+      isLoading,
+      prefixNode,
+      suffixNode,
+      variant,
+      size,
+      ghost,
+      outline,
+      onClick,
+      ...props
+    },
     ref
   ) => {
     const { open } = useAppKit()
@@ -65,7 +88,7 @@ export const Button = React.forwardRef<
       <button
         ref={ref}
         type="button"
-        className={cn(buttonVariants({ variant, size, ghost, className }))}
+        className={cn(buttonVariants({ variant, size, ghost, outline, className }))}
         onClick={(ev) => {
           if (notConnected) connect()
           else onClick?.(ev)

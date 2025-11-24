@@ -4,14 +4,14 @@ import React, { useState } from 'react'
 import { Card } from '../ui/Box'
 import { ButtonRadioGroup } from '../ui/Button'
 
-export enum TRADE {
+export enum Trade {
   Swap,
   TWAP,
   Limit
 }
 
 const TradeType = () => {
-  const [trade, setTrade] = useState(TRADE.Swap)
+  const [trade, setTrade] = useState(Trade.Swap)
 
   return (
     <Card>
@@ -20,15 +20,15 @@ const TradeType = () => {
         options={[
           {
             label: <Trans>Swap</Trans>,
-            value: TRADE.Swap
+            value: Trade.Swap
           },
           {
             label: <Trans>TWAP</Trans>,
-            value: TRADE.TWAP
+            value: Trade.TWAP
           },
           {
             label: <Trans>Limit</Trans>,
-            value: TRADE.Limit
+            value: Trade.Limit
           }
         ]}
         onChangeValue={setTrade}

@@ -5,11 +5,13 @@ import { KanitText } from '../ui/Text'
 import TokenSelect from './TokenSelect'
 
 export interface ProInputProps {
-  title: React.ReactNode
+  title?: React.ReactNode
   token?: ComponentPropsWithRef<typeof TokenSelect>['token']
+  suffixNode?: React.ReactNode
+
   onTokenSelect?: ComponentPropsWithRef<typeof TokenSelect>['onTokenSelect']
 }
-const TokenAmountInput: React.FC<ProInputProps> = ({ title, token, onTokenSelect }) => {
+const TokenAmountInput: React.FC<ProInputProps> = ({ title, token, suffixNode, onTokenSelect }) => {
   return (
     <div className="space-y-3">
       {title && <KanitText className="text-xs text-secondary">{title}</KanitText>}
@@ -22,6 +24,7 @@ const TokenAmountInput: React.FC<ProInputProps> = ({ title, token, onTokenSelect
         placeholder="0.00"
         className="text-right text-secondary"
       />
+      {suffixNode}
     </div>
   )
 }

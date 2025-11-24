@@ -34,7 +34,9 @@ module.exports = {
           DEFAULT: 'hsl(var(--color-warning))',
           background: 'hsl(var(--color-warning-background))'
         },
+        tip: 'hsl(var(--color-tip))',
         overlay: 'var(--color-overlay)',
+        content: 'hsl(var(--color-content))',
         input: {
           bg: 'hsl(var(--color-input-bg))',
           border: {
@@ -49,7 +51,8 @@ module.exports = {
           disabled: 'hsl(var(--color-text-disabled))'
         },
         border: {
-          DEFAULT: 'hsl(var(--color-border))'
+          DEFAULT: 'hsl(var(--color-border))',
+          thin: 'hsl(var(--color-border-thin))'
         }
       },
       borderRadius: {
@@ -57,6 +60,9 @@ module.exports = {
       },
       fontFamily: {
         Kanit: ['Kanit', 'sans-serif']
+      },
+      fontSize: {
+        '1.5xl': '1.25rem'
       }
     }
   },

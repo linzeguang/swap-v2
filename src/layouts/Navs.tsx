@@ -3,7 +3,7 @@ import React, { useMemo } from 'react'
 import { NavLink, useLocation } from 'react-router'
 
 import { cn } from '@/lib/utils'
-import { ROUTE_PATH } from '@/routes'
+import { RoutePath } from '@/routes'
 
 const Navs: React.FC = () => {
   const { pathname } = useLocation()
@@ -11,11 +11,11 @@ const Navs: React.FC = () => {
     () => [
       {
         name: <Trans>Swap</Trans>,
-        path: ROUTE_PATH.Swap
+        path: RoutePath.Swap
       },
       {
         name: <Trans>Pool</Trans>,
-        path: ROUTE_PATH.Pool
+        path: RoutePath.Pool
       }
     ],
     []

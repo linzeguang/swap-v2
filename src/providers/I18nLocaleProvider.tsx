@@ -2,12 +2,12 @@ import { I18nProvider } from '@lingui/react'
 import { useAtom } from 'jotai/react'
 import React, { createContext, PropsWithChildren, useCallback, useContext, useEffect } from 'react'
 
-import i18n, { importLocale, LOCALE } from '@/i18n'
+import i18n, { importLocale, Locale } from '@/i18n'
 import { localeAtom } from '@/stores/settings'
 
 export interface I18nLocaleProviderContextProps {
-  locale: LOCALE
-  changeLocale: (locale: LOCALE) => void
+  locale: Locale
+  changeLocale: (locale: Locale) => void
 }
 
 export const I18nLocaleProviderContext = createContext<I18nLocaleProviderContextProps>(
@@ -20,7 +20,7 @@ const I18nLocaleProvider: React.FC<PropsWithChildren> = ({ children }) => {
   const [locale, setLocale] = useAtom(localeAtom)
 
   const changeLocale = useCallback(
-    async (locale: LOCALE) => {
+    async (locale: Locale) => {
       await importLocale(locale)
       setLocale(locale)
     },

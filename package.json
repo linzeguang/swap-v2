@@ -18,7 +18,10 @@
   "dependencies": {
     "@lingui/core": "^5.5.1",
     "@lingui/react": "^5.5.1",
+    "@radix-ui/react-label": "^2.1.8",
     "@radix-ui/react-slot": "^1.2.3",
+    "@radix-ui/react-switch": "^1.2.6",
+    "@radix-ui/react-tooltip": "^1.2.8",
     "@reown/appkit": "^1.8.12",
     "@reown/appkit-adapter-wagmi": "^1.8.12",
     "@tanstack/react-query": "^5.90.5",

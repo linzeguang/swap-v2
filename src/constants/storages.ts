@@ -1,4 +1,7 @@
-export enum STORAGE_KEY {
-  LOCALE = 'LOCALE',
-  THEME = 'THEME'
+export enum StorageKey {
+  Locale = 'Locale',
+  Theme = 'Theme',
+  Slippage = 'Slippage',
+  Deadline = 'Deadline',
+  InfiniteApproval = 'InfiniteApproval'
 }

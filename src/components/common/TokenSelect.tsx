@@ -39,21 +39,19 @@ const TokenSelect: React.FC<{
       trigger={{
         asChild: true,
         children: (
-          <Button className="px-2">
+          <Button className={token ? 'px-2' : 'px-4'} size={'lg'} variant={token ? 'default' : 'secondary'}>
             {token ? (
               <>
-                <TokenImage token={token} className="size-8" />
-                <Flex className="items-center">
-                  <KanitText className="text-xl font-semibold">{token.symbol}</KanitText>
-                  <ArrowDown />
-                </Flex>
+                <TokenImage token={token} className="size-7" />
+                <KanitText className="text-xl font-semibold text-text-secondary">{token.symbol}</KanitText>
+                <ArrowDown />
               </>
             ) : (
               <Flex className="items-center">
-                <KanitText className="text-xl font-semibold">
+                <KanitText className="text-base font-semibold">
                   <Trans>Select Token</Trans>
                 </KanitText>
-                <ArrowDown />
+                {/* <ArrowDown /> */}
               </Flex>
             )}
           </Button>

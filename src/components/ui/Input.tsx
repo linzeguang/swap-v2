@@ -7,7 +7,7 @@ const inputVariants = cva(cn('flex items-center bg-input-bg'), {
   variants: {
     size: {
       xs: '',
-      sm: '',
+      sm: 'h-8 px-4 rounded-full text-sm space-x-2',
       md: 'h-10 px-4 rounded-full',
       lg: '',
       xl: 'p-4 rounded-3xl text-2xl font-semibold'

@@ -73,12 +73,23 @@ export interface DialogProps
     React.PropsWithChildren {
   closeable?: boolean
   title?: React.ReactNode
+  titleClassName?: string
   trigger?: React.ComponentPropsWithoutRef<typeof DialogTrigger>
   content?: React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content> & { disableOutsideClose?: boolean }
 }
 
 export const Dialog = React.forwardRef<DialogMethods, DialogProps>((props, methods) => {
-  const { trigger, content, title, children, closeable = true, position = 'center', onOpenChange, ...rest } = props
+  const {
+    trigger,
+    content,
+    title,
+    titleClassName,
+    children,
+    closeable = true,
+    position = 'center',
+    onOpenChange,
+    ...rest
+  } = props
   const [isOpen, setIsOpen] = useState(false)
 
   const handleOpenChange = React.useCallback(
@@ -115,7 +126,8 @@ export const Dialog = React.forwardRef<DialogMethods, DialogProps>((props, metho
           <DialogPrimitive.Title
             className={cn(
               'flex items-center justify-between text-base font-medium lg:text-xl',
-              !title && !closeable && 'min-h-auto pb-0'
+              !title && !closeable && 'min-h-auto pb-0',
+              titleClassName
             )}
           >
             <label className="font-Kanit text-xl font-bold text-text-primary">{title}</label>

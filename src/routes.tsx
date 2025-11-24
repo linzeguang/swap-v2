@@ -3,23 +3,24 @@ import { createBrowserRouter } from 'react-router'
 
 import RootLayout from '@/layouts'
 
-export enum ROUTE_PATH {
+export enum RoutePath {
   Swap = '/',
-  Pool = '/pool'
+  Pool = '/pool',
+  Positions = '/positions'
 }
 
 export const router = createBrowserRouter([
   {
-    path: ROUTE_PATH.Swap,
+    path: RoutePath.Swap,
     Component: RootLayout,
     children: [
       {
         index: true,
-        path: ROUTE_PATH.Swap,
+        path: RoutePath.Swap,
         Component: lazy(() => import('@/pages/swap'))
       },
       {
-        path: ROUTE_PATH.Pool,
+        path: RoutePath.Pool,
         Component: lazy(() => import('@/pages/pool'))
       }
     ]
