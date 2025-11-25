@@ -1,5 +1,6 @@
-import { useAppKitAccount, useDisconnect } from '@reown/appkit/react'
-import React from 'react'
+import { Trans } from '@lingui/react/macro'
+import { useAppKit, useAppKitAccount, useDisconnect } from '@reown/appkit/react'
+import React, { useCallback } from 'react'
 
 import { formatAddress } from '@/lib/format'
 
@@ -7,12 +8,26 @@ import { ArrowDown } from './svgr/icons'
 import { Card } from './ui/Box'
 import { Button } from './ui/Button'
 import { DrawerContent, DrawerRoot, DrawerTrigger } from './ui/Drawer'
+import { KanitText } from './ui/Text'
 
 const ConnectWallet: React.FC = () => {
   const { isConnected, address } = useAppKitAccount()
   const { disconnect } = useDisconnect()
 
-  if (!isConnected) return <Button notConnected={!isConnected} variant={'primary'} />
+  const { open } = useAppKit()
+
+  const connect = useCallback(() => {
+    open({ view: 'Connect' })
+  }, [open])
+
+  if (!isConnected)
+    return (
+      <Button variant={'primary'} onClick={connect}>
+        <KanitText>
+          <Trans>Connect Wallet</Trans>
+        </KanitText>
+      </Button>
+    )
 
   return (
     <DrawerRoot direction="right">

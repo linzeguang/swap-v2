@@ -4,7 +4,7 @@ import React, { useCallback, useState } from 'react'
 
 import { BNB } from '@/features/token/testnet/bsc'
 
-import TokenAmountInput from '../common/TokenAmountInput'
+import { TokenAmountInput } from '../common/AmountInput'
 import { Swap as SwapIcon } from '../svgr/icons'
 import { Card } from '../ui/Box'
 import { Dividing } from '../ui/Dividing'

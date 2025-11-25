@@ -6,7 +6,7 @@ import { Direction } from '@/constants/enum'
 import { cn } from '@/lib/utils'
 import { deadlineAtom, infiniteApprovalAtom, Slippage, slippageAtom } from '@/stores/settings'
 
-import { Setting, Tip } from '../svgr/icons'
+import { Setting, Help } from '../svgr/icons'
 import { Flex } from '../ui/Box'
 import { Button } from '../ui/Button'
 import { Dialog } from '../ui/Dialog'
@@ -89,8 +89,8 @@ const SlippageField: React.FC = () => {
           <KanitText>
             <Trans>Slippage Tolerance</Trans>
           </KanitText>
-          <Tip className="text-tip" />
-          {/* <Tooltip trigger={{ children: <Tip className="text-tip" /> }}>
+          <Help className="text-icon" />
+          {/* <Tooltip trigger={{ children: <Help className="text-icon" /> }}>
               <KanitText>
                 <Trans>Slippage Tolerance</Trans>
               </KanitText>
@@ -145,7 +145,7 @@ const DeadlineField: React.FC = () => {
           <KanitText>
             <Trans>Transaction Deadline</Trans>
           </KanitText>
-          <Tip className="text-tip" />
+          <Help className="text-icon" />
         </Flex>
       }
     >
@@ -187,7 +187,7 @@ const InfiniteApprovalField: React.FC = () => {
           <KanitText>
             <Trans>Infinite Approval</Trans>
           </KanitText>
-          <Tip className="text-tip" />
+          <Help className="text-icon" />
         </Flex>
       }
     >

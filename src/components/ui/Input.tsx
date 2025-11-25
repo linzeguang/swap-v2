@@ -10,7 +10,7 @@ const inputVariants = cva(cn('flex items-center bg-input-bg'), {
       sm: 'h-8 px-4 rounded-full text-sm space-x-2',
       md: 'h-10 px-4 rounded-full',
       lg: '',
-      xl: 'p-4 rounded-3xl text-2xl font-semibold'
+      xl: 'p-4 rounded-3xl text-2xl font-semibold space-x-4'
     },
     border: {
       true: 'border border-input-border focus-within:border-input-border-focus hover:border-input-border-focus'

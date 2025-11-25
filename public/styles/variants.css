@@ -17,6 +17,7 @@
   /* bg */
   --color-content: 0 0% 100%; /* #fff */
   --color-overlay: rgba(51, 51, 51, 0.1); /* #3333331a */
+  --color-disabled: 208 55% 89%; /* #D2E3F2 */
 
   /* input */
   --color-input-bg: 208 100% 97%; /* #F0F8FF */
@@ -34,5 +35,5 @@
   --color-border-thin: 208 100% 97%; /* #F0F8FF */
 
   /* tip */
-  --color-tip: 208 55% 89%; /* #D2E3F2 */
+  --color-icon: 208 55% 89%; /* #D2E3F2 */
 }

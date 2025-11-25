@@ -34,9 +34,10 @@ module.exports = {
           DEFAULT: 'hsl(var(--color-warning))',
           background: 'hsl(var(--color-warning-background))'
         },
-        tip: 'hsl(var(--color-tip))',
+        icon: 'hsl(var(--color-icon))',
         overlay: 'var(--color-overlay)',
         content: 'hsl(var(--color-content))',
+        disabled: 'hsl(var(--color-disabled))',
         input: {
           bg: 'hsl(var(--color-input-bg))',
           border: {

@@ -11,7 +11,7 @@ const Switch = React.forwardRef<
     className={cn(
       'focus-visible:outline-none',
       'disabled:cursor-not-allowed disabled:opacity-50',
-      'data-[state=unchecked]:bg-tip data-[state=checked]:bg-secondary',
+      'data-[state=unchecked]:bg-icon data-[state=checked]:bg-secondary',
       'inline-flex h-5 w-10 shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent transition-colors',
       className
     )}

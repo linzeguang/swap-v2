@@ -1,115 +1,85 @@
-import { Trans } from '@lingui/react/macro'
-import { useAppKit } from '@reown/appkit/react'
 import { cva, VariantProps } from 'class-variance-authority'
-import React, { ButtonHTMLAttributes, ComponentProps, useCallback } from 'react'
+import React, { ButtonHTMLAttributes, ComponentProps } from 'react'
 
 import { cn } from '@/lib/utils'
 
 import { Flex } from './Box'
 
-const buttonVariants = cva(cn('flex items-center justify-center rounded-2xl text-base font-Kanit border'), {
-  variants: {
-    variant: {
-      default: 'bg-content text-secondary border-content',
-      primary: 'bg-primary text-primary-foreground border-primary',
-      secondary: 'bg-secondary text-secondary-foreground border-secondary',
-      radio: 'bg-input-bg text-secondary border-input-bg hover:bg-secondary hover:text-secondary-foreground'
+const buttonVariants = cva(
+  cn(
+    'flex items-center justify-center rounded-2xl text-base font-Kanit border disabled:bg-disabled disabled:border-disabled '
+  ),
+  {
+    variants: {
+      variant: {
+        default: 'bg-content text-secondary border-content',
+        primary: 'bg-primary text-primary-foreground border-primary',
+        secondary: 'bg-secondary text-secondary-foreground border-secondary',
+        radio: 'bg-input-bg text-secondary border-input-bg hover:bg-secondary hover:text-secondary-foreground'
+      },
+      size: {
+        sm: 'h-6 px-3 space-x-1.5',
+        md: 'h-8 px-4 space-x-2',
+        lg: 'h-10 px-5 space-x-3',
+        xl: 'h-12 px-6 space-x-4'
+      },
+      ghost: {
+        true: 'bg-transparent border-transparent'
+      },
+      outline: {
+        true: 'bg-transparent'
+      }
     },
-    size: {
-      sm: 'h-6 px-3 space-x-1.5',
-      md: 'h-8 px-4 space-x-2',
-      lg: 'h-10 px-5 space-x-3',
-      xl: 'h-12 px-6 space-x-4'
-    },
-    ghost: {
-      true: 'bg-transparent border-transparent'
-    },
-    outline: {
-      true: 'bg-transparent'
+    compoundVariants: [
+      {
+        ghost: true,
+        variant: 'primary',
+        className: 'text-primary'
+      },
+      {
+        ghost: true,
+        variant: 'secondary',
+        className: 'text-secondary'
+      },
+      {
+        outline: true,
+        variant: 'secondary',
+        className: 'text-secondary'
+      }
+    ],
+    defaultVariants: {
+      variant: 'default',
+      size: 'md'
     }
-  },
-  compoundVariants: [
-    {
-      ghost: true,
-      variant: 'primary',
-      className: 'text-primary'
-    },
-    {
-      ghost: true,
-      variant: 'secondary',
-      className: 'text-secondary'
-    },
-    {
-      outline: true,
-      variant: 'secondary',
-      className: 'text-secondary'
-    }
-  ],
-  defaultVariants: {
-    variant: 'default',
-    size: 'md'
   }
-})
+)
 
 export const Button = React.forwardRef<
   HTMLButtonElement,
   ButtonHTMLAttributes<HTMLButtonElement> &
     VariantProps<typeof buttonVariants> & {
-      notConnected?: boolean
       isLoading?: boolean
       prefixNode?: React.ReactNode
       suffixNode?: React.ReactNode
     }
 >(
   (
-    {
-      children,
-      className,
-      notConnected,
-      isLoading,
-      prefixNode,
-      suffixNode,
-      variant,
-      size,
-      ghost,
-      outline,
-      onClick,
-      ...props
-    },
+    { children, className, isLoading, prefixNode, suffixNode, variant, size, ghost, outline, onClick, ...props },
     ref
-  ) => {
-    const { open } = useAppKit()
-
-    const connect = useCallback(() => {
-      open({ view: 'Connect' })
-    }, [open])
-
-    return (
-      <button
-        ref={ref}
-        type="button"
-        className={cn(buttonVariants({ variant, size, ghost, outline, className }))}
-        onClick={(ev) => {
-          if (notConnected) connect()
-          else onClick?.(ev)
-        }}
-        {...props}
-      >
-        {prefixNode}
-        {isLoading && 'loading...'}
-        {notConnected ? (
-          <span>
-            <Trans>Connect Wallet</Trans>
-          </span>
-        ) : ['string', 'number'].includes(typeof children) ? (
-          <span>{children}</span>
-        ) : (
-          children
-        )}
-        {suffixNode}
-      </button>
-    )
-  }
+  ) => (
+    <button
+      ref={ref}
+      type="button"
+      className={cn(buttonVariants({ variant, size, ghost, outline, className }))}
+      onClick={onClick}
+      {...props}
+    >
+      {prefixNode}
+      {isLoading && 'loading...'}
+      {!React.isValidElement(children) ? <span>{children}</span> : children}
+      {suffixNode}
+    </button>
+  )
 )
 
 export function ButtonRadioGroup<V>(props: {
