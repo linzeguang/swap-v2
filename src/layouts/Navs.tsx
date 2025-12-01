@@ -16,6 +16,10 @@ const Navs: React.FC = () => {
       {
         name: <Trans>Pool</Trans>,
         path: RoutePath.Pool
+      },
+      {
+        name: <Trans>Tools</Trans>,
+        path: RoutePath.Tools
       }
     ],
     []

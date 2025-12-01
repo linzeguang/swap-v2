@@ -14,7 +14,7 @@ const slippage = new Percent(0.5 * 100, 10000) // 默认 0.5%
 const deadlineMinutes = 10
 const deadline = Math.floor(Date.now() / 1000) + 60 * deadlineMinutes // 10分钟后过期
 
-export const useLiquidity = (pairAddress: Address, reserveA: bigint, reserveB: bigint, totalSupply: bigint) => {
+export const useRemoveLiquidity = (pairAddress: Address, reserveA: bigint, reserveB: bigint, totalSupply: bigint) => {
   const { address } = useAppKitAccount()
   const { writeContractAsync } = useWriteContract()
 
@@ -27,64 +27,6 @@ export const useLiquidity = (pairAddress: Address, reserveA: bigint, reserveB: b
       enabled: !!address
     }
   })
-
-  const addLiquidity = useCallback(
-    async (
-      currencyAmountA: CurrencyAmount<Token | NativeCurrency>,
-      currencyAmountB: CurrencyAmount<Token | NativeCurrency>
-    ) => {
-      if (!address) return
-
-      let txHash: Address
-
-      if (currencyAmountA.currency.isNative || currencyAmountB.currency.isNative) {
-        const [nativeAmount, tokenAmount] = currencyAmountA.currency.isNative
-          ? [currencyAmountA, currencyAmountB]
-          : [currencyAmountB, currencyAmountA]
-        const amountTokenDesired = jsbiToBigInt(tokenAmount.quotient)
-        const amountTokenMin = jsbiToBigInt(tokenAmount.multiply(one.subtract(slippage)).quotient)
-        const amountETHMin = jsbiToBigInt(nativeAmount.multiply(one.subtract(slippage)).quotient)
-
-        txHash = await writeContractAsync({
-          abi: ROUTER_02_ABI,
-          address: ROUTER_02_ADDRESS,
-          functionName: 'addLiquidityETH',
-          args: [
-            tokenAmount.currency.wrapped.address as Address,
-            amountTokenDesired,
-            amountTokenMin,
-            amountETHMin,
-            address as Address,
-            BigInt(deadline)
-          ]
-        })
-      } else {
-        const amountADesired = jsbiToBigInt(currencyAmountA.quotient)
-        const amountBDesired = jsbiToBigInt(currencyAmountB.quotient)
-        const amountAMin = jsbiToBigInt(currencyAmountA.multiply(one.subtract(slippage)).quotient)
-        const amountBMin = jsbiToBigInt(currencyAmountB.multiply(one.subtract(slippage)).quotient)
-
-        txHash = await writeContractAsync({
-          abi: ROUTER_02_ABI,
-          address: ROUTER_02_ADDRESS,
-          functionName: 'addLiquidity',
-          args: [
-            currencyAmountA.currency.wrapped.address as Address,
-            currencyAmountB.currency.wrapped.address as Address,
-            amountADesired,
-            amountBDesired,
-            amountAMin,
-            amountBMin,
-            address as Address,
-            BigInt(deadline)
-          ]
-        })
-      }
-
-      console.log('>>>>>> txHash: ', txHash)
-    },
-    [address, writeContractAsync]
-  )
 
   const removeLiquidity = useCallback(
     async (tokenA: Token | NativeCurrency, tokenB: Token | NativeCurrency, liquidity: bigint) => {
@@ -142,7 +84,75 @@ export const useLiquidity = (pairAddress: Address, reserveA: bigint, reserveB: b
 
   return {
     liquidity,
-    addLiquidity,
     removeLiquidity
+  }
+}
+
+export const useAddLiquidity = () => {
+  const { address } = useAppKitAccount()
+  const { writeContractAsync } = useWriteContract()
+
+  const addLiquidity = useCallback(
+    async (
+      currencyAmountA: CurrencyAmount<Token | NativeCurrency>,
+      currencyAmountB: CurrencyAmount<Token | NativeCurrency>,
+      isInit?: boolean
+    ) => {
+      if (!address) return
+
+      let txHash: Address
+
+      if (currencyAmountA.currency.isNative || currencyAmountB.currency.isNative) {
+        const [nativeAmount, tokenAmount] = currencyAmountA.currency.isNative
+          ? [currencyAmountA, currencyAmountB]
+          : [currencyAmountB, currencyAmountA]
+        const amountTokenDesired = jsbiToBigInt(tokenAmount.quotient)
+        const amountTokenMin = isInit ? 0n : jsbiToBigInt(tokenAmount.multiply(one.subtract(slippage)).quotient)
+        const amountETHMin = isInit ? 0n : jsbiToBigInt(nativeAmount.multiply(one.subtract(slippage)).quotient)
+
+        txHash = await writeContractAsync({
+          abi: ROUTER_02_ABI,
+          address: ROUTER_02_ADDRESS,
+          functionName: 'addLiquidityETH',
+          args: [
+            tokenAmount.currency.wrapped.address as Address,
+            amountTokenDesired,
+            amountTokenMin,
+            amountETHMin,
+            address as Address,
+            BigInt(deadline)
+          ]
+        })
+      } else {
+        const amountADesired = jsbiToBigInt(currencyAmountA.quotient)
+        const amountBDesired = jsbiToBigInt(currencyAmountB.quotient)
+        const amountAMin = isInit ? 0n : jsbiToBigInt(currencyAmountA.multiply(one.subtract(slippage)).quotient)
+        const amountBMin = isInit ? 0n : jsbiToBigInt(currencyAmountB.multiply(one.subtract(slippage)).quotient)
+
+        txHash = await writeContractAsync({
+          abi: ROUTER_02_ABI,
+          address: ROUTER_02_ADDRESS,
+          functionName: 'addLiquidity',
+          args: [
+            currencyAmountA.currency.wrapped.address as Address,
+            currencyAmountB.currency.wrapped.address as Address,
+            amountADesired,
+            amountBDesired,
+            amountAMin,
+            amountBMin,
+            address as Address,
+            BigInt(deadline)
+          ]
+        })
+      }
+
+      return txHash
+    },
+    [address, writeContractAsync]
+  )
+
+  return {
+    addLiquidity,
+    spender: ROUTER_02_ADDRESS
   }
 }

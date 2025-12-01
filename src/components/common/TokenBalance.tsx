@@ -1,6 +1,6 @@
 import { useAppKitAccount } from '@reown/appkit/react'
-import { CurrencyAmount, NativeCurrency, Token } from '@uniswap/sdk-core'
-import React, { useMemo } from 'react'
+import { Currency, CurrencyAmount } from '@uniswap/sdk-core'
+import React, { useEffect, useImperativeHandle, useMemo } from 'react'
 import { Address } from 'viem'
 import { useBalance } from 'wagmi'
 
@@ -10,18 +10,34 @@ import { Loading } from '../svgr/icons'
 import { Flex } from '../ui/Box'
 import { KanitText } from '../ui/Text'
 
-const TokenBalance: React.FC<{ token: Currency }> = ({ token }) => {
+export type Balance = { decimals: number; formatted: string; symbol: string; value: bigint }
+
+const TokenBalance = React.forwardRef<
+  {
+    refreshBalance: () => void
+  },
+  {
+    token?: Currency
+    onBalanceChange?: (data?: Balance) => void
+  }
+>(({ token, onBalanceChange }, ref) => {
   const { address } = useAppKitAccount()
   const { data, isFetching, refetch } = useBalance({
     address: address as Address,
-    token: token.isNative ? undefined : (token.wrapped.address as Address),
+    token: !token || token.isNative ? undefined : (token.wrapped.address as Address),
     query: {
       enabled: !!address
     }
   })
   const currencyAmount = useMemo(() => {
-    return data && CurrencyAmount.fromRawAmount(token, data.value.toString())
+    return token && data && CurrencyAmount.fromRawAmount(token, data.value.toString())
   }, [data, token])
+
+  useImperativeHandle(ref, () => ({ refreshBalance: refetch }), [refetch])
+
+  useEffect(() => {
+    onBalanceChange?.(data)
+  }, [data, onBalanceChange])
 
   return (
     <Flex
@@ -41,6 +57,6 @@ const TokenBalance: React.FC<{ token: Currency }> = ({ token }) => {
       {isFetching && <Loading className="size-4" />}
     </Flex>
   )
-}
+})
 
 export default TokenBalance

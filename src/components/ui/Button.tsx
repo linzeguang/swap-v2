@@ -76,7 +76,7 @@ export const Button = React.forwardRef<
     >
       {prefixNode}
       {isLoading && 'loading...'}
-      {!React.isValidElement(children) ? <span>{children}</span> : children}
+      {React.isValidElement(children) || Array.isArray(children) ? children : <span>{children}</span>}
       {suffixNode}
     </button>
   )

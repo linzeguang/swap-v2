@@ -6,7 +6,8 @@ import RootLayout from '@/layouts'
 export enum RoutePath {
   Swap = '/',
   Pool = '/pool',
-  Positions = '/positions'
+  Positions = '/positions',
+  Tools = '/tools'
 }
 
 export const router = createBrowserRouter([
@@ -22,6 +23,10 @@ export const router = createBrowserRouter([
       {
         path: RoutePath.Pool,
         Component: lazy(() => import('@/pages/pool'))
+      },
+      {
+        path: RoutePath.Tools,
+        Component: lazy(() => import('@/pages/tools'))
       }
     ]
   }
