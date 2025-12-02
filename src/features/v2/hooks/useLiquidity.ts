@@ -10,7 +10,7 @@ import { ROUTER_02_ABI } from '../abis'
 import { one, ROUTER_02_ADDRESS } from '../constants'
 import { getRemoveLiquidityMinAmounts } from '../utils'
 
-const slippage = new Percent(0.5 * 100, 10000) // 默认 0.5%
+const slippage = new Percent(1 * 100, 10000) // 默认 0.5%
 const deadlineMinutes = 10
 const deadline = Math.floor(Date.now() / 1000) + 60 * deadlineMinutes // 10分钟后过期
 
@@ -155,4 +155,13 @@ export const useAddLiquidity = () => {
     addLiquidity,
     spender: ROUTER_02_ADDRESS
   }
+}
+
+export const useQuote = () => {
+  useReadContract({
+    abi: ROUTER_02_ABI,
+    address: ROUTER_02_ADDRESS,
+    functionName: '',
+    args: []
+  })
 }

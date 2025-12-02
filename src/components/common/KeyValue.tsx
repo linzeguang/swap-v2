@@ -9,10 +9,10 @@ import { KanitText } from '../ui/Text'
 const KeyValue: React.FC<{
   direction?: Direction
   keyNode?: React.ReactNode
-  ValueNode?: React.ReactNode
+  valueNode?: React.ReactNode
   keyClassname?: string
   valueClassname?: string
-}> = ({ direction = Direction.Horizontal, keyNode, ValueNode, keyClassname, valueClassname }) => {
+}> = ({ direction = Direction.Horizontal, keyNode, valueNode, keyClassname, valueClassname }) => {
   return (
     <Flex
       className={cn(
@@ -26,11 +26,11 @@ const KeyValue: React.FC<{
           {keyNode}
         </KanitText>
       )}
-      {React.isValidElement(ValueNode) ? (
-        ValueNode
+      {React.isValidElement(valueNode) ? (
+        valueNode
       ) : (
         <KanitText variant={'tertiary'} className={cn('text-xs', valueClassname)}>
-          {ValueNode}
+          {valueNode}
         </KanitText>
       )}
     </Flex>

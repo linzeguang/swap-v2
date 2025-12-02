@@ -457,9 +457,9 @@
     ethereum-cryptography "^2.0.0"
     micro-ftch "^0.3.1"
 
-"@ethersproject/address@^5.0.2":
+"@ethersproject/address@^5.0.2", "@ethersproject/address@^5.8.0":
   version "5.8.0"
-  resolved "https://registry.yarnpkg.com/@ethersproject/address/-/address-5.8.0.tgz#3007a2c352eee566ad745dca1dbbebdb50a6a983"
+  resolved "https://registry.npmmirror.com/@ethersproject/address/-/address-5.8.0.tgz#3007a2c352eee566ad745dca1dbbebdb50a6a983"
   integrity sha512-GhH/abcC46LJwshoN+uBNoKVFPxUuZm6dA257z0vZkKmU1+t8xTn8oK7B9qrj8W2rFRMch4gbJl6PmVxjxBEBA==
   dependencies:
     "@ethersproject/bignumber" "^5.8.0"
@@ -529,9 +529,9 @@
     "@ethersproject/logger" "^5.8.0"
     hash.js "1.1.7"
 
-"@ethersproject/solidity@^5.0.9":
+"@ethersproject/solidity@^5.0.9", "@ethersproject/solidity@^5.8.0":
   version "5.8.0"
-  resolved "https://registry.yarnpkg.com/@ethersproject/solidity/-/solidity-5.8.0.tgz#429bb9fcf5521307a9448d7358c26b93695379b9"
+  resolved "https://registry.npmmirror.com/@ethersproject/solidity/-/solidity-5.8.0.tgz#429bb9fcf5521307a9448d7358c26b93695379b9"
   integrity sha512-4CxFeCgmIWamOHwYN9d+QWGxye9qQLilpgTU0XhYs1OahkclF+ewO+3V1U0mvpiuQxm5EHHmv8f7ClVII8EHsA==
   dependencies:
     "@ethersproject/bignumber" "^5.8.0"
@@ -1146,6 +1146,17 @@
   integrity sha512-JcvQkZxvcX2jK+QCclm8+e8HXqtdFW9xV4/kk2aL9Y3dJA2oQVt+pzbv1orkumz3rfx4K9mn9fDoMr1He1yr7Q==
   dependencies:
     lit "^3"
+
+"@pippyswap/v2-sdk@^1.0.9":
+  version "1.0.9"
+  resolved "https://registry.npmjs.org/@pippyswap/v2-sdk/-/v2-sdk-1.0.9.tgz#4b470c4918bd857666227dec7f70388a4826edfe"
+  integrity sha512-qhkvmCD+9LyRwU6S7J5CFGbBElf5RcQAd8kByLGCDmt9y7DuKiOp0KQnthdMkuv8JzLawHaXk03iDdLa/uZHQQ==
+  dependencies:
+    "@ethersproject/address" "^5.0.2"
+    "@ethersproject/solidity" "^5.0.9"
+    "@uniswap/sdk-core" "^7.8.0"
+    tiny-invariant "^1.1.0"
+    tiny-warning "^1.0.3"
 
 "@radix-ui/primitive@1.1.3":
   version "1.1.3"
@@ -2663,17 +2674,6 @@
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/@uniswap/v2-core/-/v2-core-1.0.1.tgz#af8f508bf183204779938969e2e54043e147d425"
   integrity sha512-MtybtkUPSyysqLY2U210NBDeCHX+ltHt3oADGdjqoThZaFRDKwM6k1Nb3F0A3hk5hwuQvytFWhrWHOEq6nVJ8Q==
-
-"@uniswap/v2-sdk@^4.16.0":
-  version "4.16.0"
-  resolved "https://registry.yarnpkg.com/@uniswap/v2-sdk/-/v2-sdk-4.16.0.tgz#7618b5e61ded39982d6af16f669f282a1bae9536"
-  integrity sha512-USMm2qz1xhEX8R0dhd0mHzf6pz5aCLjbtud1ZyUBk+gshhUCFp6NW9UovH0L5hqrH03rTvmqQdfhHMW5m+Sosg==
-  dependencies:
-    "@ethersproject/address" "^5.0.2"
-    "@ethersproject/solidity" "^5.0.9"
-    "@uniswap/sdk-core" "^7.8.0"
-    tiny-invariant "^1.1.0"
-    tiny-warning "^1.0.3"
 
 "@vitejs/plugin-react@^5.0.4":
   version "5.1.1"
