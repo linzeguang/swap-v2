@@ -1147,10 +1147,10 @@
   dependencies:
     lit "^3"
 
-"@pippyswap/v2-sdk@^1.0.9":
-  version "1.0.9"
-  resolved "https://registry.npmjs.org/@pippyswap/v2-sdk/-/v2-sdk-1.0.9.tgz#4b470c4918bd857666227dec7f70388a4826edfe"
-  integrity sha512-qhkvmCD+9LyRwU6S7J5CFGbBElf5RcQAd8kByLGCDmt9y7DuKiOp0KQnthdMkuv8JzLawHaXk03iDdLa/uZHQQ==
+"@pippyswap/v2-sdk@^1.0.10":
+  version "1.0.10"
+  resolved "https://registry.npmjs.org/@pippyswap/v2-sdk/-/v2-sdk-1.0.10.tgz#5b3277e9325d581e6e469fdd2f6f2c63d482635b"
+  integrity sha512-kr6tRi1fQigUgcLo4aAyi4x94GZ9g9Lf6Ymy8z41HrE5DSF7y6uXVC4x7vRz+NK51MTxl8kc9KorQeGs3+Ct3w==
   dependencies:
     "@ethersproject/address" "^5.0.2"
     "@ethersproject/solidity" "^5.0.9"

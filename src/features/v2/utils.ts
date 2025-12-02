@@ -1,7 +1,7 @@
 import { Percent } from '@uniswap/sdk-core'
 
 import { jsbiToBigInt } from '../utils'
-import { one } from './constants'
+import { ONE } from './constants'
 
 export function getRemoveLiquidityMinAmounts({
   liquidity,
@@ -19,8 +19,8 @@ export function getRemoveLiquidityMinAmounts({
   const amountA = (liquidity * reserveA) / totalSupply
   const amountB = (liquidity * reserveB) / totalSupply
 
-  const amountAMin = one.subtract(slippage).multiply(amountA.toString())
-  const amountBMin = one.subtract(slippage).multiply(amountB.toString())
+  const amountAMin = ONE.subtract(slippage).multiply(amountA.toString())
+  const amountBMin = ONE.subtract(slippage).multiply(amountB.toString())
 
   return {
     amountA,

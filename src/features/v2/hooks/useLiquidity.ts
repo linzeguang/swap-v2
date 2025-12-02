@@ -1,5 +1,5 @@
 import { useAppKitAccount } from '@reown/appkit/react'
-import { CurrencyAmount, NativeCurrency, Percent, Token } from '@uniswap/sdk-core'
+import { CurrencyAmount, NativeCurrency, Token } from '@uniswap/sdk-core'
 import { useCallback } from 'react'
 import { Address, erc20Abi } from 'viem'
 import { useReadContract, useWriteContract } from 'wagmi'
@@ -7,15 +7,13 @@ import { useReadContract, useWriteContract } from 'wagmi'
 import { jsbiToBigInt } from '@/features/utils'
 
 import { ROUTER_02_ABI } from '../abis'
-import { one, ROUTER_02_ADDRESS } from '../constants'
+import { ONE, ROUTER_02_ADDRESS } from '../constants'
+import { useV2Context } from '../provider'
 import { getRemoveLiquidityMinAmounts } from '../utils'
-
-const slippage = new Percent(1 * 100, 10000) // 默认 0.5%
-const deadlineMinutes = 10
-const deadline = Math.floor(Date.now() / 1000) + 60 * deadlineMinutes // 10分钟后过期
 
 export const useRemoveLiquidity = (pairAddress: Address, reserveA: bigint, reserveB: bigint, totalSupply: bigint) => {
   const { address } = useAppKitAccount()
+  const { slippage, deadline } = useV2Context()
   const { writeContractAsync } = useWriteContract()
 
   const liquidity = useReadContract({
@@ -58,7 +56,7 @@ export const useRemoveLiquidity = (pairAddress: Address, reserveA: bigint, reser
             amountTokenMin,
             amountETHMin,
             address as Address,
-            BigInt(deadline)
+            deadline
           ]
         })
       } else {
@@ -79,7 +77,7 @@ export const useRemoveLiquidity = (pairAddress: Address, reserveA: bigint, reser
       }
       console.log('>>>>>> txHash: ', txHash)
     },
-    [address, reserveA, reserveB, totalSupply, writeContractAsync]
+    [address, deadline, reserveA, reserveB, slippage, totalSupply, writeContractAsync]
   )
 
   return {
@@ -90,6 +88,7 @@ export const useRemoveLiquidity = (pairAddress: Address, reserveA: bigint, reser
 
 export const useAddLiquidity = () => {
   const { address } = useAppKitAccount()
+  const { slippage, deadline } = useV2Context()
   const { writeContractAsync } = useWriteContract()
 
   const addLiquidity = useCallback(
@@ -107,8 +106,8 @@ export const useAddLiquidity = () => {
           ? [currencyAmountA, currencyAmountB]
           : [currencyAmountB, currencyAmountA]
         const amountTokenDesired = jsbiToBigInt(tokenAmount.quotient)
-        const amountTokenMin = isInit ? 0n : jsbiToBigInt(tokenAmount.multiply(one.subtract(slippage)).quotient)
-        const amountETHMin = isInit ? 0n : jsbiToBigInt(nativeAmount.multiply(one.subtract(slippage)).quotient)
+        const amountTokenMin = isInit ? 0n : jsbiToBigInt(tokenAmount.multiply(ONE.subtract(slippage)).quotient)
+        const amountETHMin = isInit ? 0n : jsbiToBigInt(nativeAmount.multiply(ONE.subtract(slippage)).quotient)
 
         txHash = await writeContractAsync({
           abi: ROUTER_02_ABI,
@@ -126,8 +125,8 @@ export const useAddLiquidity = () => {
       } else {
         const amountADesired = jsbiToBigInt(currencyAmountA.quotient)
         const amountBDesired = jsbiToBigInt(currencyAmountB.quotient)
-        const amountAMin = isInit ? 0n : jsbiToBigInt(currencyAmountA.multiply(one.subtract(slippage)).quotient)
-        const amountBMin = isInit ? 0n : jsbiToBigInt(currencyAmountB.multiply(one.subtract(slippage)).quotient)
+        const amountAMin = isInit ? 0n : jsbiToBigInt(currencyAmountA.multiply(ONE.subtract(slippage)).quotient)
+        const amountBMin = isInit ? 0n : jsbiToBigInt(currencyAmountB.multiply(ONE.subtract(slippage)).quotient)
 
         txHash = await writeContractAsync({
           abi: ROUTER_02_ABI,
@@ -148,20 +147,11 @@ export const useAddLiquidity = () => {
 
       return txHash
     },
-    [address, writeContractAsync]
+    [address, deadline, slippage, writeContractAsync]
   )
 
   return {
     addLiquidity,
     spender: ROUTER_02_ADDRESS
   }
-}
-
-export const useQuote = () => {
-  useReadContract({
-    abi: ROUTER_02_ABI,
-    address: ROUTER_02_ADDRESS,
-    functionName: '',
-    args: []
-  })
 }

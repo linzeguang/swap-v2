@@ -4,9 +4,9 @@ import React, { PropsWithChildren, useCallback, useEffect, useMemo, useState } f
 
 import { Direction } from '@/constants/enum'
 import { cn } from '@/lib/utils'
-import { deadlineAtom, infiniteApprovalAtom, Slippage, slippageAtom } from '@/stores/settings'
+import { deadlineAtom, infiniteApprovalAtom, slippageAtom } from '@/stores/settings'
 
-import { Setting, Help } from '../svgr/icons'
+import { Help, Setting } from '../svgr/icons'
 import { Flex } from '../ui/Box'
 import { Button } from '../ui/Button'
 import { Dialog } from '../ui/Dialog'
@@ -22,7 +22,7 @@ const Field: React.FC<PropsWithChildren<{ name: React.ReactNode; direction?: Dir
   return (
     <Flex
       className={cn(
-        'border-border-thin border-b py-5 last:border-0',
+        'border-b border-border-thin py-5 last:border-0',
         direction === Direction.Horizontal ? 'flex-col space-y-6' : 'items-center justify-between space-x-6'
       )}
     >
@@ -38,10 +38,6 @@ const SlippageField: React.FC = () => {
 
   const slippageOptions = useMemo(
     () => [
-      {
-        lable: <Trans>Auto</Trans>,
-        value: Slippage.Auto
-      },
       {
         lable: '0.1%',
         value: 0.1
@@ -59,7 +55,7 @@ const SlippageField: React.FC = () => {
   )
 
   const handleSlippage = useCallback(
-    (value: Slippage | number) => {
+    (value: number) => {
       setSlippage(value)
       setSlippageValue('')
     },

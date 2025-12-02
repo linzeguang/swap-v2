@@ -13,10 +13,7 @@ export const themeAtom = atomWithStorage<Theme>(StorageKey.Theme, Theme.Light, u
   getOnInit: true
 })
 
-export enum Slippage {
-  Auto = 'Auto'
-}
-export const slippageAtom = atomWithStorage<Slippage | number>(StorageKey.Slippage, Slippage.Auto, undefined, {
+export const slippageAtom = atomWithStorage<number>(StorageKey.Slippage, 0.5, undefined, {
   getOnInit: true
 })
 
