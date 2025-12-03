@@ -60,6 +60,7 @@ const SubmitButton = React.forwardRef<ComponentRef<typeof Button>, PropsWithChil
         className="w-full"
         onClick={event}
         disabled={insufficientBalance || disabled || isLoading}
+        isLoading={isLoading}
         {...props}
       >
         {content}

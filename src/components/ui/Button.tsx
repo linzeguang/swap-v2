@@ -3,6 +3,7 @@ import React, { ButtonHTMLAttributes, ComponentProps } from 'react'
 
 import { cn } from '@/lib/utils'
 
+import { Loading } from '../svgr/icons'
 import { Flex } from './Box'
 
 const buttonVariants = cva(
@@ -18,10 +19,10 @@ const buttonVariants = cva(
         radio: 'bg-input-bg text-secondary border-input-bg hover:bg-secondary hover:text-secondary-foreground'
       },
       size: {
-        sm: 'h-6 px-3 space-x-1.5',
-        md: 'h-8 px-4 space-x-2',
-        lg: 'h-10 px-5 space-x-3',
-        xl: 'h-12 px-6 space-x-4'
+        sm: 'h-6 px-3 space-x-1.5 [&_.loading]:size-2',
+        md: 'h-8 px-4 space-x-2 [&_.loading]:size-3',
+        lg: 'h-10 px-5 space-x-3 [&_.loading]:size-4',
+        xl: 'h-12 px-6 space-x-4 [&_.loading]:size-6'
       },
       ghost: {
         true: 'bg-transparent border-transparent'
@@ -75,8 +76,14 @@ export const Button = React.forwardRef<
       {...props}
     >
       {prefixNode}
-      {isLoading && 'loading...'}
-      {React.isValidElement(children) || Array.isArray(children) ? children : <span>{children}</span>}
+      {isLoading ? (
+        <Loading className="loading" />
+      ) : React.isValidElement(children) || Array.isArray(children) ? (
+        children
+      ) : (
+        <span>{children}</span>
+      )}
+
       {suffixNode}
     </button>
   )
