@@ -15,7 +15,16 @@ interface SubmitButtonProps extends ComponentPropsWithRef<typeof Button> {
   insufficientBalanceText?: React.ReactNode
 }
 const SubmitButton = React.forwardRef<ComponentRef<typeof Button>, PropsWithChildren<SubmitButtonProps>>(
-  ({ children, walletConnect, insufficientBalance, insufficientBalanceText, onClick }) => {
+  ({
+    children,
+    walletConnect,
+    insufficientBalance,
+    insufficientBalanceText,
+    disabled,
+    isLoading,
+    onClick,
+    ...props
+  }) => {
     const { open } = useAppKit()
 
     const connect = useCallback(() => {
@@ -45,7 +54,14 @@ const SubmitButton = React.forwardRef<ComponentRef<typeof Button>, PropsWithChil
     }, [children, connect, insufficientBalance, insufficientBalanceText, onClick, walletConnect])
 
     return (
-      <Button variant={'primary'} size={'xl'} className="w-full" onClick={event} disabled={insufficientBalance}>
+      <Button
+        variant={'primary'}
+        size={'xl'}
+        className="w-full"
+        onClick={event}
+        disabled={insufficientBalance || disabled || isLoading}
+        {...props}
+      >
         {content}
       </Button>
     )

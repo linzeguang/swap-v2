@@ -18,7 +18,7 @@ const TokenBalance = React.forwardRef<
   },
   {
     token?: Currency
-    onBalanceChange?: (data?: Balance) => void
+    onBalanceChange?: (currencyAmount?: CurrencyAmount<Currency>) => void
   }
 >(({ token, onBalanceChange }, ref) => {
   const { address } = useAppKitAccount()
@@ -29,15 +29,16 @@ const TokenBalance = React.forwardRef<
       enabled: !!address
     }
   })
-  const currencyAmount = useMemo(() => {
-    return token && data && CurrencyAmount.fromRawAmount(token, data.value.toString())
-  }, [data, token])
+  const currencyAmount = useMemo(
+    () => token && data && CurrencyAmount.fromRawAmount(token, data.value.toString()),
+    [data, token]
+  )
 
   useImperativeHandle(ref, () => ({ refreshBalance: refetch }), [refetch])
 
   useEffect(() => {
-    onBalanceChange?.(data)
-  }, [data, onBalanceChange])
+    onBalanceChange?.(currencyAmount)
+  }, [currencyAmount, onBalanceChange])
 
   return (
     <Flex

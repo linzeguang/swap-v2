@@ -13,12 +13,15 @@ createAppKit({
   projectId,
   metadata,
   features: {
-    analytics: true, // Optional - defaults to your Cloud configuration
+    analytics: false, // Optional - defaults to your Cloud configuration
     swaps: false,
     send: false,
     email: false,
     socials: false
   },
+  allWallets: 'ONLY_MOBILE',
+
+  enableAuthLogger: false,
   enableCoinbase: false,
   enableWalletGuide: false
 })

@@ -1,6 +1,7 @@
 import { useAppKitAccount } from '@reown/appkit/react'
 import { Currency, CurrencyAmount } from '@uniswap/sdk-core'
 import { useCallback } from 'react'
+import toast from 'react-hot-toast'
 import { Address, erc20Abi } from 'viem'
 import { useReadContract, useWriteContract } from 'wagmi'
 
@@ -31,14 +32,22 @@ export const useApprove = (spender: string, currencyAmount?: CurrencyAmount<Curr
     if (allowance === undefined) throw new Error('Allowance Error')
 
     if (currencyAmount.greaterThan(allowance.toString())) {
-      const txHash = await writeContractAsync({
-        abi: erc20Abi,
-        address: currencyAmount.currency.wrapped.address as Address,
-        functionName: 'approve',
-        args: [spender as Address, jsbiToBigInt(currencyAmount.quotient)]
-      })
-      await waitForTransactionReceipt(txHash)
-      refetchAllowance()
+      const toastId = toast.loading('Approving, please confirm in your wallet.')
+      try {
+        const txHash = await writeContractAsync({
+          abi: erc20Abi,
+          address: currencyAmount.currency.wrapped.address as Address,
+          functionName: 'approve',
+          args: [spender as Address, jsbiToBigInt(currencyAmount.quotient)]
+        })
+        toast.loading('Waiting for blockchain confirmation...', { id: toastId })
+        await waitForTransactionReceipt(txHash)
+        toast.success('Approval Successful', { id: toastId })
+        refetchAllowance()
+      } catch (error) {
+        toast.error('Approval Failed', { id: toastId })
+        throw error
+      }
     }
   }, [allowance, currencyAmount, refetchAllowance, spender, writeContractAsync])
 

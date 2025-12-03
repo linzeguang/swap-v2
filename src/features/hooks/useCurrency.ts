@@ -12,12 +12,15 @@ export const useCurrency = () => {
 
   const currencyBalance = useMemo(() => {
     if (!token || !tokenBalance) return
-    return CurrencyAmount.fromRawAmount(token, tokenBalance.value.toString())
+    return CurrencyAmount.fromRawAmount(token.wrapped, tokenBalance.value.toString())
   }, [token, tokenBalance])
 
   const currencyAmount = useMemo(() => {
-    if (!token || !tokenAmount) return
-    return CurrencyAmount.fromRawAmount(token, parseUnits(tokenAmount, token.wrapped.decimals).toString())
+    if (!token) return
+    return CurrencyAmount.fromRawAmount(
+      token.wrapped,
+      parseUnits(tokenAmount || '0', token.wrapped.decimals).toString()
+    )
   }, [token, tokenAmount])
 
   return {

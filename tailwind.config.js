@@ -64,6 +64,16 @@ module.exports = {
       },
       fontSize: {
         '1.5xl': '1.25rem'
+      },
+      keyframes: {
+        fade: {
+          '0%': { opacity: 1 },
+          '50%': { opacity: 0.5 },
+          '100%': { opacity: 1 }
+        }
+      },
+      animation: {
+        fade: 'fade 1s ease-in-out infinite'
       }
     }
   },

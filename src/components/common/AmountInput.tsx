@@ -1,5 +1,7 @@
 import React, { ComponentPropsWithRef } from 'react'
 
+import { cn } from '@/lib/utils'
+
 import { NumberInput } from '../ui/Input'
 import { KanitText } from '../ui/Text'
 import TokenSelect from './TokenSelect'
@@ -33,6 +35,7 @@ export const LiquidityAmountInput: React.FC<ProInputProps> = ({
   title,
   token,
   suffixNode,
+  className,
   onTokenSelect,
   ...props
 }) => {
@@ -43,7 +46,7 @@ export const LiquidityAmountInput: React.FC<ProInputProps> = ({
         size={'xl'}
         decimals={token?.decimals}
         placeholder="0.00"
-        className="text-right text-secondary"
+        className={cn('text-right text-secondary', className)}
         wrapperProps={{
           className: 'bg-transparent px-0 py-0'
         }}

@@ -1,10 +1,12 @@
 import { useAppKitAccount } from '@reown/appkit/react'
 import { CurrencyAmount, NativeCurrency, Token } from '@uniswap/sdk-core'
 import { useCallback } from 'react'
+import toast from 'react-hot-toast'
 import { Address, erc20Abi } from 'viem'
 import { useReadContract, useWriteContract } from 'wagmi'
 
 import { jsbiToBigInt } from '@/features/utils'
+import { waitForTransactionReceipt } from '@/reown'
 
 import { ROUTER_02_ABI } from '../abis'
 import { ONE, ROUTER_02_ADDRESS } from '../constants'
@@ -13,7 +15,7 @@ import { getRemoveLiquidityMinAmounts } from '../utils'
 
 export const useRemoveLiquidity = (pairAddress: Address, reserveA: bigint, reserveB: bigint, totalSupply: bigint) => {
   const { address } = useAppKitAccount()
-  const { slippage, deadline } = useV2Context()
+  const { slippage, createDeadline } = useV2Context()
   const { writeContractAsync } = useWriteContract()
 
   const liquidity = useReadContract({
@@ -56,7 +58,7 @@ export const useRemoveLiquidity = (pairAddress: Address, reserveA: bigint, reser
             amountTokenMin,
             amountETHMin,
             address as Address,
-            deadline
+            createDeadline()
           ]
         })
       } else {
@@ -71,13 +73,13 @@ export const useRemoveLiquidity = (pairAddress: Address, reserveA: bigint, reser
             amountAMin,
             amountBMin,
             address as Address,
-            BigInt(deadline)
+            createDeadline()
           ]
         })
       }
       console.log('>>>>>> txHash: ', txHash)
     },
-    [address, deadline, reserveA, reserveB, slippage, totalSupply, writeContractAsync]
+    [address, createDeadline, reserveA, reserveB, slippage, totalSupply, writeContractAsync]
   )
 
   return {
@@ -88,7 +90,7 @@ export const useRemoveLiquidity = (pairAddress: Address, reserveA: bigint, reser
 
 export const useAddLiquidity = () => {
   const { address } = useAppKitAccount()
-  const { slippage, deadline } = useV2Context()
+  const { slippage, createDeadline } = useV2Context()
   const { writeContractAsync } = useWriteContract()
 
   const addLiquidity = useCallback(
@@ -101,38 +103,37 @@ export const useAddLiquidity = () => {
 
       let txHash: Address
 
-      if (currencyAmountA.currency.isNative || currencyAmountB.currency.isNative) {
-        const [nativeAmount, tokenAmount] = currencyAmountA.currency.isNative
-          ? [currencyAmountA, currencyAmountB]
-          : [currencyAmountB, currencyAmountA]
-        const amountTokenDesired = jsbiToBigInt(tokenAmount.quotient)
-        const amountTokenMin = isInit ? 0n : jsbiToBigInt(tokenAmount.multiply(ONE.subtract(slippage)).quotient)
-        const amountETHMin = isInit ? 0n : jsbiToBigInt(nativeAmount.multiply(ONE.subtract(slippage)).quotient)
+      const toastId = toast.loading('Adding Liquidity, please confirm in your wallet.')
+      try {
+        if (currencyAmountA.currency.isNative || currencyAmountB.currency.isNative) {
+          const [nativeAmount, tokenAmount] = currencyAmountA.currency.isNative
+            ? [currencyAmountA, currencyAmountB]
+            : [currencyAmountB, currencyAmountA]
+          const amountTokenDesired = jsbiToBigInt(tokenAmount.quotient)
+          const amountTokenMin = isInit ? 0n : jsbiToBigInt(tokenAmount.multiply(ONE.subtract(slippage)).quotient)
+          const amountETHMin = isInit ? 0n : jsbiToBigInt(nativeAmount.multiply(ONE.subtract(slippage)).quotient)
 
-        txHash = await writeContractAsync({
-          abi: ROUTER_02_ABI,
-          address: ROUTER_02_ADDRESS,
-          functionName: 'addLiquidityETH',
-          args: [
-            tokenAmount.currency.wrapped.address as Address,
-            amountTokenDesired,
-            amountTokenMin,
-            amountETHMin,
-            address as Address,
-            BigInt(deadline)
-          ]
-        })
-      } else {
-        const amountADesired = jsbiToBigInt(currencyAmountA.quotient)
-        const amountBDesired = jsbiToBigInt(currencyAmountB.quotient)
-        const amountAMin = isInit ? 0n : jsbiToBigInt(currencyAmountA.multiply(ONE.subtract(slippage)).quotient)
-        const amountBMin = isInit ? 0n : jsbiToBigInt(currencyAmountB.multiply(ONE.subtract(slippage)).quotient)
+          txHash = await writeContractAsync({
+            abi: ROUTER_02_ABI,
+            address: ROUTER_02_ADDRESS,
+            functionName: 'addLiquidityETH',
+            args: [
+              tokenAmount.currency.wrapped.address as Address,
+              amountTokenDesired,
+              amountTokenMin,
+              amountETHMin,
+              address as Address,
+              createDeadline()
+            ],
+            value: BigInt(nativeAmount.quotient.toString())
+          })
+        } else {
+          const amountADesired = jsbiToBigInt(currencyAmountA.quotient)
+          const amountBDesired = jsbiToBigInt(currencyAmountB.quotient)
+          const amountAMin = isInit ? 0n : jsbiToBigInt(currencyAmountA.multiply(ONE.subtract(slippage)).quotient)
+          const amountBMin = isInit ? 0n : jsbiToBigInt(currencyAmountB.multiply(ONE.subtract(slippage)).quotient)
 
-        txHash = await writeContractAsync({
-          abi: ROUTER_02_ABI,
-          address: ROUTER_02_ADDRESS,
-          functionName: 'addLiquidity',
-          args: [
+          console.log('>>>>>> addLiquidity: ', [
             currencyAmountA.currency.wrapped.address as Address,
             currencyAmountB.currency.wrapped.address as Address,
             amountADesired,
@@ -140,14 +141,33 @@ export const useAddLiquidity = () => {
             amountAMin,
             amountBMin,
             address as Address,
-            BigInt(deadline)
-          ]
-        })
+            createDeadline()
+          ])
+          txHash = await writeContractAsync({
+            abi: ROUTER_02_ABI,
+            address: ROUTER_02_ADDRESS,
+            functionName: 'addLiquidity',
+            args: [
+              currencyAmountA.currency.wrapped.address as Address,
+              currencyAmountB.currency.wrapped.address as Address,
+              amountADesired,
+              amountBDesired,
+              amountAMin,
+              amountBMin,
+              address as Address,
+              createDeadline()
+            ]
+          })
+        }
+        toast.loading('Waiting for blockchain confirmation...', { id: toastId })
+        await waitForTransactionReceipt(txHash)
+        toast.success('Add Liquidity Successful.', { id: toastId })
+      } catch (error) {
+        toast.error('Add Liquidity Failed.', { id: toastId })
+        throw error
       }
-
-      return txHash
     },
-    [address, deadline, slippage, writeContractAsync]
+    [address, createDeadline, slippage, writeContractAsync]
   )
 
   return {
