@@ -91,7 +91,7 @@ export const useLiquidityForm = () => {
       }
       setSearchParams(searchParams)
     },
-    [tokenA, tokenB, searchParams, setTokenA, setTokenB, setSearchParams]
+    [tokenA, tokenB, searchParams, setSearchParams]
   )
 
   const handleChangeAmount = useCallback(async (amount: string, tokenType: TokenType) => {

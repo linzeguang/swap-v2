@@ -1,5 +1,8 @@
 import { Currency } from '@uniswap/sdk-core'
 import JSBI from 'jsbi'
+import { zeroAddress } from 'viem'
+
+export const isZeroAddress = (address: string) => address === zeroAddress
 
 export const jsbiToBigInt = (value: JSBI) => BigInt(value.toString())
 

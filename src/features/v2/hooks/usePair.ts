@@ -3,13 +3,14 @@ import { useAppKitAccount } from '@reown/appkit/react'
 import { Currency, CurrencyAmount } from '@uniswap/sdk-core'
 import { useCallback, useMemo } from 'react'
 import toast from 'react-hot-toast'
-import { Address, parseUnits, zeroAddress } from 'viem'
+import { Address, parseUnits } from 'viem'
 import { useReadContract, useReadContracts, useWriteContract } from 'wagmi'
 import { readContract } from 'wagmi/actions'
 
+import { USDT } from '@/features/token/testnet/bsc'
 import { wagmiAdapter, waitForTransactionReceipt } from '@/reown'
 
-import { jsbiToBigInt } from '../../utils'
+import { isZeroAddress, jsbiToBigInt } from '../../utils'
 import { FACTORY_ABI, PAIR_ABI, ROUTER_02_ABI } from '../abis'
 import { FACTORY_ADDRESS, ROUTER_02_ADDRESS } from '../constants'
 
@@ -112,9 +113,9 @@ export const usePair = ({
 
   const [isCreated, isEmpty] = useMemo(() => {
     let isCreated = false,
-      isEmpty = false
-    if (pairAddress && pairAddress !== zeroAddress) isCreated = true
-    if (reserve0 === 0n && reserve1 === 0n) isEmpty = true
+      isEmpty = true
+    if (pairAddress && !isZeroAddress(pairAddress)) isCreated = true
+    if (reserve0 && reserve1) isEmpty = false
     return [isCreated, isEmpty]
   }, [pairAddress, reserve0, reserve1])
 
@@ -182,5 +183,112 @@ export const usePair = ({
       refreshLpTokenBalance()
     },
     createPair
+  }
+}
+
+export const usePairs = (inputToken?: Currency, outputToken?: Currency) => {
+  // const [token0, token1] = useMemo(
+  //   () =>
+  //     inputToken && outputToken
+  //       ? inputToken.wrapped.sortsBefore(outputToken.wrapped)
+  //         ? [inputToken, outputToken]
+  //         : [outputToken, inputToken]
+  //       : [],
+  //   [inputToken, outputToken]
+  // )
+
+  const {
+    data: pairAddressesResults,
+    isLoading: pairAddressesLoading,
+    refetch: refreshPairAddresses
+  } = useReadContracts({
+    contracts: [
+      {
+        abi: FACTORY_ABI,
+        address: FACTORY_ADDRESS,
+        functionName: 'getPair',
+        args:
+          inputToken && outputToken
+            ? [inputToken.wrapped.address as Address, outputToken.wrapped.address as Address]
+            : undefined
+      },
+      {
+        abi: FACTORY_ABI,
+        address: FACTORY_ADDRESS,
+        functionName: 'getPair',
+        args: inputToken ? [inputToken.wrapped.address as Address, USDT.address as Address] : undefined
+      },
+      {
+        abi: FACTORY_ABI,
+        address: FACTORY_ADDRESS,
+        functionName: 'getPair',
+        args: outputToken ? [outputToken.wrapped.address as Address, USDT.address as Address] : undefined
+      }
+    ],
+    query: {
+      enabled: !!(inputToken && outputToken),
+      refetchInterval: 30_000 // 30s 刷新一次
+    }
+  })
+
+  const pairAddresses = useMemo(() => {
+    if (!pairAddressesResults) return []
+    const [{ result: pairAddress1 }, { result: pairAddress2 }, { result: pairAddress3 }] = pairAddressesResults
+    if (pairAddress1 && !isZeroAddress(pairAddress1)) return [pairAddress1]
+    if (pairAddress2 && pairAddress3 && !isZeroAddress(pairAddress2) && !isZeroAddress(pairAddress3))
+      return [pairAddress2, pairAddress3]
+    return []
+  }, [pairAddressesResults])
+
+  const {
+    data: pairReserves,
+    isLoading: pairReservesLoading,
+    refetch: refreshPairReserves
+  } = useReadContracts({
+    contracts: pairAddresses.map((pairAddress) => ({
+      abi: PAIR_ABI,
+      address: pairAddress,
+      functionName: 'getReserves'
+    })),
+    query: {
+      enabled: !!pairAddresses?.length,
+      refetchInterval: 30_000 // 30s 刷新一次
+    }
+  })
+
+  const pairs = useMemo(() => {
+    if (!inputToken || !outputToken) return []
+    if (!pairReserves?.length) return []
+    if (pairReserves.length === 1) {
+      const [{ result: reserves }] = pairReserves
+      const [reserve0, reserve1] = reserves as [bigint, bigint, number]
+      return [
+        new Pair(
+          CurrencyAmount.fromRawAmount(inputToken.wrapped, reserve0.toString()),
+          CurrencyAmount.fromRawAmount(outputToken.wrapped, reserve1.toString())
+        )
+      ]
+    }
+    const pairsTokens = [
+      inputToken.wrapped.sortsBefore(USDT) ? [inputToken.wrapped, USDT] : [USDT, inputToken.wrapped],
+      outputToken.wrapped.sortsBefore(USDT) ? [outputToken.wrapped, USDT] : [USDT, outputToken.wrapped]
+    ]
+    return pairsTokens.map(([token0, token1], index) => {
+      const { result: reserves } = pairReserves[index]
+      const [reserve0, reserve1] = reserves as [bigint, bigint, number]
+      return new Pair(
+        CurrencyAmount.fromRawAmount(token0.wrapped, reserve0.toString()),
+        CurrencyAmount.fromRawAmount(token1.wrapped, reserve1.toString())
+      )
+    })
+  }, [inputToken, outputToken, pairReserves])
+
+  return {
+    pairs,
+    isLoaing: pairAddressesLoading || pairReservesLoading,
+    refreshPairs: () => {
+      refreshPairAddresses()
+      refreshPairReserves()
+    }
   }
 }

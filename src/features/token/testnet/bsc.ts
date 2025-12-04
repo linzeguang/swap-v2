@@ -24,7 +24,8 @@ export class Native extends NativeCurrency {
 
 export const BNB = Native.onChain(bscTestnet.id)
 export const WBNB = BNB.wrapped
-export const USDT = new Token(bscTestnet.id, '0x337610d27c682E347C9cD60BD4b3b107C9d34dDd', 18, 'USDT', 'Tether USD')
+// export const USDT = new Token(bscTestnet.id, '0x337610d27c682E347C9cD60BD4b3b107C9d34dDd', 18, 'USDT', 'Tether USD')
+export const USDT = BNB.wrapped
 export const USDC = new Token(bscTestnet.id, '0x64544969ed7EBf5f083679233325356EbE738930', 18, 'USDC', 'USD Coin')
 export const ETH = new Token(bscTestnet.id, '0xd66c6B4F0be8CE5b39D52E0Fd1344c389929B378', 18, 'ETH', 'Ethereum Token')
 export const TOKENA = new Token(bscTestnet.id, '0xE6071242710831F27dD4926B22C752574626832d', 18, 'TOKENA', 'TOKEN A')

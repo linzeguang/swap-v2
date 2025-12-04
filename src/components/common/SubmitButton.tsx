@@ -2,7 +2,7 @@ import { Trans } from '@lingui/react/macro'
 import { useAppKit } from '@reown/appkit/react'
 import React, { ComponentPropsWithRef, ComponentRef, PropsWithChildren, useCallback, useMemo } from 'react'
 
-import { isUndefined } from '@/lib/utils'
+import { cn, isUndefined } from '@/lib/utils'
 
 import { WalletFill } from '../svgr/icons'
 import { Flex } from '../ui/Box'
@@ -22,6 +22,7 @@ const SubmitButton = React.forwardRef<ComponentRef<typeof Button>, PropsWithChil
     insufficientBalanceText,
     disabled,
     isLoading,
+    className,
     onClick,
     ...props
   }) => {
@@ -57,7 +58,7 @@ const SubmitButton = React.forwardRef<ComponentRef<typeof Button>, PropsWithChil
       <Button
         variant={'primary'}
         size={'xl'}
-        className="w-full"
+        className={cn('w-full', className)}
         onClick={event}
         disabled={insufficientBalance || disabled || isLoading}
         isLoading={isLoading}
