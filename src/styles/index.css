@@ -13,6 +13,9 @@ html {
 header {
   @apply border-b border-border bg-white;
 }
+aside {
+  @apply border-r border-border bg-white;
+}
 
 footer {
   @apply bg-[#27262C];

@@ -1,15 +1,15 @@
 import React from 'react'
 
-import Footer from './Footer'
 import Header from './Header'
 import Main from './Main'
+import SideBar from './SideBar'
 
 const RootLayout: React.FC = () => {
   return (
-    <section className="grid min-h-screen grid-rows-[3.5rem_minmax(calc(100vh-3.5rem),1fr)_395px]">
-      <Header />
+    <section className="grid h-screen grid-rows-[4.5rem_1fr_auto] lg:grid-cols-[auto_1fr] lg:grid-rows-[4.5rem_1fr]">
+      <Header className="lg:col-span-full" />
+      <SideBar className="lg:col-span-1" />
       <Main />
-      <Footer />
     </section>
   )
 }

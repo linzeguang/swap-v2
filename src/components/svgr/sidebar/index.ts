@@ -1,0 +1,6 @@
+export { default as Doc } from './doc.svg?react'
+export { default as Home } from './home.svg?react'
+export { default as Locale } from './locale.svg?react'
+export { default as Theme } from './theme.svg?react'
+export { default as Tutorial } from './tutorial.svg?react'
+export { default as X } from './x.svg?react'
