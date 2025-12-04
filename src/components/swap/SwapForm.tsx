@@ -43,8 +43,6 @@ const SwapForm: React.FC = () => {
     refreshPairs
   } = useSwapForm()
 
-  console.log('>>>>>> trade: ', route, trade)
-
   const { spender, swap } = useSwap()
 
   const { approve: approveCurrencyAmount } = useApprove(spender, trade?.inputAmount)
@@ -129,12 +127,20 @@ const SwapForm: React.FC = () => {
       <SubmitButton
         className="mt-6"
         walletConnect={isConnected}
-        disabled={!!pairsLoading}
+        disabled={!!pairsLoading || !route}
         insufficientBalance={insufficientBalance}
         isLoading={loading}
         onClick={handleSwap}
       >
-        <KanitText>{pairsLoading ? <Trans>Fetching Swap Route</Trans> : <Trans>Swap</Trans>}</KanitText>
+        <KanitText>
+          {pairsLoading ? (
+            <Trans>Fetching Swap Route</Trans>
+          ) : !route ? (
+            <Trans>Not Route to swap</Trans>
+          ) : (
+            <Trans>Swap</Trans>
+          )}
+        </KanitText>
       </SubmitButton>
     </Card>
   )

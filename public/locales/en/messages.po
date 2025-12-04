@@ -36,12 +36,12 @@ msgstr "Connect Wallet"
 msgid "Create pool and add liquidity"
 msgstr "Create pool and add liquidity"
 
-#: src/components/swap/SwapForm.tsx:132
+#: src/components/swap/SwapForm.tsx:137
 msgid "Fetching Swap Route"
 msgstr "Fetching Swap Route"
 
-#: src/components/swap/SwapForm.tsx:83
-#: src/components/swap/SwapForm.tsx:91
+#: src/components/swap/SwapForm.tsx:85
+#: src/components/swap/SwapForm.tsx:93
 msgid "From"
 msgstr "From"
 
@@ -77,16 +77,24 @@ msgstr "Max"
 msgid "minutes"
 msgstr "minutes"
 
+#: src/components/swap/SwapForm.tsx:139
+msgid "Not Route to swap"
+msgstr "Not Route to swap"
+
 #: src/layouts/Navs.tsx:17
 #: src/pages/pool.tsx:15
 msgid "Pool"
 msgstr "Pool"
 
-#: src/components/common/TokenSelect.tsx:72
+#: src/components/common/TokenSelect.tsx:73
 msgid "Popular Tokens"
 msgstr "Popular Tokens"
 
-#: src/components/common/TokenSelect.tsx:52
+#: src/components/swap/Preview.tsx:21
+msgid "Price impact"
+msgstr "Price impact"
+
+#: src/components/common/TokenSelect.tsx:53
 msgid "Select Token"
 msgstr "Select Token"
 
@@ -98,18 +106,18 @@ msgstr "Settings"
 msgid "Slippage Tolerance"
 msgstr "Slippage Tolerance"
 
-#: src/components/swap/SwapForm.tsx:132
+#: src/components/swap/SwapForm.tsx:141
 #: src/components/swap/TradeType.tsx:22
 #: src/layouts/Navs.tsx:13
 msgid "Swap"
 msgstr ""
 
-#: src/components/swap/SwapForm.tsx:109
-#: src/components/swap/SwapForm.tsx:117
+#: src/components/swap/SwapForm.tsx:111
+#: src/components/swap/SwapForm.tsx:119
 msgid "To"
 msgstr "To"
 
-#: src/components/common/TokenSelect.tsx:38
+#: src/components/common/TokenSelect.tsx:39
 msgid "Token Select"
 msgstr "Token Select"
 
