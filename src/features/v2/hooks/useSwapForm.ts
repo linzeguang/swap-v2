@@ -5,9 +5,9 @@ import { useSearchParams } from 'react-router'
 import { useDebounce } from 'react-use'
 import { parseUnits, zeroAddress } from 'viem'
 
-import { BNB, TOKEN_LIST } from '@/features/token/testnet/bsc'
 import { areTokensIdentical } from '@/features/utils'
 
+import { useV2Context } from '../provider'
 import { usePairs } from './usePair'
 import { useRoute } from './useSwap'
 
@@ -17,6 +17,7 @@ export enum TokenType {
 }
 
 export const useSwapForm = () => {
+  const { tokenConfig } = useV2Context()
   const [searchParams, setSearchParams] = useSearchParams()
 
   const [inputToken, setInputToken] = useState<Currency>()
@@ -144,7 +145,7 @@ export const useSwapForm = () => {
     const addressA = searchParams.get('inputToken')
     const addressB = searchParams.get('outputToken')
     const [inputToken, outputToken] = [addressA, addressB].map((address) =>
-      TOKEN_LIST.find((token) => {
+      tokenConfig?.TOKEN_LIST.find((token) => {
         if (address === zeroAddress) {
           return token.isNative
         }
@@ -154,7 +155,7 @@ export const useSwapForm = () => {
     if (addressA && !inputToken) searchParams.delete('inputToken')
     if (addressB && !outputToken) searchParams.delete('outputToken')
     setSearchParams(searchParams)
-    setInputToken(inputToken || BNB)
+    setInputToken(inputToken || tokenConfig?.ETH)
     setOutputToken(outputToken)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])

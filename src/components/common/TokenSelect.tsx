@@ -3,7 +3,7 @@ import { Currency } from '@uniswap/sdk-core'
 import React, { ComponentPropsWithRef, useCallback, useState } from 'react'
 import { zeroAddress } from 'viem'
 
-import { POPULAR_TOKENS, TOKEN_LIST } from '@/features/token/testnet/bsc'
+import { useV2Context } from '@/features/v2/provider'
 import { cn } from '@/lib/utils'
 
 import { ArrowDown } from '../svgr/icons'
@@ -21,6 +21,7 @@ const TokenSelect: React.FC<{
   onTokenSelect?: (token: Currency) => void
   dialogProps?: ComponentPropsWithRef<typeof Dialog>
 }> = ({ token, tokenList, onTokenSelect, dialogProps }) => {
+  const { tokenConfig } = useV2Context()
   const [open, setOpen] = useState(false)
 
   const handleTokenSelect = useCallback(
@@ -72,7 +73,7 @@ const TokenSelect: React.FC<{
           <Trans>Popular Tokens</Trans>
         </KanitText>
         <Flex className="space-x-1.5">
-          {POPULAR_TOKENS.map((token) => (
+          {tokenConfig?.POPULAR_TOKENS.map((token) => (
             <Button
               key={token.isNative ? zeroAddress : token.wrapped.address}
               variant={'radio'}
@@ -86,7 +87,7 @@ const TokenSelect: React.FC<{
         </Flex>
       </div>
       <div className="space-y-1 overflow-y-scroll">
-        {(tokenList || TOKEN_LIST).map((token) => (
+        {(tokenList || tokenConfig?.TOKEN_LIST)?.map((token) => (
           <Grid
             key={token.isNative ? zeroAddress : token.address}
             className="cursor-pointer grid-cols-[auto_1fr_auto] items-center gap-2.5 rounded-3xl p-2 pr-4 hover:bg-input-bg"

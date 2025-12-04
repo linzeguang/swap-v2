@@ -7,12 +7,12 @@ import { Address, parseUnits } from 'viem'
 import { useReadContract, useReadContracts, useWriteContract } from 'wagmi'
 import { readContract } from 'wagmi/actions'
 
-import { USDT } from '@/features/token/testnet/bsc'
 import { wagmiAdapter, waitForTransactionReceipt } from '@/reown'
 
 import { isZeroAddress, jsbiToBigInt } from '../../utils'
 import { FACTORY_ABI, PAIR_ABI, ROUTER_02_ABI } from '../abis'
 import { FACTORY_ADDRESS, ROUTER_02_ADDRESS } from '../constants'
+import { useV2Context } from '../provider'
 
 export const usePair = ({
   tokenA,
@@ -187,15 +187,8 @@ export const usePair = ({
 }
 
 export const usePairs = (inputToken?: Currency, outputToken?: Currency) => {
-  // const [token0, token1] = useMemo(
-  //   () =>
-  //     inputToken && outputToken
-  //       ? inputToken.wrapped.sortsBefore(outputToken.wrapped)
-  //         ? [inputToken, outputToken]
-  //         : [outputToken, inputToken]
-  //       : [],
-  //   [inputToken, outputToken]
-  // )
+  const { tokenConfig } = useV2Context()
+  const USDT = tokenConfig?.USDT
 
   const {
     data: pairAddressesResults,
@@ -216,17 +209,17 @@ export const usePairs = (inputToken?: Currency, outputToken?: Currency) => {
         abi: FACTORY_ABI,
         address: FACTORY_ADDRESS,
         functionName: 'getPair',
-        args: inputToken ? [inputToken.wrapped.address as Address, USDT.address as Address] : undefined
+        args: inputToken ? [inputToken.wrapped.address as Address, USDT?.address as Address] : undefined
       },
       {
         abi: FACTORY_ABI,
         address: FACTORY_ADDRESS,
         functionName: 'getPair',
-        args: outputToken ? [outputToken.wrapped.address as Address, USDT.address as Address] : undefined
+        args: outputToken ? [outputToken.wrapped.address as Address, USDT?.address as Address] : undefined
       }
     ],
     query: {
-      enabled: !!(inputToken && outputToken),
+      enabled: !!(inputToken && outputToken && USDT),
       refetchInterval: 30_000 // 30s 刷新一次
     }
   })
@@ -257,7 +250,7 @@ export const usePairs = (inputToken?: Currency, outputToken?: Currency) => {
   })
 
   const pairs = useMemo(() => {
-    if (!inputToken || !outputToken) return []
+    if (!inputToken || !outputToken || !USDT) return []
     if (!pairReserves?.length) return []
     if (pairReserves.length === 1) {
       const [{ result: reserves }] = pairReserves
@@ -281,7 +274,7 @@ export const usePairs = (inputToken?: Currency, outputToken?: Currency) => {
         CurrencyAmount.fromRawAmount(token1.wrapped, reserve1.toString())
       )
     })
-  }, [inputToken, outputToken, pairReserves])
+  }, [USDT, inputToken, outputToken, pairReserves])
 
   return {
     pairs,

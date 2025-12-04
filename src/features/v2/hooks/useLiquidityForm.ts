@@ -4,9 +4,9 @@ import { useSearchParams } from 'react-router'
 import { useDebounce } from 'react-use'
 import { parseUnits, zeroAddress } from 'viem'
 
-import { BNB, TOKEN_LIST } from '@/features/token/testnet/bsc'
 import { areTokensIdentical } from '@/features/utils'
 
+import { useV2Context } from '../provider'
 import { usePair } from './usePair'
 
 export enum TokenType {
@@ -15,6 +15,8 @@ export enum TokenType {
 }
 
 export const useLiquidityForm = () => {
+  const { tokenConfig } = useV2Context()
+
   const [searchParams, setSearchParams] = useSearchParams()
 
   const [tokenA, setTokenA] = useState<Currency>()
@@ -124,7 +126,7 @@ export const useLiquidityForm = () => {
     const addressA = searchParams.get('tokenA')
     const addressB = searchParams.get('tokenB')
     const [tokenA, tokenB] = [addressA, addressB].map((address) =>
-      TOKEN_LIST.find((token) => {
+      tokenConfig?.TOKEN_LIST.find((token) => {
         if (address === zeroAddress) {
           return token.isNative
         }
@@ -134,7 +136,7 @@ export const useLiquidityForm = () => {
     if (addressA && !tokenA) searchParams.delete('tokenA')
     if (addressB && !tokenB) searchParams.delete('tokenB')
     setSearchParams(searchParams)
-    setTokenA(tokenA || BNB)
+    setTokenA(tokenA || tokenConfig?.ETH)
     setTokenB(tokenB)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])

@@ -1,1 +1,1 @@
-export * as BSC from './bsc'
+export * as BSC_TESTNET from './bsc'
