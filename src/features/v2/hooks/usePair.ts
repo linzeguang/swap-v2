@@ -7,9 +7,9 @@ import { Address, parseUnits, zeroAddress } from 'viem'
 import { useReadContract, useReadContracts, useWriteContract } from 'wagmi'
 import { readContract } from 'wagmi/actions'
 
-import { jsbiToBigInt } from '@/features/utils'
 import { wagmiAdapter, waitForTransactionReceipt } from '@/reown'
 
+import { jsbiToBigInt } from '../../utils'
 import { FACTORY_ABI, PAIR_ABI, ROUTER_02_ABI } from '../abis'
 import { FACTORY_ADDRESS, ROUTER_02_ADDRESS } from '../constants'
 

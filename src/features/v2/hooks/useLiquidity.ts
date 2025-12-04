@@ -5,9 +5,9 @@ import toast from 'react-hot-toast'
 import { Address, erc20Abi } from 'viem'
 import { useReadContract, useWriteContract } from 'wagmi'
 
-import { jsbiToBigInt } from '@/features/utils'
 import { waitForTransactionReceipt } from '@/reown'
 
+import { jsbiToBigInt } from '../../utils'
 import { ROUTER_02_ABI } from '../abis'
 import { ONE, ROUTER_02_ADDRESS } from '../constants'
 import { useV2Context } from '../provider'

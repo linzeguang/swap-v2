@@ -1,5 +1,5 @@
+import { Pair, Route, Trade } from '@pippyswap/v2-sdk'
 import { Currency, CurrencyAmount, TradeType } from '@uniswap/sdk-core'
-import { Pair, Route, Trade } from '@uniswap/v2-sdk'
 import { useCallback, useMemo } from 'react'
 
 // export const usePairs = () => useMemo(() => , [])
