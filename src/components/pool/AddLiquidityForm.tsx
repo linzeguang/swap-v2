@@ -1,6 +1,6 @@
 import { Trans } from '@lingui/react/macro'
 import { useAppKitAccount } from '@reown/appkit/react'
-import { Currency, CurrencyAmount } from '@uniswap/sdk-core'
+import { Currency, CurrencyAmount, Percent } from '@uniswap/sdk-core'
 import React, { ComponentRef, useCallback, useMemo, useRef, useState } from 'react'
 
 import { useApprove } from '@/features/hooks/useApprove'
@@ -67,6 +67,19 @@ const AddLiquidityForm: React.FC = () => {
     handleChangeAmount('', TokenType.TokenB)
   }, [handleChangeAmount, refreshPair])
 
+  const handleHalfMax = useCallback(
+    (val: number, tokenType: TokenType) => {
+      const percent = new Percent(val * 10000, 10000)
+      if (tokenType === TokenType.TokenA && currencyBalanceA) {
+        handleChangeAmount(currencyBalanceA.multiply(percent).toSignificant(), tokenType)
+      }
+      if (tokenType === TokenType.TokenB && currencyBalanceB) {
+        handleChangeAmount(currencyBalanceB.multiply(percent).toSignificant(), tokenType)
+      }
+    },
+    [currencyBalanceA, currencyBalanceB, handleChangeAmount]
+  )
+
   const handleAddLiquidity = useCallback(async () => {
     if (!currencyAmountA || !currencyAmountB) return
 
@@ -118,7 +131,7 @@ const AddLiquidityForm: React.FC = () => {
                     <Wallet />
                     <TokenBalance ref={balanceARef} token={tokenA} onBalanceChange={setCurrencyBalanceA} />
                   </KanitText>
-                  <HalfMax />
+                  <HalfMax onClick={(val) => handleHalfMax(val, TokenType.TokenA)} />
                 </Flex>
                 <KanitText>usd balance</KanitText>
               </Flex>
@@ -139,7 +152,7 @@ const AddLiquidityForm: React.FC = () => {
                     <Wallet />
                     <TokenBalance ref={balanceBRef} token={tokenB} onBalanceChange={setCurrencyBalanceB} />
                   </KanitText>
-                  <HalfMax />
+                  <HalfMax onClick={(val) => handleHalfMax(val, TokenType.TokenB)} />
                 </Flex>
                 <KanitText>usd balance</KanitText>
               </Flex>
