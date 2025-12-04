@@ -184,6 +184,7 @@ export const useSwapForm = () => {
     currencyAmountInput,
     currencyAmountOutput,
     pairsLoading,
+    route,
     trade: tokenType ? (tokenType === TokenType.Input ? tradeByInputToken : tradeByOutputToken) : undefined,
     handleSwapTokens,
     handleChangeToken,

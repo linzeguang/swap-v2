@@ -2,12 +2,13 @@ import { useAppKitAccount } from '@reown/appkit/react'
 import { Currency, CurrencyAmount } from '@uniswap/sdk-core'
 import { useCallback } from 'react'
 import toast from 'react-hot-toast'
-import { Address, erc20Abi } from 'viem'
+import { Address, erc20Abi, maxUint256 } from 'viem'
 import { useReadContract, useWriteContract } from 'wagmi'
 
 import { waitForTransactionReceipt } from '@/reown'
 
 import { jsbiToBigInt } from '../utils'
+import { useV2Context } from '../v2/provider'
 
 export const useAllowance = (spender: string, tokenAddress?: string) => {
   const { address } = useAppKitAccount()
@@ -23,6 +24,7 @@ export const useAllowance = (spender: string, tokenAddress?: string) => {
 }
 
 export const useApprove = (spender: string, currencyAmount?: CurrencyAmount<Currency>) => {
+  const { infiniteApproval } = useV2Context()
   const { writeContractAsync } = useWriteContract()
   const { data: allowance, refetch: refetchAllowance } = useAllowance(spender, currencyAmount?.currency.wrapped.address)
 
@@ -38,7 +40,7 @@ export const useApprove = (spender: string, currencyAmount?: CurrencyAmount<Curr
           abi: erc20Abi,
           address: currencyAmount.currency.wrapped.address as Address,
           functionName: 'approve',
-          args: [spender as Address, jsbiToBigInt(currencyAmount.quotient)]
+          args: [spender as Address, infiniteApproval ? maxUint256 : jsbiToBigInt(currencyAmount.quotient)]
         })
         toast.loading('Waiting for blockchain confirmation...', { id: toastId })
         await waitForTransactionReceipt(txHash)
@@ -49,7 +51,7 @@ export const useApprove = (spender: string, currencyAmount?: CurrencyAmount<Curr
         throw error
       }
     }
-  }, [allowance, currencyAmount, refetchAllowance, spender, writeContractAsync])
+  }, [allowance, currencyAmount, infiniteApproval, refetchAllowance, spender, writeContractAsync])
 
   return {
     approve,

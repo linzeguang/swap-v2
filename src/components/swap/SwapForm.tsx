@@ -15,6 +15,7 @@ import { Swap as SwapIcon, Wallet } from '../svgr/icons'
 import { Card, Flex } from '../ui/Box'
 import { Dividing } from '../ui/Dividing'
 import { KanitText } from '../ui/Text'
+import Preview from './Preview'
 
 const SwapForm: React.FC = () => {
   const { isConnected } = useAppKitAccount()
@@ -34,12 +35,15 @@ const SwapForm: React.FC = () => {
     currencyAmountInput,
     currencyAmountOutput,
     pairsLoading,
+    route,
     trade,
     handleSwapTokens,
     handleChangeToken,
     handleChangeAmount,
     refreshPairs
   } = useSwapForm()
+
+  console.log('>>>>>> trade: ', route, trade)
 
   const { spender, swap } = useSwap()
 
@@ -121,6 +125,7 @@ const SwapForm: React.FC = () => {
         onTokenSelect={(token) => handleChangeToken(token, TokenType.Output)}
         onChange={(ev) => handleChangeAmount(ev.target.value, TokenType.Output)}
       />
+      {trade && <Preview trade={trade} />}
       <SubmitButton
         className="mt-6"
         walletConnect={isConnected}
