@@ -13,6 +13,122 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
-#: src/layouts/Navs.tsx:11
+#: src/components/pool/AddLiquidityForm.tsx:188
+msgid "Add"
+msgstr "Add"
+
+#: src/components/pool/AddLiquidityForm.tsx:186
+msgid "Add Initial Liquidity"
+msgstr "Add Initial Liquidity"
+
+#: src/components/pool/AddLiquidityForm.tsx:119
+#: src/components/pool/AddLiquidityForm.tsx:125
+#: src/components/pool/AddLiquidityForm.tsx:146
+msgid "Add Liquidity"
+msgstr "Add Liquidity"
+
+#: src/components/common/SubmitButton.tsx:40
+#: src/components/ConnectWallet.tsx:27
+msgid "Connect Wallet"
+msgstr "Connect Wallet"
+
+#: src/components/pool/AddLiquidityForm.tsx:184
+msgid "Create pool and add liquidity"
+msgstr "Create pool and add liquidity"
+
+#: src/components/swap/SwapForm.tsx:132
+msgid "Fetching Swap Route"
+msgstr "Fetching Swap Route"
+
+#: src/components/swap/SwapForm.tsx:83
+#: src/components/swap/SwapForm.tsx:91
+msgid "From"
+msgstr "From"
+
+#: src/components/common/HalfMax.tsx:23
+msgid "Half"
+msgstr "Half"
+
+#: src/components/common/Settings.tsx:184
+msgid "Infinite Approval"
+msgstr "Infinite Approval"
+
+#: src/components/common/SubmitButton.tsx:50
+msgid "Insufficient Balance"
+msgstr "Insufficient Balance"
+
+#: src/components/swap/TradeType.tsx:30
+msgid "Limit"
+msgstr "Limit"
+
+#: src/components/pool/Preview.tsx:142
+msgid "LP address"
+msgstr "LP address"
+
+#: src/components/pool/Preview.tsx:125
+msgid "LP Tokens Received"
+msgstr "LP Tokens Received"
+
+#: src/components/common/HalfMax.tsx:34
+msgid "Max"
+msgstr "Max"
+
+#: src/components/common/Settings.tsx:156
+msgid "minutes"
+msgstr "minutes"
+
+#: src/layouts/Navs.tsx:17
+#: src/pages/pool.tsx:15
+msgid "Pool"
+msgstr "Pool"
+
+#: src/components/common/TokenSelect.tsx:72
+msgid "Popular Tokens"
+msgstr "Popular Tokens"
+
+#: src/components/common/TokenSelect.tsx:52
+msgid "Select Token"
+msgstr "Select Token"
+
+#: src/components/common/Settings.tsx:198
+msgid "Settings"
+msgstr "Settings"
+
+#: src/components/common/Settings.tsx:86
+msgid "Slippage Tolerance"
+msgstr "Slippage Tolerance"
+
+#: src/components/swap/SwapForm.tsx:132
+#: src/components/swap/TradeType.tsx:22
+#: src/layouts/Navs.tsx:13
 msgid "Swap"
 msgstr ""
+
+#: src/components/swap/SwapForm.tsx:109
+#: src/components/swap/SwapForm.tsx:117
+msgid "To"
+msgstr "To"
+
+#: src/components/common/TokenSelect.tsx:38
+msgid "Token Select"
+msgstr "Token Select"
+
+#: src/layouts/Navs.tsx:21
+msgid "Tools"
+msgstr "Tools"
+
+#: src/components/common/Settings.tsx:142
+msgid "Transaction Deadline"
+msgstr "Transaction Deadline"
+
+#: src/components/swap/TradeType.tsx:26
+msgid "TWAP"
+msgstr "TWAP"
+
+#: src/components/pool/Preview.tsx:100
+msgid "Your Pool Share"
+msgstr "Your Pool Share"
+
+#: src/components/pool/PositionNav.tsx:14
+msgid "Your positions"
+msgstr "Your positions"
