@@ -161,7 +161,7 @@ export const useSwapForm = () => {
 
   useDebounce(
     () => {
-      if (tokenType === TokenType.Input && outputOptimal) setOutputAmount(outputOptimal)
+      if (tokenType === TokenType.Input) setOutputAmount(outputOptimal || '')
     },
     500,
     [outputOptimal, tokenType]
@@ -169,7 +169,7 @@ export const useSwapForm = () => {
 
   useDebounce(
     () => {
-      if (tokenType === TokenType.Output && inputOptimal) setInputAmount(inputOptimal)
+      if (tokenType === TokenType.Output) setInputAmount(inputOptimal || '')
     },
     500,
     [inputOptimal, tokenType]
