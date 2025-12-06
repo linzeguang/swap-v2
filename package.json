@@ -33,6 +33,7 @@
     "@uniswap/v2-core": "^1.0.1",
     "bignumber.js": "^9.3.1",
     "class-variance-authority": "^0.7.1",
+    "clipboard": "^2.0.11",
     "clsx": "^2.1.1",
     "jotai": "^2.15.1",
     "react": "^19.1.1",

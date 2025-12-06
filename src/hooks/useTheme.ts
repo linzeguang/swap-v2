@@ -9,9 +9,9 @@ export const useTheme = () => {
   const changeTheme = useCallback(
     (theme: Theme) => {
       setTheme(theme)
-      const currentTheme = document.documentElement.classList.contains('dark') ? 'dark' : 'light'
+      const currentTheme = document.documentElement.classList.contains(Theme.Dark) ? Theme.Dark : Theme.Light
 
-      if (theme !== currentTheme) document.documentElement.classList.toggle('dark')
+      if (theme !== currentTheme) document.documentElement.classList.toggle(Theme.Dark)
     },
     [setTheme]
   )

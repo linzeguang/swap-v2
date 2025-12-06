@@ -14,12 +14,9 @@ import {
 import { Flex } from '@/components/ui/Box'
 import { Dividing } from '@/components/ui/Dividing'
 import { KanitText } from '@/components/ui/Text'
-import { useTheme } from '@/hooks/useTheme'
-import { LOCALES } from '@/i18n'
 import { cn } from '@/lib/utils'
 import { useI18nLocaleProviderContext } from '@/providers/I18nLocaleProvider'
 import { RoutePath } from '@/routes'
-import { Theme } from '@/stores/settings'
 
 const AccordionTriggerChildren: React.FC<{
   option: {
@@ -84,7 +81,6 @@ const Nav = React.forwardRef<
 >(({ collapsed, className, closeMenu }, ref) => {
   const [accordionValue, setAccordionValue] = useState<string>('')
 
-  const { changeTheme } = useTheme()
   const { changeLocale } = useI18nLocaleProviderContext()
 
   const accordionOptions: Array<React.ComponentPropsWithRef<typeof AccordionTriggerChildren>['option'] | undefined> = [
@@ -108,52 +104,52 @@ const Nav = React.forwardRef<
         closeMenu?.()
       }
     },
-    {
-      name: 'Tools',
-      value: 'tools',
-      icon: Sidebar.Tutorial,
-      iconActive: Sidebar.TutorialActive,
-      path: RoutePath.Tools,
-      onClick: () => {
-        closeMenu?.()
-      }
-    },
-    undefined,
-    {
-      name: t`Theme`,
-      value: 'theme',
-      icon: Sidebar.Theme,
-      iconActive: Sidebar.ThemeActive,
-      childrens: [
-        {
-          name: t`Light Mode`,
-          onClick: () => {
-            closeMenu?.()
-            changeTheme(Theme.Light)
-          }
-        },
-        {
-          name: t`Dark Mode`,
-          onClick: () => {
-            closeMenu?.()
-            changeTheme(Theme.Dark)
-          }
-        }
-      ]
-    },
-    {
-      name: t`Locale`,
-      value: 'locale',
-      icon: Sidebar.Locale,
-      iconActive: Sidebar.LocaleActive,
-      childrens: Object.values(LOCALES).map(({ name, locale }) => ({
-        name,
-        onClick: () => {
-          closeMenu?.()
-          changeLocale(locale)
-        }
-      }))
-    }
+    // {
+    //   name: 'Tools',
+    //   value: 'tools',
+    //   icon: Sidebar.Tutorial,
+    //   iconActive: Sidebar.TutorialActive,
+    //   path: RoutePath.Tools,
+    //   onClick: () => {
+    //     closeMenu?.()
+    //   }
+    // },
+    undefined
+    // {
+    //   name: t`Theme`,
+    //   value: 'theme',
+    //   icon: Sidebar.Theme,
+    //   iconActive: Sidebar.ThemeActive,
+    //   childrens: [
+    //     {
+    //       name: t`Light Mode`,
+    //       onClick: () => {
+    //         closeMenu?.()
+    //         changeTheme(Theme.Light)
+    //       }
+    //     },
+    //     {
+    //       name: t`Dark Mode`,
+    //       onClick: () => {
+    //         closeMenu?.()
+    //         changeTheme(Theme.Dark)
+    //       }
+    //     }
+    //   ]
+    // },
+    // {
+    //   name: t`Locale`,
+    //   value: 'locale',
+    //   icon: Sidebar.Locale,
+    //   iconActive: Sidebar.LocaleActive,
+    //   childrens: Object.values(LOCALES).map(({ name, locale }) => ({
+    //     name,
+    //     onClick: () => {
+    //       closeMenu?.()
+    //       changeLocale(locale)
+    //     }
+    //   }))
+    // }
   ]
 
   useImperativeHandle(

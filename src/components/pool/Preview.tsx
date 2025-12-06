@@ -3,6 +3,7 @@ import { Pair } from '@pippyswap/v2-sdk'
 import { Currency, CurrencyAmount, Percent, Token } from '@uniswap/sdk-core'
 import React, { useMemo } from 'react'
 
+import { useCopy } from '@/hooks/useCopy'
 import { formatAddress } from '@/lib/format'
 
 import KeyValue from '../common/KeyValue'
@@ -29,6 +30,8 @@ const Preview: React.FC<Preview> = ({
   isCreated,
   liquidityMinted
 }) => {
+  const { buttonRef } = useCopy(pair?.liquidityToken.address || '')
+
   const [token0, token1] = useMemo(() => {
     if (!tokenA || !tokenB) return []
     return tokenA.wrapped.sortsBefore(tokenB.wrapped) ? [tokenA, tokenB] : [tokenB, tokenA]
@@ -84,6 +87,7 @@ const Preview: React.FC<Preview> = ({
   return (
     <div className="space-y-2.5 rounded-2xl border border-border-thin p-4">
       <KeyValue
+        classname="lg:flex-row flex-col lg:items-center items-start space-x-0 lg:space-x-4"
         keyNode={`1 ${token0?.symbol} = ${pair.token0Price.toSignificant() || '--'} ${token1?.symbol}`}
         valueNode={`1 ${token1?.symbol} = ${pair.token1Price.toSignificant() || '--'} ${token0?.symbol}`}
       />
@@ -144,9 +148,11 @@ const Preview: React.FC<Preview> = ({
             </Flex>
           }
           valueNode={
-            <KanitText className="flex items-center space-x-1 text-xs text-secondary">
+            <KanitText className="gradient-text flex items-center space-x-1 text-xs">
               <span>{pair && formatAddress(pair?.liquidityToken.address)}</span>
-              <Copy />
+              <button ref={buttonRef}>
+                <Copy className="text-text-tertiary" />
+              </button>
             </KanitText>
           }
         />

@@ -10,13 +10,15 @@ const KeyValue: React.FC<{
   direction?: Direction
   keyNode?: React.ReactNode
   valueNode?: React.ReactNode
+  classname?: string
   keyClassname?: string
   valueClassname?: string
-}> = ({ direction = Direction.Horizontal, keyNode, valueNode, keyClassname, valueClassname }) => {
+}> = ({ direction = Direction.Horizontal, keyNode, valueNode, classname, keyClassname, valueClassname }) => {
   return (
     <Flex
       className={cn(
-        direction === Direction.Horizontal ? 'items-center justify-between space-x-4' : 'flex-col space-y-4'
+        direction === Direction.Horizontal ? 'items-center justify-between space-x-4' : 'flex-col space-y-4',
+        classname
       )}
     >
       {React.isValidElement(keyNode) ? (

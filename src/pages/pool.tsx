@@ -8,8 +8,8 @@ import { PageTitle } from '@/components/ui/Text'
 
 const Pool: React.FC = () => {
   return (
-    <div className="pool min-h-screen w-full">
-      <div className="mx-auto max-w-[660px] space-y-7 pt-14">
+    <div className="pool w-full">
+      <div className="mx-auto max-w-[660px] space-y-4 py-4 pt-4 lg:space-y-7 lg:pt-14">
         <PageTitle>
           <Trans>Pool</Trans>
         </PageTitle>

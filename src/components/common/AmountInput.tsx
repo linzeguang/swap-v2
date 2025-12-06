@@ -52,14 +52,14 @@ export const LiquidityAmountInput: React.FC<ProInputProps> = ({
   ...props
 }) => {
   return (
-    <div className="space-y-3 rounded-3xl bg-input-bg px-6 py-4">
+    <div className="space-y-3 rounded-3xl bg-input-bg p-4 lg:px-6 lg:py-4">
       <NumberInput
         prefixNode={<TokenSelect dialogProps={{ title }} token={token} onTokenSelect={onTokenSelect} />}
         size={'xl'}
         decimals={token?.decimals}
         min={0}
         placeholder="0.00"
-        className={cn('text-right text-secondary', className)}
+        className={cn('text-right text-text-primary', className)}
         wrapperProps={{
           className: 'bg-transparent px-0 py-0'
         }}

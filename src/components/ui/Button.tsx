@@ -9,7 +9,7 @@ import { Flex } from './Box'
 
 const buttonVariants = cva(
   cn(
-    'flex items-center justify-center rounded-2xl text-base font-Kanit border disabled:bg-disabled disabled:border-disabled '
+    'flex items-center justify-center rounded-2xl text-base font-Kanit border disabled:bg-none disabled:bg-disabled disabled:border-disabled '
   ),
   {
     variants: {

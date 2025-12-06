@@ -28,7 +28,7 @@ const App: React.FC = () => {
       </V2Provider>
       {createPortal(
         <Toaster
-          position="bottom-right"
+          position="top-center"
           toastOptions={{
             style: {
               background: 'hsl(var(--color-content))',

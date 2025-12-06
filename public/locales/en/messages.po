@@ -28,9 +28,13 @@ msgid "Add Liquidity"
 msgstr "Add Liquidity"
 
 #: src/components/common/SubmitButton.tsx:40
-#: src/components/ConnectWallet.tsx:27
+#: src/components/ConnectWallet.tsx:28
 msgid "Connect Wallet"
 msgstr "Connect Wallet"
+
+#: src/hooks/useCopy.ts:19
+msgid "copied"
+msgstr "copied"
 
 #: src/components/pool/AddLiquidityForm.tsx:184
 msgid "Create pool and add liquidity"
@@ -49,7 +53,7 @@ msgstr "From"
 msgid "Half"
 msgstr "Half"
 
-#: src/components/common/Settings.tsx:184
+#: src/components/common/Settings.tsx:192
 msgid "Infinite Approval"
 msgstr "Infinite Approval"
 
@@ -61,11 +65,11 @@ msgstr "Insufficient Balance"
 msgid "Limit"
 msgstr "Limit"
 
-#: src/components/pool/Preview.tsx:142
+#: src/components/pool/Preview.tsx:146
 msgid "LP address"
 msgstr "LP address"
 
-#: src/components/pool/Preview.tsx:125
+#: src/components/pool/Preview.tsx:129
 msgid "LP Tokens Received"
 msgstr "LP Tokens Received"
 
@@ -73,7 +77,7 @@ msgstr "LP Tokens Received"
 msgid "Max"
 msgstr "Max"
 
-#: src/components/common/Settings.tsx:156
+#: src/components/common/Settings.tsx:164
 msgid "minutes"
 msgstr "minutes"
 
@@ -81,8 +85,9 @@ msgstr "minutes"
 msgid "Not Route to swap"
 msgstr "Not Route to swap"
 
+#: src/layouts/Nav.tsx:98
 #: src/layouts/Navs.tsx:17
-#: src/pages/pool.tsx:15
+#: src/pages/pool.tsx:14
 msgid "Pool"
 msgstr "Pool"
 
@@ -90,7 +95,7 @@ msgstr "Pool"
 msgid "Popular Tokens"
 msgstr "Popular Tokens"
 
-#: src/components/swap/Preview.tsx:21
+#: src/components/swap/Preview.tsx:22
 msgid "Price impact"
 msgstr "Price impact"
 
@@ -98,19 +103,25 @@ msgstr "Price impact"
 msgid "Select Token"
 msgstr "Select Token"
 
-#: src/components/common/Settings.tsx:198
+#: src/components/common/Settings.tsx:207
 msgid "Settings"
 msgstr "Settings"
 
-#: src/components/common/Settings.tsx:86
+#: src/components/common/Settings.tsx:89
 msgid "Slippage Tolerance"
 msgstr "Slippage Tolerance"
 
 #: src/components/swap/SwapForm.tsx:141
 #: src/components/swap/TradeType.tsx:22
+#: src/layouts/Nav.tsx:88
 #: src/layouts/Navs.tsx:13
+#: src/pages/swap.tsx:12
 msgid "Swap"
 msgstr ""
+
+#: src/hooks/useCopy.ts:25
+msgid "The current browser environment does not support copying to the clipboard"
+msgstr "The current browser environment does not support copying to the clipboard"
 
 #: src/components/swap/SwapForm.tsx:111
 #: src/components/swap/SwapForm.tsx:119
@@ -125,7 +136,7 @@ msgstr "Token Select"
 msgid "Tools"
 msgstr "Tools"
 
-#: src/components/common/Settings.tsx:142
+#: src/components/common/Settings.tsx:150
 msgid "Transaction Deadline"
 msgstr "Transaction Deadline"
 
@@ -133,7 +144,7 @@ msgstr "Transaction Deadline"
 msgid "TWAP"
 msgstr "TWAP"
 
-#: src/components/pool/Preview.tsx:100
+#: src/components/pool/Preview.tsx:104
 msgid "Your Pool Share"
 msgstr "Your Pool Share"
 

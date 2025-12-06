@@ -28,8 +28,12 @@ msgid "Add Liquidity"
 msgstr ""
 
 #: src/components/common/SubmitButton.tsx:40
-#: src/components/ConnectWallet.tsx:27
+#: src/components/ConnectWallet.tsx:28
 msgid "Connect Wallet"
+msgstr ""
+
+#: src/hooks/useCopy.ts:19
+msgid "copied"
 msgstr ""
 
 #: src/components/pool/AddLiquidityForm.tsx:184
@@ -49,7 +53,7 @@ msgstr ""
 msgid "Half"
 msgstr ""
 
-#: src/components/common/Settings.tsx:184
+#: src/components/common/Settings.tsx:192
 msgid "Infinite Approval"
 msgstr ""
 
@@ -61,11 +65,11 @@ msgstr ""
 msgid "Limit"
 msgstr ""
 
-#: src/components/pool/Preview.tsx:142
+#: src/components/pool/Preview.tsx:146
 msgid "LP address"
 msgstr ""
 
-#: src/components/pool/Preview.tsx:125
+#: src/components/pool/Preview.tsx:129
 msgid "LP Tokens Received"
 msgstr ""
 
@@ -73,7 +77,7 @@ msgstr ""
 msgid "Max"
 msgstr ""
 
-#: src/components/common/Settings.tsx:156
+#: src/components/common/Settings.tsx:164
 msgid "minutes"
 msgstr ""
 
@@ -81,8 +85,9 @@ msgstr ""
 msgid "Not Route to swap"
 msgstr ""
 
+#: src/layouts/Nav.tsx:98
 #: src/layouts/Navs.tsx:17
-#: src/pages/pool.tsx:15
+#: src/pages/pool.tsx:14
 msgid "Pool"
 msgstr ""
 
@@ -90,7 +95,7 @@ msgstr ""
 msgid "Popular Tokens"
 msgstr ""
 
-#: src/components/swap/Preview.tsx:21
+#: src/components/swap/Preview.tsx:22
 msgid "Price impact"
 msgstr ""
 
@@ -98,19 +103,25 @@ msgstr ""
 msgid "Select Token"
 msgstr ""
 
-#: src/components/common/Settings.tsx:198
+#: src/components/common/Settings.tsx:207
 msgid "Settings"
 msgstr ""
 
-#: src/components/common/Settings.tsx:86
+#: src/components/common/Settings.tsx:89
 msgid "Slippage Tolerance"
 msgstr ""
 
 #: src/components/swap/SwapForm.tsx:141
 #: src/components/swap/TradeType.tsx:22
+#: src/layouts/Nav.tsx:88
 #: src/layouts/Navs.tsx:13
+#: src/pages/swap.tsx:12
 msgid "Swap"
 msgstr "Swap"
+
+#: src/hooks/useCopy.ts:25
+msgid "The current browser environment does not support copying to the clipboard"
+msgstr ""
 
 #: src/components/swap/SwapForm.tsx:111
 #: src/components/swap/SwapForm.tsx:119
@@ -125,7 +136,7 @@ msgstr ""
 msgid "Tools"
 msgstr ""
 
-#: src/components/common/Settings.tsx:142
+#: src/components/common/Settings.tsx:150
 msgid "Transaction Deadline"
 msgstr ""
 
@@ -133,7 +144,7 @@ msgstr ""
 msgid "TWAP"
 msgstr ""
 
-#: src/components/pool/Preview.tsx:100
+#: src/components/pool/Preview.tsx:104
 msgid "Your Pool Share"
 msgstr ""
 

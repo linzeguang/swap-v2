@@ -48,7 +48,7 @@ export const PageTitle = React.forwardRef<React.ComponentRef<typeof Text>, React
       {...props}
       ref={ref}
       as="h2"
-      className={cn('font-Kanit text-4xl font-semibold text-secondary-foreground', props.className)}
+      className={cn('font-Kanit text-2xl font-semibold text-secondary-foreground lg:text-4xl', props.className)}
     />
   )
 )

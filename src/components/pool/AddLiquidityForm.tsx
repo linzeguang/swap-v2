@@ -113,7 +113,7 @@ const AddLiquidityForm: React.FC = () => {
   return (
     <div className="relative">
       {/* <TopIcon className="absolute left-1/2 top-0 z-[1] -translate-x-1/2 -translate-y-[100px]" /> */}
-      <Card className="relative z-[2] space-y-6">
+      <Card className="relative z-[2] space-y-3 lg:space-y-6">
         <Flex className="items-center justify-between">
           <KanitText className="text-1.5xl text-text-primary">
             <Trans>Add Liquidity</Trans>
