@@ -21,6 +21,7 @@ const buttonVariants = cva(
         radio: 'bg-input-bg text-secondary border-input-bg hover:bg-secondary hover:text-secondary-foreground'
       },
       size: {
+        xs: 'h-5 px-2  text-xs',
         sm: 'h-6 px-3 space-x-1.5 [&_.loading]:size-2',
         md: 'h-8 px-4 space-x-2 [&_.loading]:size-3',
         lg: 'h-10 px-5 space-x-3 [&_.loading]:size-4',

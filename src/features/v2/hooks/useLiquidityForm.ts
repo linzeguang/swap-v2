@@ -1,5 +1,5 @@
 import { Currency, CurrencyAmount } from '@uniswap/sdk-core'
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useSearchParams } from 'react-router'
 import { useDebounce } from 'react-use'
 import { parseUnits, zeroAddress } from 'viem'
@@ -15,7 +15,7 @@ export enum TokenType {
 }
 
 export const useLiquidityForm = () => {
-  const { tokenConfig } = useV2Context()
+  const { tokenConfig, tokenList } = useV2Context()
 
   const [searchParams, setSearchParams] = useSearchParams()
 
@@ -31,6 +31,8 @@ export const useLiquidityForm = () => {
     amountA,
     amountB
   })
+
+  const [addressA, addressB] = useMemo(() => [searchParams.get('tokenA'), searchParams.get('tokenB')], [searchParams])
 
   const setAmountOptimal = useCallback(
     async (amountDesired: string, tokenType: TokenType) => {
@@ -123,10 +125,8 @@ export const useLiquidityForm = () => {
 
   useEffect(() => {
     // load url token
-    const addressA = searchParams.get('tokenA')
-    const addressB = searchParams.get('tokenB')
     const [tokenA, tokenB] = [addressA, addressB].map((address) =>
-      tokenConfig?.TOKEN_LIST.find((token) => {
+      tokenList.find((token) => {
         if (address === zeroAddress) {
           return token.isNative
         }
@@ -139,7 +139,7 @@ export const useLiquidityForm = () => {
     setTokenA(tokenA || tokenConfig?.ETH)
     setTokenB(tokenB)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [addressA, addressB, tokenList])
 
   return {
     tokenType,

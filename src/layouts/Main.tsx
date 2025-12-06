@@ -3,7 +3,7 @@ import { Outlet } from 'react-router'
 
 const Main: React.FC = () => {
   return (
-    <main className="px-4">
+    <main id="main" className="main overflow-auto px-4">
       <Outlet />
     </main>
   )

@@ -34,6 +34,13 @@ export const TOKEND = new Token(bscTestnet.id, '0xD4D681BFEBf563F080A6cA6e40D98B
 
 export const POPULAR_TOKENS = [BNB, WBNB]
 
-export const TOKEN_LIST = [BNB, WBNB, TOKENA, TOKENB, TOKENC, TOKEND, USDT, USDC, ETH]
+export const TOKEN_LIST = [
+  BNB,
+  WBNB,
+  // TOKENA, TOKENB, TOKENC, TOKEND,
+  USDT,
+  USDC,
+  ETH
+]
 
 export const CUSTOM_TOKEN_LIST = [TOKENA, TOKENB, TOKENC, TOKEND, USDT]

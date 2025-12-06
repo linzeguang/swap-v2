@@ -53,3 +53,16 @@ export const PageTitle = React.forwardRef<React.ComponentRef<typeof Text>, React
   )
 )
 PageTitle.displayName = 'PageTitle'
+
+export const SubPageTitle = React.forwardRef<
+  React.ComponentRef<typeof Text>,
+  React.ComponentPropsWithoutRef<typeof Text>
+>((props, ref) => (
+  <Text
+    {...props}
+    ref={ref}
+    as="h2"
+    className={cn('font-Kanit text-xl font-semibold text-secondary-foreground lg:text-4xl', props.className)}
+  />
+))
+SubPageTitle.displayName = 'SubPageTitle'
