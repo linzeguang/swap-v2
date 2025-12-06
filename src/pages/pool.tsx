@@ -2,7 +2,6 @@ import { Trans } from '@lingui/react/macro'
 import React from 'react'
 
 import AddLiquidityForm from '@/components/pool/AddLiquidityForm'
-import PositionNav from '@/components/pool/PositionNav'
 import VersionSelect from '@/components/pool/VersionSelect'
 import { Flex } from '@/components/ui/Box'
 import { PageTitle } from '@/components/ui/Text'
@@ -16,7 +15,7 @@ const Pool: React.FC = () => {
         </PageTitle>
         <Flex className="items-center justify-between">
           <VersionSelect />
-          <PositionNav />
+          {/* <PositionNav /> */}
         </Flex>
         <AddLiquidityForm />
       </div>

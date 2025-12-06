@@ -4,8 +4,9 @@ import React, { useCallback } from 'react'
 
 import { formatAddress } from '@/lib/format'
 
+import { DeadlineField, InfiniteApprovalField, SlippageField } from './common/Settings'
 import { ArrowDown } from './svgr/icons'
-import { Card } from './ui/Box'
+import { Card, Flex } from './ui/Box'
 import { Button } from './ui/Button'
 import { DrawerContent, DrawerRoot, DrawerTrigger } from './ui/Drawer'
 import { KanitText } from './ui/Text'
@@ -22,7 +23,7 @@ const ConnectWallet: React.FC = () => {
 
   if (!isConnected)
     return (
-      <Button variant={'primary'} onClick={connect}>
+      <Button variant={'gradient'} onClick={connect}>
         <KanitText>
           <Trans>Connect Wallet</Trans>
         </KanitText>
@@ -32,16 +33,20 @@ const ConnectWallet: React.FC = () => {
   return (
     <DrawerRoot direction="right">
       <DrawerTrigger asChild>
-        <Button variant={'primary'} suffixNode={<ArrowDown className="-rotate-90" />}>
+        <Button variant={'gradient'} suffixNode={<ArrowDown className="-rotate-90" />}>
           {formatAddress(address)}
         </Button>
       </DrawerTrigger>
       <DrawerContent className="w-[20rem]">
         <Card className="h-full !rounded-r-none border-r-0">
-          <appkit-button />
-          <Button variant={'primary'} onClick={() => disconnect()}>
-            disconnect
-          </Button>
+          <Flex className="justify-end">
+            <Button variant={'secondary'} className="w-full" onClick={() => disconnect()}>
+              disconnect
+            </Button>
+          </Flex>
+          <SlippageField inSide />
+          <DeadlineField />
+          <InfiniteApprovalField />
         </Card>
       </DrawerContent>
     </DrawerRoot>

@@ -1,6 +1,7 @@
 import { t } from '@lingui/core/macro'
-import React, { useCallback, useImperativeHandle, useState } from 'react'
-import { useNavigate } from 'react-router'
+import React, { useImperativeHandle, useState } from 'react'
+import { useLocation, useNavigate } from 'react-router'
+import { useHover } from 'react-use'
 
 import * as Sidebar from '@/components/svgr/sidebar'
 import {
@@ -20,52 +21,90 @@ import { useI18nLocaleProviderContext } from '@/providers/I18nLocaleProvider'
 import { RoutePath } from '@/routes'
 import { Theme } from '@/stores/settings'
 
+const AccordionTriggerChildren: React.FC<{
+  option: {
+    name: React.ReactNode
+    value: string
+    icon: React.FunctionComponent<
+      React.SVGProps<SVGSVGElement> & {
+        title?: string
+        titleId?: string
+        desc?: string
+        descId?: string
+      }
+    >
+    iconActive: React.FunctionComponent<
+      React.SVGProps<SVGSVGElement> & {
+        title?: string
+        titleId?: string
+        desc?: string
+        descId?: string
+      }
+    >
+    path?: RoutePath
+    childrens?: {
+      name: React.ReactNode
+      onClick: () => void
+    }[]
+  }
+  collapsed: boolean
+}> = ({ option, collapsed }) => {
+  const { pathname } = useLocation()
+  const navigate = useNavigate()
+
+  const [hoverable] = useHover((hovered) => (
+    <Flex
+      className={cn(
+        'hover:gradient-text flex-1 cursor-pointer items-center text-text-primary',
+        pathname === option.path && 'gradient-text',
+        collapsed && 'justify-center'
+      )}
+      onClick={() => {
+        if (option.path) {
+          navigate(option.path)
+        }
+      }}
+    >
+      {hovered || pathname === option.path ? <option.iconActive className="w-10" /> : <option.icon className="w-10" />}
+      <KanitText className={cn('text flex-1 overflow-hidden whitespace-nowrap text-sm', collapsed && 'w-0')}>
+        {option.name}
+      </KanitText>
+      {option.childrens && <AccordionArrow className={cn('text-accordion-arrow', collapsed && 'w-0')} />}
+    </Flex>
+  ))
+
+  return hoverable
+}
+
 const Nav = React.forwardRef<
   { closeAccordion: () => void },
   { collapsed: boolean; className?: string; closeMenu?: () => void }
 >(({ collapsed, className, closeMenu }, ref) => {
-  const navigate = useNavigate()
   const [accordionValue, setAccordionValue] = useState<string>('')
 
   const { changeTheme } = useTheme()
   const { changeLocale } = useI18nLocaleProviderContext()
 
-  const accordionOptions: Array<
-    | {
-        name: React.ReactNode
-        value: string
-        icon: React.FunctionComponent<
-          React.SVGProps<SVGSVGElement> & {
-            title?: string
-            titleId?: string
-            desc?: string
-            descId?: string
-          }
-        >
-        path?: RoutePath
-        childrens?: {
-          name: React.ReactNode
-          onClick: () => void
-        }[]
-      }
-    | undefined
-  > = [
+  const accordionOptions: Array<React.ComponentPropsWithRef<typeof AccordionTriggerChildren>['option'] | undefined> = [
     {
       name: t`Swap`,
-      value: 'home',
-      icon: Sidebar.Home,
+      value: 'swap',
+      icon: Sidebar.Swap,
+      iconActive: Sidebar.SwapActive,
       path: RoutePath.Swap
     },
     {
       name: t`Pool`,
       value: 'pool',
-      icon: Sidebar.Tutorial,
+      icon: Sidebar.Pool,
+      iconActive: Sidebar.Poolactive,
       path: RoutePath.Pool
     },
     {
       name: 'Tools',
       value: 'tools',
-      icon: Sidebar.Doc,
+      icon: Sidebar.Tutorial,
+      iconActive: Sidebar.TutorialActive,
       path: RoutePath.Tools
     },
     undefined,
@@ -73,6 +112,7 @@ const Nav = React.forwardRef<
       name: t`Theme`,
       value: 'theme',
       icon: Sidebar.Theme,
+      iconActive: Sidebar.ThemeActive,
       childrens: [
         {
           name: t`Light Mode`,
@@ -94,6 +134,7 @@ const Nav = React.forwardRef<
       name: t`Locale`,
       value: 'locale',
       icon: Sidebar.Locale,
+      iconActive: Sidebar.LocaleActive,
       childrens: Object.values(LOCALES).map(({ name, locale }) => ({
         name,
         onClick: () => {
@@ -103,33 +144,6 @@ const Nav = React.forwardRef<
       }))
     }
   ]
-
-  const renderAccordionTrigger = useCallback(
-    (option: Exclude<(typeof accordionOptions)[number], undefined>) => {
-      return (
-        <Flex
-          className={cn(
-            'flex-1 cursor-pointer items-center hover:text-primary hover:[&_.accordion-arrow]:text-primary',
-            collapsed && 'justify-center'
-          )}
-          onClick={() => {
-            if (option.path) {
-              navigate(option.path)
-            }
-          }}
-        >
-          <option.icon className="w-10" />
-          <KanitText
-            className={cn('flex-1 overflow-hidden whitespace-nowrap text-sm text-inherit', collapsed && 'w-0')}
-          >
-            {option.name}
-          </KanitText>
-          {option.childrens && <AccordionArrow className={cn('text-accordion-arrow', collapsed && 'w-0')} />}
-        </Flex>
-      )
-    },
-    [collapsed]
-  )
 
   useImperativeHandle(
     ref,
@@ -154,12 +168,14 @@ const Nav = React.forwardRef<
           <AccordionItem key={option.value} value={option.value}>
             {option.childrens ? (
               <>
-                <AccordionTrigger showArrow={false}>{renderAccordionTrigger(option)}</AccordionTrigger>
+                <AccordionTrigger showArrow={false}>
+                  <AccordionTriggerChildren option={option} collapsed={collapsed} />
+                </AccordionTrigger>
                 <AccordionContent className="flex flex-col space-y-1 text-balance">
                   {option.childrens.map((children, i) => (
                     <a
                       key={i}
-                      className="bg-background-tertiary block cursor-pointer py-1 pl-10 text-xs hover:text-primary"
+                      className="hover:gradient-text block cursor-pointer py-1 pl-10 text-xs text-secondary"
                       onClick={(ev) => {
                         ev.preventDefault()
                         children.onClick()
@@ -171,7 +187,7 @@ const Nav = React.forwardRef<
                 </AccordionContent>
               </>
             ) : (
-              renderAccordionTrigger(option)
+              <AccordionTriggerChildren option={option} collapsed={collapsed} />
             )}
           </AccordionItem>
         )

@@ -9,7 +9,7 @@ export enum Theme {
   Dark = 'dark',
   Light = 'light'
 }
-export const themeAtom = atomWithStorage<Theme>(StorageKey.Theme, Theme.Light, undefined, {
+export const themeAtom = atomWithStorage<Theme>(StorageKey.Theme, Theme.Dark, undefined, {
   getOnInit: true
 })
 

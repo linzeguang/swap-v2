@@ -14,7 +14,7 @@ import Settings from '../common/Settings'
 import SubmitButton from '../common/SubmitButton'
 import TokenBalance from '../common/TokenBalance'
 import { Wallet } from '../svgr/icons'
-import { Add, TopIcon } from '../svgr/pool'
+import { Add } from '../svgr/pool'
 import { Card, Flex } from '../ui/Box'
 import { KanitText } from '../ui/Text'
 import Preview from './Preview'
@@ -112,10 +112,10 @@ const AddLiquidityForm: React.FC = () => {
 
   return (
     <div className="relative">
-      <TopIcon className="absolute left-1/2 top-0 z-[1] -translate-x-1/2 -translate-y-[100px]" />
+      {/* <TopIcon className="absolute left-1/2 top-0 z-[1] -translate-x-1/2 -translate-y-[100px]" /> */}
       <Card className="relative z-[2] space-y-6">
         <Flex className="items-center justify-between">
-          <KanitText className="text-1.5xl">
+          <KanitText className="text-1.5xl text-text-primary">
             <Trans>Add Liquidity</Trans>
           </KanitText>
           <Settings />
@@ -133,7 +133,7 @@ const AddLiquidityForm: React.FC = () => {
                   </KanitText>
                   <HalfMax onClick={(val) => handleHalfMax(val, TokenType.TokenA)} />
                 </Flex>
-                <KanitText>usd balance</KanitText>
+                {/* <KanitText>usd balance</KanitText> */}
               </Flex>
             }
             value={amountA}
@@ -154,7 +154,7 @@ const AddLiquidityForm: React.FC = () => {
                   </KanitText>
                   <HalfMax onClick={(val) => handleHalfMax(val, TokenType.TokenB)} />
                 </Flex>
-                <KanitText>usd balance</KanitText>
+                {/* <KanitText>usd balance</KanitText> */}
               </Flex>
             }
             value={amountB}

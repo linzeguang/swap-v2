@@ -1,11 +1,9 @@
 <svg width="43" height="38" viewBox="0 0 43 38" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <g id="Component 15">
-    <g id="Container">
-      <g id="Component 1">
-        <path id="Vector"
-          d="M27.5375 9H30.758L23.723 17.0474L32 28H25.52L20.441 21.3587L14.636 28H11.4125L18.9365 19.3895L11 9.0015H17.645L22.229 15.0708L27.5375 9ZM26.405 26.0712H28.19L16.67 10.8284H14.756L26.405 26.0712Z"
-          fill="currentColor" />
-      </g>
-    </g>
-  </g>
+<g id="Component 15">
+<g id="Container">
+<g id="Component 1">
+<path id="Vector" d="M27.5375 9H30.758L23.723 17.0474L32 28H25.52L20.441 21.3587L14.636 28H11.4125L18.9365 19.3895L11 9.0015H17.645L22.229 15.0708L27.5375 9ZM26.405 26.0712H28.19L16.67 10.8284H14.756L26.405 26.0712Z" fill="white"/>
+</g>
+</g>
+</g>
 </svg>

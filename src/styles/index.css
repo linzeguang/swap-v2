@@ -2,28 +2,48 @@
 @tailwind components;
 @tailwind utilities;
 
-:focus-visible {
-  outline: none;
-}
+@layer base {
+  :focus-visible {
+    outline: none;
+  }
 
-html {
-  @apply bg-[#E6F3FF];
-}
+  html {
+    @apply bg-[#191A2E];
+  }
 
-header {
-  @apply border-b border-border bg-white;
-}
-aside {
-  @apply border-r border-border bg-white;
-}
+  header {
+    @apply border-b border-border bg-[#191A2E];
+  }
+  aside {
+    @apply border-r border-border bg-[#191A2E];
+  }
 
-footer {
-  @apply bg-[#27262C];
-}
+  footer {
+    @apply bg-[#27262C];
+  }
 
-.dividing-wieght {
-  --dividing-wieght: 1px; /* 分割线粗细 */
-}
-.dividing-wieght-bold {
-  --dividing-wieght: 2px; /* 分割线粗细 */
+  .dividing-wieght {
+    --dividing-wieght: 1px; /* 分割线粗细 */
+  }
+  .dividing-wieght-bold {
+    --dividing-wieght: 2px; /* 分割线粗细 */
+  }
+
+  .gradient-button {
+    background: linear-gradient(
+      var(--color-gradient-button-deg),
+      var(--color-gradient-button-from),
+      var(--color-gradient-button-to)
+    );
+  }
+
+  .gradient-text {
+    background: linear-gradient(
+      var(--color-gradient-button-deg),
+      var(--color-gradient-button-from),
+      var(--color-gradient-button-to)
+    );
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
 }

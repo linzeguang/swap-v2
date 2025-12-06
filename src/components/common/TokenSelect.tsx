@@ -40,16 +40,16 @@ const TokenSelect: React.FC<{
       trigger={{
         asChild: true,
         children: (
-          <Button className={token ? 'px-2' : 'px-4'} size={'lg'} variant={token ? 'default' : 'secondary'}>
+          <Button className={token ? 'px-2' : 'px-4'} size={'lg'} variant={'default'}>
             {token ? (
               <>
                 <TokenImage token={token} className="size-7" />
-                <KanitText className="text-xl font-semibold text-text-secondary">{token.symbol}</KanitText>
+                <KanitText className="text-xl font-semibold text-text-primary">{token.symbol}</KanitText>
                 <ArrowDown />
               </>
             ) : (
               <Flex className="items-center">
-                <KanitText className="text-base font-semibold">
+                <KanitText className="text-base font-semibold text-text-primary">
                   <Trans>Select Token</Trans>
                 </KanitText>
                 {/* <ArrowDown /> */}
@@ -95,7 +95,7 @@ const TokenSelect: React.FC<{
           >
             <TokenImage token={token} className="size-10" />
             <div className="flex-1 space-y-1">
-              <KanitText className="text-lg leading-none">{token.symbol}</KanitText>
+              <KanitText className="text-lg leading-none text-text-primary">{token.symbol}</KanitText>
               <KanitText variant={'tertiary'} className="text-sm leading-none">
                 {token.name}
               </KanitText>

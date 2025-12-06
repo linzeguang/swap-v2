@@ -35,7 +35,7 @@ export const TokenAmountInput: React.FC<ProInputProps> = ({
         decimals={token?.decimals}
         min={0}
         placeholder="0.00"
-        className={cn('text-right text-secondary', className)}
+        className={cn('text-right text-text-primary', className)}
         {...props}
       />
       {suffixNode}

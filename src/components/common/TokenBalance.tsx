@@ -48,14 +48,14 @@ const TokenBalance = React.forwardRef<
         refetch()
       }}
     >
-      <KanitText className="leading-none">
+      <KanitText className="leading-none text-text-primary">
         {currencyAmount
           ? currencyAmount.toSignificant(currencyAmount.currency.isNative ? UI_DECIMALS.Native : UI_DECIMALS.Token)
           : isFetching
             ? ''
             : '--'}
       </KanitText>
-      {isFetching && <Loading className="size-4" />}
+      {isFetching && <Loading className="size-4 text-text-primary" />}
     </Flex>
   )
 })

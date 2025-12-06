@@ -3,12 +3,12 @@ import React, { ComponentRef } from 'react'
 
 import { cn } from '@/lib/utils'
 
-const inputVariants = cva(cn('flex items-center bg-input-bg'), {
+const inputVariants = cva(cn('flex items-center bg-input-bg text-text-primary'), {
   variants: {
     size: {
       xs: '',
       sm: 'h-8 px-4 rounded-full text-sm space-x-2',
-      md: 'h-10 px-4 rounded-full',
+      md: 'h-10 px-4 rounded-full space-x-2',
       lg: '',
       xl: 'p-4 rounded-3xl text-2xl font-semibold space-x-4'
     },

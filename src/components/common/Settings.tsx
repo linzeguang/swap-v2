@@ -1,13 +1,13 @@
 import { Trans } from '@lingui/react/macro'
 import { useAtom } from 'jotai/react'
-import React, { PropsWithChildren, useCallback, useEffect, useMemo, useState } from 'react'
+import React, { ComponentPropsWithRef, PropsWithChildren, useCallback, useEffect, useMemo, useState } from 'react'
 
 import { Direction } from '@/constants/enum'
 import { cn } from '@/lib/utils'
 import { deadlineAtom, infiniteApprovalAtom, slippageAtom } from '@/stores/settings'
 
-import { Help, Setting } from '../svgr/icons'
-import { Flex } from '../ui/Box'
+import { Setting } from '../svgr/icons'
+import { Flex, Grid } from '../ui/Box'
 import { Button } from '../ui/Button'
 import { Dialog } from '../ui/Dialog'
 import { NumberInput } from '../ui/Input'
@@ -32,7 +32,10 @@ const Field: React.FC<PropsWithChildren<{ name: React.ReactNode; direction?: Dir
   )
 }
 
-const SlippageField: React.FC = () => {
+export const SlippageField: React.FC<Partial<ComponentPropsWithRef<typeof Field>> & { inSide?: boolean }> = ({
+  inSide,
+  ...props
+}) => {
   const [slippage, setSlippage] = useAtom(slippageAtom)
   const [slippageValue, setSlippageValue] = useState('')
 
@@ -81,11 +84,11 @@ const SlippageField: React.FC = () => {
   return (
     <Field
       name={
-        <Flex className="items-center space-x-2">
+        <Flex className="items-center space-x-2 text-text-tertiary">
           <KanitText>
             <Trans>Slippage Tolerance</Trans>
           </KanitText>
-          <Help className="text-icon" />
+          {/* <Help className="text-icon" /> */}
           {/* <Tooltip trigger={{ children: <Help className="text-icon" /> }}>
               <KanitText>
                 <Trans>Slippage Tolerance</Trans>
@@ -93,23 +96,29 @@ const SlippageField: React.FC = () => {
             </Tooltip> */}
         </Flex>
       }
+      {...props}
     >
-      <Flex className="space-x-4">
-        {slippageOptions.map((option) => (
-          <Button
-            key={option.value}
-            variant={'secondary'}
-            outline={slippage !== option.value}
-            onClick={() => handleSlippage(option.value)}
-          >
-            {option.lable}
-          </Button>
-        ))}
+      <Grid className={cn('gap-3', !inSide && 'grid-cols-[auto_1fr]')}>
+        <Grid className="grid-cols-3 gap-3">
+          {slippageOptions.map((option) => (
+            <Button
+              key={option.value}
+              size={'lg'}
+              onHoveredOutline={(hovered) => (hovered ? false : slippage !== option.value)}
+              onHoveredVariant={(hovered) =>
+                hovered ? 'gradient' : slippage === option.value ? 'gradient' : 'secondary'
+              }
+              onClick={() => handleSlippage(option.value)}
+            >
+              {option.lable}
+            </Button>
+          ))}
+        </Grid>
         <NumberInput
-          border
+          // border
           wrapperProps={{ className: 'flex-1' }}
           className="w-full text-right"
-          size={'sm'}
+          size={'md'}
           decimals={2}
           max={100}
           suffixNode={<KanitText className="text-secondary">%</KanitText>}
@@ -118,12 +127,12 @@ const SlippageField: React.FC = () => {
             handleSlippageValue(ev.target.value)
           }}
         />
-      </Flex>
+      </Grid>
     </Field>
   )
 }
 
-const DeadlineField: React.FC = () => {
+export const DeadlineField: React.FC<Partial<ComponentPropsWithRef<typeof Field>>> = (props) => {
   const [deadline, setDeadline] = useAtom(deadlineAtom)
 
   const handleDeadline = useCallback(
@@ -135,20 +144,19 @@ const DeadlineField: React.FC = () => {
 
   return (
     <Field
-      direction={Direction.Vertical}
       name={
-        <Flex className="items-center space-x-2">
+        <Flex className="items-center space-x-2 text-text-tertiary">
           <KanitText>
             <Trans>Transaction Deadline</Trans>
           </KanitText>
-          <Help className="text-icon" />
+          {/* <Help className="text-icon" /> */}
         </Flex>
       }
+      {...props}
     >
       <NumberInput
-        border
         className="text-right"
-        size={'sm'}
+        size={'md'}
         decimals={0}
         max={100}
         suffixNode={
@@ -165,7 +173,7 @@ const DeadlineField: React.FC = () => {
   )
 }
 
-const InfiniteApprovalField: React.FC = () => {
+export const InfiniteApprovalField: React.FC<Partial<ComponentPropsWithRef<typeof Field>>> = (props) => {
   const [infiniteApproval, setInfiniteApproval] = useAtom(infiniteApprovalAtom)
 
   const handleInfiniteApproval = useCallback(
@@ -179,13 +187,14 @@ const InfiniteApprovalField: React.FC = () => {
     <Field
       direction={Direction.Vertical}
       name={
-        <Flex className="items-center space-x-2">
+        <Flex className="items-center space-x-2 text-text-tertiary">
           <KanitText>
             <Trans>Infinite Approval</Trans>
           </KanitText>
-          <Help className="text-icon" />
+          {/* <Help className="text-icon" /> */}
         </Flex>
       }
+      {...props}
     >
       <Switch checked={infiniteApproval} onCheckedChange={handleInfiniteApproval} />
     </Field>

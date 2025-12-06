@@ -6,9 +6,9 @@ import SideBar from './SideBar'
 
 const RootLayout: React.FC = () => {
   return (
-    <section className="grid h-screen grid-rows-[4.5rem_1fr_auto] lg:grid-cols-[auto_1fr] lg:grid-rows-[4.5rem_1fr]">
-      <Header className="lg:col-span-full" />
-      <SideBar className="lg:col-span-1" />
+    <section className="grid h-screen grid-cols-[auto_1fr] grid-rows-[4.5rem_1fr]">
+      <Header className="col-span-full" />
+      <SideBar className="" />
       <Main />
     </section>
   )

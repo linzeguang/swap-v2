@@ -56,7 +56,7 @@ const SubmitButton = React.forwardRef<ComponentRef<typeof Button>, PropsWithChil
 
     return (
       <Button
-        variant={'primary'}
+        variant={'gradient'}
         size={'xl'}
         className={cn('w-full', className)}
         onClick={event}

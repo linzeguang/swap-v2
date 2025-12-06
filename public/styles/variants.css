@@ -2,7 +2,7 @@
   /* 取 hsl 的值 去除中间的逗号，方便tailwindcss控制透明度 */
   --color-primary: 18 98% 62%; /* #FD773E */
   --color-primary-foreground: 0 0% 100%; /* #fff */
-  --color-secondary: 194 85% 62%; /* #4CC9F0 */
+  --color-secondary: 218 12% 64%; /* #99A1AF */
   --color-secondary-foreground: 0 0% 100%; /* #fff */
 
   --color-info: 215 100% 64%; /* #4994FF */
@@ -15,25 +15,33 @@
   --color-warning-background: 39 100% 95%; /* #FFF7E8 */
 
   /* bg */
-  --color-content: 0 0% 100%; /* #fff */
+  --color-content: 243 23% 16%; /* #201F31 */
   --color-overlay: rgba(51, 51, 51, 0.1); /* #3333331a */
-  --color-disabled: 208 55% 89%; /* #D2E3F2 */
+  --color-disabled: 244 18% 17%; /* #252434 */
 
   /* input */
-  --color-input-bg: 208 100% 97%; /* #F0F8FF */
+  --color-input-bg: 237 30% 14%; /* #191A2E */
   --color-input-border: var(--color-border); /* #fff */
   --color-input-border-focus: var(--color-secondary);
 
   /* text */
-  --color-text-primary: 194 98% 56%; /* #23C9FD */
+  --color-text-primary: 0 0% 100%; /* #fff */
   --color-text-secondary: 0 0% 12%; /* #1E1E1E */
-  --color-text-tertiary: 217 27% 43%; /* #50678C */
+  --color-text-tertiary: 218 12% 64%; /* #99A1AF */
   --color-text-disabled: 218 11% 81%; /* #C9CDD4 */
 
   /* border */
-  --color-border: 208 55% 89%; /* #D2E3F2 */
-  --color-border-thin: 208 100% 97%; /* #F0F8FF */
+  --color-border: 244 18% 17%; /* #252434 */
+  --color-border-thin: 244 18% 17%; /* #252434 */
 
   /* tip */
-  --color-icon: 208 55% 89%; /* #D2E3F2 */
+  --color-icon: 218 12% 64%; /* #99A1AF */
+
+  /* gradient */
+  --color-gradient-button-from: #2600fc; /* #2600FC */
+  --color-gradient-button-to: #ff00ea; /* #2600FC */
+  --color-gradient-button-deg: 25deg; /* #2600FC */
+}
+
+:root {
 }

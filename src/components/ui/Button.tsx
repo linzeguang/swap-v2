@@ -1,5 +1,6 @@
 import { cva, VariantProps } from 'class-variance-authority'
 import React, { ButtonHTMLAttributes, ComponentProps } from 'react'
+import { useHover } from 'react-use'
 
 import { cn } from '@/lib/utils'
 
@@ -14,6 +15,7 @@ const buttonVariants = cva(
     variants: {
       variant: {
         default: 'bg-content text-secondary border-content',
+        gradient: 'gradient-button border-0 text-text-primary',
         primary: 'bg-primary text-primary-foreground border-primary',
         secondary: 'bg-secondary text-secondary-foreground border-secondary',
         radio: 'bg-input-bg text-secondary border-input-bg hover:bg-secondary hover:text-secondary-foreground'
@@ -46,6 +48,11 @@ const buttonVariants = cva(
         outline: true,
         variant: 'secondary',
         className: 'text-secondary'
+      },
+      {
+        outline: true,
+        variant: 'gradient',
+        className: 'text-secondary'
       }
     ],
     defaultVariants: {
@@ -62,31 +69,59 @@ export const Button = React.forwardRef<
       isLoading?: boolean
       prefixNode?: React.ReactNode
       suffixNode?: React.ReactNode
+      onHoveredVariant?: (hovered: boolean) => VariantProps<typeof buttonVariants>['variant']
+      onHoveredOutline?: (hovered: boolean) => VariantProps<typeof buttonVariants>['outline']
+      onHoveredGhost?: (hovered: boolean) => VariantProps<typeof buttonVariants>['ghost']
     }
 >(
   (
-    { children, className, isLoading, prefixNode, suffixNode, variant, size, ghost, outline, onClick, ...props },
+    {
+      children,
+      className,
+      isLoading,
+      prefixNode,
+      suffixNode,
+      variant,
+      size,
+      ghost,
+      outline,
+      onHoveredVariant,
+      onHoveredOutline,
+      onHoveredGhost,
+      ...props
+    },
     ref
-  ) => (
-    <button
-      ref={ref}
-      type="button"
-      className={cn(buttonVariants({ variant, size, ghost, outline, className }))}
-      onClick={onClick}
-      {...props}
-    >
-      {prefixNode}
-      {isLoading ? (
-        <Loading className="loading" />
-      ) : React.isValidElement(children) || Array.isArray(children) ? (
-        children
-      ) : (
-        <span>{children}</span>
-      )}
+  ) => {
+    const [hoverable] = useHover((hovered) => (
+      <button
+        ref={ref}
+        type="button"
+        className={cn(
+          buttonVariants({
+            size,
+            variant: onHoveredVariant?.(hovered) || variant,
+            outline: onHoveredOutline?.(hovered) || outline,
+            ghost: onHoveredGhost?.(hovered) || ghost,
+            className
+          })
+        )}
+        {...props}
+      >
+        {prefixNode}
+        {isLoading ? (
+          <Loading className="loading" />
+        ) : React.isValidElement(children) || Array.isArray(children) ? (
+          children
+        ) : (
+          <span>{children}</span>
+        )}
 
-      {suffixNode}
-    </button>
-  )
+        {suffixNode}
+      </button>
+    ))
+
+    return hoverable
+  }
 )
 
 export function ButtonRadioGroup<V>(props: {
