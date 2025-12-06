@@ -6,6 +6,7 @@ import { RouterProvider } from 'react-router'
 
 import V2Provider from './features/v2/provider'
 import { useTheme } from './hooks/useTheme'
+import HelperProvider from './providers/HelperProvider'
 import { router } from './routes'
 import { deadlineAtom, infiniteApprovalAtom, slippageAtom } from './stores/settings'
 
@@ -24,7 +25,9 @@ const App: React.FC = () => {
   return (
     <>
       <V2Provider infiniteApproval={infiniteApproval} slippagePercent={slippage} deadlineMinutes={deadline}>
-        <RouterProvider router={router} />
+        <HelperProvider>
+          <RouterProvider router={router} />
+        </HelperProvider>
       </V2Provider>
       {createPortal(
         <Toaster

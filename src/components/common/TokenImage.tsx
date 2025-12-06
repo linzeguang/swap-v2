@@ -1,7 +1,9 @@
 import { Currency } from '@uniswap/sdk-core'
+import { useAtomValue } from 'jotai/react'
 import React, { useMemo, useState } from 'react'
 
 import { cn } from '@/lib/utils'
+import { tokenImagesAtom } from '@/stores/trade'
 
 import { Setting } from '../svgr/icons'
 import { Flex } from '../ui/Box'
@@ -14,14 +16,16 @@ enum Status {
 }
 
 const TokenImage: React.FC<React.ImgHTMLAttributes<HTMLImageElement> & { token: Currency }> = ({ token, ...props }) => {
+  const tokenImages = useAtomValue(tokenImagesAtom)
   const [loadingStatus, setLoadingStatus] = useState(Status.Loading)
 
   const imgSrc = useMemo(
-    () =>
-      token.isNative
-        ? `https://assets.pancakeswap.finance/web/native/${token.chainId}.png`
-        : `https://tokens.pancakeswap.finance/images/symbol/${token.symbol?.toLowerCase()}.png`,
-    [token]
+    () => tokenImages[token.wrapped.address],
+    // ||
+    //   (token.isNative
+    //     ? `https://assets.pancakeswap.finance/web/native/${token.chainId}.png`
+    //     : `https://tokens.pancakeswap.finance/images/symbol/${token.symbol?.toLowerCase()}.png`)
+    [token, tokenImages]
   )
 
   return (
@@ -29,7 +33,7 @@ const TokenImage: React.FC<React.ImgHTMLAttributes<HTMLImageElement> & { token: 
       {loadingStatus === Status.Loading && (
         <TokenSkeleton className={cn('absolute bottom-0 left-0 right-0 top-0', props.className)} />
       )}
-      {loadingStatus === Status.Error && (
+      {(!imgSrc || loadingStatus === Status.Error) && (
         <Flex
           className={cn(
             'absolute bottom-0 left-0 right-0 top-0 items-center justify-center rounded-full bg-input-bg',

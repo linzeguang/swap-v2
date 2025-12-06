@@ -14,6 +14,7 @@ import {
 import { Flex } from '@/components/ui/Box'
 import { Dividing } from '@/components/ui/Dividing'
 import { KanitText } from '@/components/ui/Text'
+import { LOCALES } from '@/i18n'
 import { cn } from '@/lib/utils'
 import { useI18nLocaleProviderContext } from '@/providers/I18nLocaleProvider'
 import { RoutePath } from '@/routes'
@@ -114,7 +115,7 @@ const Nav = React.forwardRef<
     //     closeMenu?.()
     //   }
     // },
-    undefined
+    undefined,
     // {
     //   name: t`Theme`,
     //   value: 'theme',
@@ -137,19 +138,19 @@ const Nav = React.forwardRef<
     //     }
     //   ]
     // },
-    // {
-    //   name: t`Locale`,
-    //   value: 'locale',
-    //   icon: Sidebar.Locale,
-    //   iconActive: Sidebar.LocaleActive,
-    //   childrens: Object.values(LOCALES).map(({ name, locale }) => ({
-    //     name,
-    //     onClick: () => {
-    //       closeMenu?.()
-    //       changeLocale(locale)
-    //     }
-    //   }))
-    // }
+    {
+      name: t`Locale`,
+      value: 'locale',
+      icon: Sidebar.Locale,
+      iconActive: Sidebar.LocaleActive,
+      childrens: Object.values(LOCALES).map(({ name, locale }) => ({
+        name,
+        onClick: () => {
+          closeMenu?.()
+          changeLocale(locale)
+        }
+      }))
+    }
   ]
 
   useImperativeHandle(

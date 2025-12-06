@@ -1,10 +1,12 @@
 import { Trans } from '@lingui/react/macro'
 import { Currency } from '@uniswap/sdk-core'
-import React, { ComponentPropsWithRef, useCallback, useState } from 'react'
+import { useAtomValue } from 'jotai/react'
+import React, { ComponentPropsWithRef, useCallback, useMemo, useState } from 'react'
 import { zeroAddress } from 'viem'
 
 import { useV2Context } from '@/features/v2/provider'
 import { cn } from '@/lib/utils'
+import { tokenListAtom } from '@/stores/trade'
 
 import { ArrowDown } from '../svgr/icons'
 import { Flex, Grid } from '../ui/Box'
@@ -22,7 +24,13 @@ const TokenSelect: React.FC<{
   dialogProps?: ComponentPropsWithRef<typeof Dialog>
 }> = ({ token, tokenList, onTokenSelect, dialogProps }) => {
   const { tokenConfig } = useV2Context()
+  const asyncTokenList = useAtomValue(tokenListAtom)
   const [open, setOpen] = useState(false)
+
+  const lastTokenList = useMemo(() => {
+    if (tokenList) return tokenList
+    return [...(tokenConfig?.TOKEN_LIST || []), ...asyncTokenList]
+  }, [asyncTokenList, tokenConfig?.TOKEN_LIST, tokenList])
 
   const handleTokenSelect = useCallback(
     (token: Currency) => {
@@ -87,7 +95,7 @@ const TokenSelect: React.FC<{
         </Flex>
       </div>
       <div className="space-y-1 overflow-y-scroll">
-        {(tokenList || tokenConfig?.TOKEN_LIST)?.map((token) => (
+        {lastTokenList.map((token) => (
           <Grid
             key={token.isNative ? zeroAddress : token.address}
             className="cursor-pointer grid-cols-[auto_1fr_auto] items-center gap-2.5 rounded-3xl p-2 pr-4 hover:bg-input-bg"

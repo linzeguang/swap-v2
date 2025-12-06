@@ -31,11 +31,11 @@ export default defineConfig((env) => {
       port: 8888,
       host: true,
       proxy: {
-        // [processEnv.VITE_API_BASE_URL]: {
-        //   target: processEnv.VITE_API_TARGET_URL,
-        //   changeOrigin: true,
-        //   rewrite: (path) => path.replace(new RegExp(`^${processEnv.VITE_API_BASE_URL}`), '')
-        // }
+        [processEnv.VITE_API_BASE_URL]: {
+          target: processEnv.VITE_API_TARGET_URL,
+          changeOrigin: true,
+          rewrite: (path) => path.replace(new RegExp(`^${processEnv.VITE_API_BASE_URL}`), '')
+        }
       }
     }
   }
