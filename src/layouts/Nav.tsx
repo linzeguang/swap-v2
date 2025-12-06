@@ -42,6 +42,7 @@ const AccordionTriggerChildren: React.FC<{
       }
     >
     path?: RoutePath
+    onClick?: () => void
     childrens?: {
       name: React.ReactNode
       onClick: () => void
@@ -60,6 +61,7 @@ const AccordionTriggerChildren: React.FC<{
         collapsed && 'justify-center'
       )}
       onClick={() => {
+        option.onClick?.()
         if (option.path) {
           navigate(option.path)
         }
@@ -91,21 +93,30 @@ const Nav = React.forwardRef<
       value: 'swap',
       icon: Sidebar.Swap,
       iconActive: Sidebar.SwapActive,
-      path: RoutePath.Swap
+      path: RoutePath.Swap,
+      onClick: () => {
+        closeMenu?.()
+      }
     },
     {
       name: t`Pool`,
       value: 'pool',
       icon: Sidebar.Pool,
       iconActive: Sidebar.Poolactive,
-      path: RoutePath.Pool
+      path: RoutePath.Pool,
+      onClick: () => {
+        closeMenu?.()
+      }
     },
     {
       name: 'Tools',
       value: 'tools',
       icon: Sidebar.Tutorial,
       iconActive: Sidebar.TutorialActive,
-      path: RoutePath.Tools
+      path: RoutePath.Tools,
+      onClick: () => {
+        closeMenu?.()
+      }
     },
     undefined,
     {

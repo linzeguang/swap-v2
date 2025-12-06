@@ -40,7 +40,7 @@ const ConnectWallet: React.FC = () => {
       <DrawerContent className="w-[20rem]">
         <Card className="h-full !rounded-r-none border-r-0">
           <Flex className="justify-end">
-            <Button variant={'secondary'} className="w-full" onClick={() => disconnect()}>
+            <Button variant={'secondary'} onClick={() => disconnect()}>
               disconnect
             </Button>
           </Flex>
