@@ -64,7 +64,7 @@ const PairCard: React.FC<{ pair: Pair }> = ({ pair }) => {
           </KanitText>
         }
         valueNode={
-          <KanitText className="gradient-text flex items-center space-x-1 text-xs">
+          <KanitText className="flex items-center space-x-1 text-xs" variant={'tertiary'}>
             <span>{formatAddress(pair.liquidityToken.address)}</span>
             <button ref={buttonRef}>
               <Copy className="text-text-tertiary" />
@@ -79,7 +79,7 @@ const PairCard: React.FC<{ pair: Pair }> = ({ pair }) => {
           </KanitText>
         }
         valueNode={
-          <KanitText className="gradient-text flex items-center space-x-1 text-xs">
+          <KanitText className="flex items-center space-x-1 text-xs" variant={'tertiary'}>
             <span>{formatAddress(pair.token0.address)}</span>
             <button ref={buttonRefToken0}>
               <Copy className="text-text-tertiary" />
@@ -94,7 +94,7 @@ const PairCard: React.FC<{ pair: Pair }> = ({ pair }) => {
           </KanitText>
         }
         valueNode={
-          <KanitText className="gradient-text flex items-center space-x-1 text-xs">
+          <KanitText className="flex items-center space-x-1 text-xs" variant={'tertiary'}>
             <span>{formatAddress(pair.token1.address)}</span>
             <button ref={buttonRefToken1}>
               <Copy className="text-text-tertiary" />
