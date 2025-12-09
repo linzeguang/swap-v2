@@ -3,11 +3,14 @@ import React from 'react'
 import ConnectWallet from '@/components/ConnectWallet'
 import { LogoName } from '@/components/svgr/logo'
 import { Flex, Viewport } from '@/components/ui/Box'
+import useMediaQuery from '@/hooks/useMediaQuery'
 import { cn } from '@/lib/utils'
 
 import Menu from './Menu'
 
 const Header: React.FC<React.HTMLAttributes<HTMLElement>> = (props) => {
+  const { isMobile } = useMediaQuery()
+
   return (
     <header className={cn('flex items-center justify-between', props.className)}>
       <Viewport className="flex items-center justify-between">
@@ -16,7 +19,7 @@ const Header: React.FC<React.HTMLAttributes<HTMLElement>> = (props) => {
         </Flex>
         <Flex className="space-x-3">
           <ConnectWallet />
-          <Menu />
+          {isMobile && <Menu />}
         </Flex>
       </Viewport>
     </header>
