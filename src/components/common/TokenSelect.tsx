@@ -1,10 +1,14 @@
+import { t } from '@lingui/core/macro'
 import { Trans } from '@lingui/react/macro'
 import { Currency } from '@uniswap/sdk-core'
-import React, { ComponentPropsWithRef, useCallback, useState } from 'react'
+import { useSetAtom } from 'jotai/react'
+import React, { ComponentPropsWithRef, useCallback, useMemo, useState } from 'react'
 import { zeroAddress } from 'viem'
 
 import { useV2Context } from '@/features/v2/provider'
+import { useSearchToken } from '@/hooks/services/useToken'
 import { cn } from '@/lib/utils'
+import { importTokenListAtom } from '@/stores/trade'
 
 import { ArrowDown } from '../svgr/icons'
 import { Flex, Grid } from '../ui/Box'
@@ -21,8 +25,28 @@ const TokenSelect: React.FC<{
   onTokenSelect?: (token: Currency) => void
   dialogProps?: ComponentPropsWithRef<typeof Dialog>
 }> = ({ token, tokenList, onTokenSelect, dialogProps }) => {
-  const { tokenConfig, tokenList: lastTokenList } = useV2Context()
+  const { tokenConfig, tokenList: allTokenList } = useV2Context()
   const [open, setOpen] = useState(false)
+  const { token: searchToken, searchValue, setSearchValue } = useSearchToken()
+  const setImportTokenList = useSetAtom(importTokenListAtom)
+
+  const lastTokenList = useMemo(() => {
+    const result = tokenList || allTokenList
+    if (!searchValue) return result
+    const searchList = result.filter((token) => {
+      const address = token.wrapped.address.toLowerCase()
+      const symbol = token.symbol?.toLowerCase()
+      const name = token.name?.toLowerCase()
+      const searchValueLowerCase = searchValue.toLowerCase()
+
+      return (
+        address.includes(searchValueLowerCase) ||
+        symbol?.includes(searchValueLowerCase) ||
+        name?.includes(searchValueLowerCase)
+      )
+    })
+    return searchList
+  }, [allTokenList, searchValue, tokenList])
 
   const handleTokenSelect = useCallback(
     (token: Currency) => {
@@ -31,6 +55,17 @@ const TokenSelect: React.FC<{
     },
     [onTokenSelect]
   )
+
+  const handleImport = useCallback(() => {
+    if (!searchToken) return
+    onTokenSelect?.(searchToken)
+    setImportTokenList((prev) => [
+      ...prev,
+      [searchToken.chainId, searchToken.address, searchToken.decimals, searchToken.symbol, searchToken.name]
+    ])
+    setOpen(false)
+    setSearchValue('')
+  }, [onTokenSelect, searchToken, setImportTokenList, setSearchValue])
 
   return (
     <Dialog
@@ -67,7 +102,12 @@ const TokenSelect: React.FC<{
         ...dialogProps?.content
       }}
     >
-      <Input border placeholder="Search name /address" />
+      <Input
+        border
+        placeholder={t`Search name / address`}
+        value={searchValue}
+        onChange={(ev) => setSearchValue(ev.target.value)}
+      />
       <div className="space-y-3">
         <KanitText variant={'primary'}>
           <Trans>Popular Tokens</Trans>
@@ -87,10 +127,10 @@ const TokenSelect: React.FC<{
         </Flex>
       </div>
       <div className="space-y-1 overflow-y-scroll">
-        {(tokenList || lastTokenList).map((token) => (
+        {lastTokenList.map((token) => (
           <Grid
             key={token.isNative ? zeroAddress : token.address}
-            className="cursor-pointer grid-cols-[auto_1fr_auto] items-center gap-2.5 rounded-3xl p-2 pr-4 hover:bg-input-bg"
+            className="cursor-pointer grid-cols-[auto_1fr_auto] items-center gap-2.5 rounded-3xl py-2 hover:bg-input-bg"
             onClick={() => handleTokenSelect(token)}
           >
             <TokenImage token={token} className="size-10" />
@@ -103,6 +143,27 @@ const TokenSelect: React.FC<{
             <TokenBalance token={token} />
           </Grid>
         ))}
+        {searchToken && (
+          <Grid
+            key={searchToken.isNative ? zeroAddress : searchToken.address}
+            className="cursor-pointer grid-cols-[auto_1fr_auto] items-center gap-2.5 rounded-3xl py-2 hover:bg-input-bg"
+            onClick={() => handleTokenSelect(searchToken)}
+          >
+            <TokenImage token={searchToken} className="size-10" />
+            <div className="flex-1 space-y-1">
+              <KanitText className="text-lg leading-none text-text-primary">{searchToken.symbol}</KanitText>
+              <KanitText variant={'tertiary'} className="text-sm leading-none">
+                {searchToken.name}
+              </KanitText>
+            </div>
+            <Flex className="space-x-2">
+              <TokenBalance token={searchToken} />
+              <Button variant={'gradient'} className="px-2" onClick={handleImport}>
+                <Trans>Import</Trans>
+              </Button>
+            </Flex>
+          </Grid>
+        )}
       </div>
     </Dialog>
   )

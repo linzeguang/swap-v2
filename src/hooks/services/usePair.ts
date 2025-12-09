@@ -1,7 +1,7 @@
 import { Pair } from '@pippyswap/v2-sdk'
 import { CurrencyAmount, Token } from '@uniswap/sdk-core'
 import { useSetAtom } from 'jotai/react'
-import { useEffect, useMemo } from 'react'
+import { useEffect } from 'react'
 
 import { useFetch } from '@/hooks/services/useFetch'
 import { pairListAtom, tokenImagesAtom, tokenListAtom } from '@/stores/trade'
@@ -31,8 +31,11 @@ export const usePairList = () => {
   const setPairList = useSetAtom(pairListAtom)
   const { data } = useFetch<PairInfo[]>({ url: `/getPairList` })
 
-  const pairList = useMemo(() => {
-    return data?.data.map((pairInfo) => {
+  useEffect(() => {
+    if (!data) return
+    const tokenMap: Record<string, Token> = {}
+    const tokenImagesMap: Record<string, string> = {}
+    const pairList = data.data.map((pairInfo) => {
       const token0 = new Token(
         pairInfo.chainid,
         pairInfo.token0,
@@ -47,38 +50,22 @@ export const usePairList = () => {
         pairInfo.token1_symbol,
         pairInfo.token1_name
       )
-      setTokenList((prev) => {
-        let isNew = false
-        if (!prev.find((token) => token.wrapped.address === token0.address)) {
-          isNew = true
-          prev.push(token0)
-        }
-        if (!prev.find((token) => token.wrapped.address === token1.address)) {
-          isNew = true
-          prev.push(token1)
-        }
-        return isNew ? [...prev] : prev
-      })
-      setTokenImages((prev) => {
-        let isNew = false
-        if (!prev[pairInfo.token0]) {
-          isNew = true
-          prev[pairInfo.token0] = pairInfo.token0_logo_url
-        }
-        if (!prev[pairInfo.token1]) {
-          isNew = true
-          prev[pairInfo.token1] = pairInfo.token1_logo_url
-        }
-        return isNew ? { ...prev } : prev
-      })
+      tokenMap[token0.address] = token0
+      tokenMap[token1.address] = token1
+      tokenImagesMap[token0.address] = pairInfo.token0_logo_url
+      tokenImagesMap[token1.address] = pairInfo.token1_logo_url
       const currencyAmount0 = CurrencyAmount.fromRawAmount(token0, pairInfo.reserve0)
       const currencyAmount1 = CurrencyAmount.fromRawAmount(token1, pairInfo.reserve1)
-
       return new Pair(currencyAmount0, currencyAmount1)
     })
-  }, [data?.data, setTokenImages, setTokenList])
 
-  useEffect(() => {
-    if (pairList) setPairList(pairList)
-  }, [pairList, setPairList])
+    setTokenList((prev) => {
+      prev.forEach((token) => {
+        tokenMap[token.address] = token
+      })
+      return Object.values(tokenMap)
+    })
+    setTokenImages((prev) => ({ ...tokenImagesMap, ...prev }))
+    setPairList(pairList)
+  }, [data, setPairList, setTokenImages, setTokenList])
 }

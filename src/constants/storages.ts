@@ -3,5 +3,6 @@ export enum StorageKey {
   Theme = 'Theme',
   Slippage = 'Slippage',
   Deadline = 'Deadline',
-  InfiniteApproval = 'InfiniteApproval'
+  InfiniteApproval = 'InfiniteApproval',
+  ImportTokens = 'ImportTokens'
 }

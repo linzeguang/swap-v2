@@ -1,6 +1,9 @@
+import { useAppKitNetwork } from '@reown/appkit/react'
 import { Token } from '@uniswap/sdk-core'
 import { useSetAtom } from 'jotai/react'
-import { useEffect, useMemo } from 'react'
+import { useEffect, useMemo, useState } from 'react'
+import { Address, erc20Abi, isAddress } from 'viem'
+import { useReadContracts } from 'wagmi'
 
 import { useFetch } from '@/hooks/services/useFetch'
 import { tokenImagesAtom, tokenListAtom } from '@/stores/trade'
@@ -29,4 +32,46 @@ export const useTokenList = () => {
   useEffect(() => {
     if (tokenList) setTokenList(tokenList)
   }, [setTokenList, tokenList])
+}
+
+export const useSearchToken = () => {
+  const { chainId } = useAppKitNetwork()
+  const [searchValue, setSearchValue] = useState('')
+
+  const { data: tokenMeta } = useReadContracts({
+    contracts: [
+      {
+        abi: erc20Abi,
+        address: searchValue as Address,
+        functionName: 'decimals'
+      },
+      {
+        abi: erc20Abi,
+        address: searchValue as Address,
+        functionName: 'symbol'
+      },
+      {
+        abi: erc20Abi,
+        address: searchValue as Address,
+        functionName: 'name'
+      }
+    ],
+    query: {
+      enabled: isAddress(searchValue)
+    }
+  })
+
+  const token = useMemo(() => {
+    if (!chainId || !searchValue || !tokenMeta) return
+    const [{ result: decimals }, { result: symbol }, { result: name }] = tokenMeta
+
+    return new Token(Number(chainId), searchValue, decimals!, symbol, name)
+  }, [chainId, searchValue, tokenMeta])
+  console.log('>>>>>> token: ', token)
+
+  return {
+    token,
+    searchValue,
+    setSearchValue
+  }
 }
