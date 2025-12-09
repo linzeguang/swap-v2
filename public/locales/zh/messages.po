@@ -13,6 +13,13 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
+#. placeholder {0}: pair.token0.symbol
+#. placeholder {0}: pair.token1.symbol
+#: src/components/pool/PoolList.tsx:78
+#: src/components/pool/PoolList.tsx:93
+msgid "{0}"
+msgstr ""
+
 #: src/components/pool/AddLiquidityForm.tsx:188
 msgid "Add"
 msgstr ""
@@ -24,6 +31,7 @@ msgstr ""
 #: src/components/pool/AddLiquidityForm.tsx:119
 #: src/components/pool/AddLiquidityForm.tsx:125
 #: src/components/pool/AddLiquidityForm.tsx:146
+#: src/components/pool/PoolList.tsx:49
 msgid "Add Liquidity"
 msgstr ""
 
@@ -53,6 +61,14 @@ msgstr ""
 msgid "Half"
 msgstr ""
 
+#: src/components/pool/PoolList.tsx:114
+msgid "Hot Pool"
+msgstr ""
+
+#: src/components/common/TokenSelect.tsx:162
+msgid "Import"
+msgstr ""
+
 #: src/components/common/Settings.tsx:192
 msgid "Infinite Approval"
 msgstr ""
@@ -65,6 +81,11 @@ msgstr ""
 msgid "Limit"
 msgstr ""
 
+#: src/layouts/Nav.tsx:142
+msgid "Locale"
+msgstr ""
+
+#: src/components/pool/PoolList.tsx:63
 #: src/components/pool/Preview.tsx:146
 msgid "LP address"
 msgstr ""
@@ -85,13 +106,13 @@ msgstr ""
 msgid "Not Route to swap"
 msgstr ""
 
-#: src/layouts/Nav.tsx:98
+#: src/layouts/Nav.tsx:99
 #: src/layouts/Navs.tsx:17
-#: src/pages/pool.tsx:14
+#: src/pages/pool.tsx:15
 msgid "Pool"
 msgstr ""
 
-#: src/components/common/TokenSelect.tsx:73
+#: src/components/common/TokenSelect.tsx:113
 msgid "Popular Tokens"
 msgstr ""
 
@@ -99,7 +120,11 @@ msgstr ""
 msgid "Price impact"
 msgstr ""
 
-#: src/components/common/TokenSelect.tsx:53
+#: src/components/common/TokenSelect.tsx:107
+msgid "Search name / address"
+msgstr ""
+
+#: src/components/common/TokenSelect.tsx:88
 msgid "Select Token"
 msgstr ""
 
@@ -113,7 +138,7 @@ msgstr ""
 
 #: src/components/swap/SwapForm.tsx:141
 #: src/components/swap/TradeType.tsx:22
-#: src/layouts/Nav.tsx:88
+#: src/layouts/Nav.tsx:89
 #: src/layouts/Navs.tsx:13
 #: src/pages/swap.tsx:12
 msgid "Swap"
@@ -128,7 +153,7 @@ msgstr ""
 msgid "To"
 msgstr ""
 
-#: src/components/common/TokenSelect.tsx:39
+#: src/components/common/TokenSelect.tsx:74
 msgid "Token Select"
 msgstr ""
 
