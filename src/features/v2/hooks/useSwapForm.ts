@@ -73,6 +73,8 @@ export const useSwapForm = () => {
 
     setInputToken(nextInputToken)
     setOutputToken(nextOutputToken)
+    setInputAmount('')
+    setOutputAmount('')
 
     if (nextInputToken) {
       searchParams.set('inputToken', nextInputToken.isNative ? zeroAddress : nextInputToken.wrapped.address)

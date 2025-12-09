@@ -7,6 +7,11 @@
     outline: none;
   }
 
+  /* 全局隐藏滚动条（Chrome / Safari / Edge） */
+  ::-webkit-scrollbar {
+    display: none;
+  }
+
   html {
     @apply bg-[#191A2E];
   }
