@@ -255,10 +255,13 @@ export const usePairs = (inputToken?: Currency, outputToken?: Currency) => {
     if (pairReserves.length === 1) {
       const [{ result: reserves }] = pairReserves
       const [reserve0, reserve1] = reserves as [bigint, bigint, number]
+      const [token0, token1] = inputToken.wrapped.sortsBefore(outputToken.wrapped)
+        ? [inputToken, outputToken]
+        : [outputToken, inputToken]
       return [
         new Pair(
-          CurrencyAmount.fromRawAmount(inputToken.wrapped, reserve0.toString()),
-          CurrencyAmount.fromRawAmount(outputToken.wrapped, reserve1.toString())
+          CurrencyAmount.fromRawAmount(token0.wrapped, reserve0.toString()),
+          CurrencyAmount.fromRawAmount(token1.wrapped, reserve1.toString())
         )
       ]
     }
@@ -269,6 +272,7 @@ export const usePairs = (inputToken?: Currency, outputToken?: Currency) => {
     return pairsTokens.map(([token0, token1], index) => {
       const { result: reserves } = pairReserves[index]
       const [reserve0, reserve1] = reserves as [bigint, bigint, number]
+
       return new Pair(
         CurrencyAmount.fromRawAmount(token0.wrapped, reserve0.toString()),
         CurrencyAmount.fromRawAmount(token1.wrapped, reserve1.toString())

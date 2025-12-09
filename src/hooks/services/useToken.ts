@@ -30,7 +30,7 @@ export const useTokenList = () => {
   }, [data?.data, setTokenImages])
 
   useEffect(() => {
-    if (tokenList) setTokenList(tokenList)
+    if (tokenList) setTokenList((prev) => [...prev, ...tokenList])
   }, [setTokenList, tokenList])
 }
 

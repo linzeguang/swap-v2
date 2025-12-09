@@ -33,10 +33,7 @@ export const useSwapForm = () => {
   const currencyAmountInput = useMemo(
     () =>
       inputToken && Number(inputAmount)
-        ? CurrencyAmount.fromRawAmount(
-            inputToken,
-            parseUnits(Number(inputAmount).toString(), inputToken.decimals).toString()
-          )
+        ? CurrencyAmount.fromRawAmount(inputToken, parseUnits(inputAmount, inputToken.decimals).toString())
         : undefined,
     [inputAmount, inputToken]
   )
@@ -44,10 +41,7 @@ export const useSwapForm = () => {
   const currencyAmountOutput = useMemo(
     () =>
       outputToken && Number(outputAmount)
-        ? CurrencyAmount.fromRawAmount(
-            outputToken,
-            parseUnits(Number(outputAmount).toString(), outputToken.decimals).toString()
-          )
+        ? CurrencyAmount.fromRawAmount(outputToken, parseUnits(outputAmount, outputToken.decimals).toString())
         : undefined,
     [outputAmount, outputToken]
   )
@@ -58,15 +52,9 @@ export const useSwapForm = () => {
       CurrencyAmount.fromRawAmount(inputToken, parseUnits(inputAmount || '0', inputToken.decimals).toString())
 
     if (!currencyAmount?.greaterThan(0) || !route) return []
-    const tradeType = route.input.wrapped.equals(currencyAmount.currency.wrapped)
-      ? TradeType.EXACT_INPUT
-      : TradeType.EXACT_OUTPUT
-    const trade = new Trade(route, currencyAmount, tradeType)
+    const trade = new Trade(route, currencyAmount, TradeType.EXACT_INPUT)
 
-    return [
-      trade,
-      tradeType === TradeType.EXACT_OUTPUT ? trade.inputAmount.toSignificant() : trade.outputAmount.toSignificant()
-    ]
+    return [trade, trade.outputAmount.toSignificant()]
   }, [inputAmount, inputToken, route])
 
   const [tradeByOutputToken, inputOptimal] = useMemo(() => {
@@ -75,15 +63,9 @@ export const useSwapForm = () => {
       CurrencyAmount.fromRawAmount(outputToken, parseUnits(outputAmount || '0', outputToken.decimals).toString())
 
     if (!currencyAmount?.greaterThan(0) || !route) return []
-    const tradeType = route.output.wrapped.equals(currencyAmount.currency.wrapped)
-      ? TradeType.EXACT_OUTPUT
-      : TradeType.EXACT_INPUT
-    const trade = new Trade(route, currencyAmount, tradeType)
+    const trade = new Trade(route, currencyAmount, TradeType.EXACT_OUTPUT)
 
-    return [
-      trade,
-      tradeType === TradeType.EXACT_OUTPUT ? trade.inputAmount.toSignificant() : trade.outputAmount.toSignificant()
-    ]
+    return [trade, trade.inputAmount.toSignificant()]
   }, [outputAmount, outputToken, route])
 
   const handleSwapTokens = useCallback(() => {
@@ -155,13 +137,14 @@ export const useSwapForm = () => {
     if (addressA && !inputToken) searchParams.delete('inputToken')
     if (addressB && !outputToken) searchParams.delete('outputToken')
     setSearchParams(searchParams)
-    setInputToken(inputToken || tokenConfig?.ETH)
+    setInputToken(inputToken || !outputToken ? tokenConfig?.ETH : undefined)
     setOutputToken(outputToken)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   useDebounce(
     () => {
+      console.log('>>>>>> outputOptimal: ', outputOptimal)
       if (tokenType === TokenType.Input) setOutputAmount(outputOptimal || '')
     },
     500,
