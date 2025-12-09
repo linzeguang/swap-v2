@@ -23,6 +23,7 @@ const fetcher = async <T = any>({
   // if (import.meta.env.MODE === 'production') url = import.meta.env.VITE_API_TARGET_URL + '/api' + url
   // else url = import.meta.env.VITE_API_BASE_URL + url
   url = import.meta.env.VITE_API_BASE_URL + url
+  console.log('>>>>>> url: ', url)
 
   // 初始化body数据
   let body: BodyInit | undefined
