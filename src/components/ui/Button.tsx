@@ -14,11 +14,12 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        default: 'bg-content text-secondary border-content',
+        default: 'bg-content text-secondary border-content ',
         gradient: 'gradient-button border-0 text-text-primary',
         primary: 'bg-primary text-primary-foreground border-primary',
         secondary: 'bg-secondary text-secondary-foreground border-secondary',
-        radio: 'bg-input-bg text-secondary border-input-bg hover:bg-secondary hover:text-secondary-foreground'
+        radio: 'bg-input-bg text-secondary border-input-bg hover:bg-secondary hover:text-secondary-foreground',
+        dialog: 'button-dialog border-none'
       },
       size: {
         xs: 'h-5 px-2  text-xs',

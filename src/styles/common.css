@@ -13,6 +13,21 @@
 .card {
   @apply rounded-3xl border border-border bg-content p-4;
 }
+.border-card {
+  border: 15px solid;
+  border-image: url('./images/border4x.png') 60;
+}
+
+.button-dialog {
+  background:
+    /* url('./images/button.png') center center no-repeat, */
+    url('./images/button.png') right no-repeat,
+    url('./images/button.png') left no-repeat;
+  background-size:
+    20px 20px,
+    20px auto;
+  /* 1px 100%; */
+}
 
 .tip-card {
   @apply rounded-xl border border-border bg-content p-2;

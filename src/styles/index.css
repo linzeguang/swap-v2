@@ -13,42 +13,10 @@
   }
 
   html {
-    @apply bg-[#191A2E];
-  }
-
-  header {
-    @apply border-b border-border bg-[#191A2E];
-  }
-  aside {
-    @apply border-r border-border bg-[#191A2E];
-  }
-
-  footer {
-    @apply bg-[#27262C];
-  }
-
-  .dividing-wieght {
-    --dividing-wieght: 1px; /* 分割线粗细 */
-  }
-  .dividing-wieght-bold {
-    --dividing-wieght: 2px; /* 分割线粗细 */
-  }
-
-  .gradient-button {
-    background: linear-gradient(
-      var(--color-gradient-button-deg),
-      var(--color-gradient-button-from),
-      var(--color-gradient-button-to)
-    );
-  }
-
-  .gradient-text {
-    background: linear-gradient(
-      var(--color-gradient-button-deg),
-      var(--color-gradient-button-from),
-      var(--color-gradient-button-to)
-    );
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
+    @apply min-h-screen;
+    background-repeat: no-repeat;
+    background-image: url('./images/bg.png');
+    background-size: cover;
+    background-position: center;
   }
 }
