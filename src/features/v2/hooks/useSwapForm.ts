@@ -10,7 +10,7 @@ import { useWriteContract } from 'wagmi'
 import { areTokensIdentical, jsbiToBigInt } from '@/features/utils'
 import { waitForTransactionReceipt } from '@/reown'
 
-import { WETH_ABI } from '../abis'
+import { WERC20_ABI, WETH_ABI } from '../abis'
 import { useV2Context } from '../provider'
 import { usePairs } from './usePair'
 import { useRoute } from './useSwap'
@@ -35,12 +35,14 @@ export const useSwapForm = () => {
 
   const route = useRoute(pairs, inputToken, outputToken)
 
-  const [isWrapETH, isUnwrapETH] = useMemo(() => {
-    if (!tokenConfig) return []
+  const [isWrapETH, isUnwrapETH, isWrapUSDT, isUnwrapUSDT] = useMemo(() => {
+    if (!tokenConfig || !inputToken || !outputToken) return []
 
     return [
-      inputToken?.isNative && outputToken?.wrapped.equals(tokenConfig?.WETH),
-      outputToken?.isNative && inputToken?.wrapped.equals(tokenConfig?.WETH)
+      inputToken.isNative && outputToken.wrapped.equals(tokenConfig.WETH),
+      outputToken.isNative && inputToken.wrapped.equals(tokenConfig.WETH),
+      inputToken.wrapped.equals(tokenConfig.USDT) && outputToken.wrapped.equals(tokenConfig.UCO),
+      outputToken.wrapped.equals(tokenConfig.USDT) && inputToken.wrapped.equals(tokenConfig.UCO)
     ]
   }, [inputToken, outputToken, tokenConfig])
 
@@ -65,26 +67,26 @@ export const useSwapForm = () => {
       inputToken &&
       CurrencyAmount.fromRawAmount(inputToken, parseUnits(inputAmount || '0', inputToken.decimals).toString())
 
-    if ((isWrapETH || isUnwrapETH) && currencyAmount?.greaterThan(0))
+    if ((isWrapETH || isUnwrapETH || isWrapUSDT || isUnwrapUSDT) && currencyAmount?.greaterThan(0))
       return [undefined, currencyAmount?.toSignificant()]
     if (!currencyAmount?.greaterThan(0) || !route) return []
     const trade = new Trade(route, currencyAmount, TradeType.EXACT_INPUT)
 
     return [trade, trade.outputAmount.toSignificant()]
-  }, [inputAmount, inputToken, isUnwrapETH, isWrapETH, route])
+  }, [inputAmount, inputToken, isUnwrapETH, isUnwrapUSDT, isWrapETH, isWrapUSDT, route])
 
   const [tradeByOutputToken, inputOptimal] = useMemo(() => {
     const currencyAmount =
       outputToken &&
       CurrencyAmount.fromRawAmount(outputToken, parseUnits(outputAmount || '0', outputToken.decimals).toString())
 
-    if ((isWrapETH || isUnwrapETH) && currencyAmount?.greaterThan(0))
+    if ((isWrapETH || isUnwrapETH || isWrapUSDT || isUnwrapUSDT) && currencyAmount?.greaterThan(0))
       return [undefined, currencyAmount?.toSignificant()]
     if (!currencyAmount?.greaterThan(0) || !route) return []
     const trade = new Trade(route, currencyAmount, TradeType.EXACT_OUTPUT)
 
     return [trade, trade.inputAmount.toSignificant()]
-  }, [isUnwrapETH, isWrapETH, outputAmount, outputToken, route])
+  }, [isUnwrapETH, isUnwrapUSDT, isWrapETH, isWrapUSDT, outputAmount, outputToken, route])
 
   const handleSwapTokens = useCallback(() => {
     const [nextInputToken, nextOutputToken] = [outputToken, inputToken]
@@ -142,7 +144,7 @@ export const useSwapForm = () => {
     }
   }, [])
 
-  const deposit = useCallback(async () => {
+  const depositETH = useCallback(async () => {
     if (!tokenConfig) return
 
     const toastId = toast.loading('Depositing, please confirm in your wallet.')
@@ -162,7 +164,7 @@ export const useSwapForm = () => {
     }
   }, [currencyAmountInput, tokenConfig, writeContractAsync])
 
-  const withdraw = useCallback(async () => {
+  const withdrawETH = useCallback(async () => {
     if (!tokenConfig) return
 
     const toastId = toast.loading('Withdrawing, please confirm in your wallet.')
@@ -170,6 +172,46 @@ export const useSwapForm = () => {
       const txHash = await writeContractAsync({
         abi: WETH_ABI,
         address: tokenConfig?.WETH.address as Address,
+        functionName: 'withdraw',
+        args: [jsbiToBigInt(currencyAmountInput?.quotient)]
+      })
+      toast.loading('Waiting for blockchain confirmation...', { id: toastId })
+      await waitForTransactionReceipt(txHash)
+      toast.success('Withdraw Successful.', { id: toastId })
+    } catch (error) {
+      toast.error('Withdraw Failed.', { id: toastId })
+      throw error
+    }
+  }, [currencyAmountInput, tokenConfig, writeContractAsync])
+
+  const depositUSDT = useCallback(async () => {
+    if (!tokenConfig) return
+
+    const toastId = toast.loading('Depositing, please confirm in your wallet.')
+    try {
+      const txHash = await writeContractAsync({
+        abi: WERC20_ABI,
+        address: tokenConfig?.UCO.address as Address,
+        functionName: 'deposit',
+        args: [jsbiToBigInt(currencyAmountInput?.quotient)]
+      })
+      toast.loading('Waiting for blockchain confirmation...', { id: toastId })
+      await waitForTransactionReceipt(txHash)
+      toast.success('Depositing Successful.', { id: toastId })
+    } catch (error) {
+      toast.error('Depositing Failed.', { id: toastId })
+      throw error
+    }
+  }, [currencyAmountInput, tokenConfig, writeContractAsync])
+
+  const withdrawUSDT = useCallback(async () => {
+    if (!tokenConfig) return
+
+    const toastId = toast.loading('Withdrawing, please confirm in your wallet.')
+    try {
+      const txHash = await writeContractAsync({
+        abi: WERC20_ABI,
+        address: tokenConfig?.UCO.address as Address,
         functionName: 'withdraw',
         args: [jsbiToBigInt(currencyAmountInput?.quotient)]
       })
@@ -197,14 +239,13 @@ export const useSwapForm = () => {
     if (addressA && !inputToken) searchParams.delete('inputToken')
     if (addressB && !outputToken) searchParams.delete('outputToken')
     setSearchParams(searchParams)
-    setInputToken(inputToken || !outputToken ? tokenConfig?.ETH : undefined)
+    setInputToken(inputToken || (!outputToken ? tokenConfig?.ETH : undefined))
     setOutputToken(outputToken)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   useDebounce(
     () => {
-      console.log('>>>>>> outputOptimal: ', outputOptimal)
       if (tokenType === TokenType.Input) setOutputAmount(outputOptimal || '')
     },
     500,
@@ -229,14 +270,18 @@ export const useSwapForm = () => {
     currencyAmountOutput,
     pairsLoading,
     route,
+    trade: tokenType ? (tokenType === TokenType.Input ? tradeByInputToken : tradeByOutputToken) : undefined,
     isWrapETH,
     isUnwrapETH,
-    trade: tokenType ? (tokenType === TokenType.Input ? tradeByInputToken : tradeByOutputToken) : undefined,
+    isWrapUSDT,
+    isUnwrapUSDT,
     handleSwapTokens,
     handleChangeToken,
     handleChangeAmount,
     refreshPairs,
-    deposit,
-    withdraw
+    depositETH,
+    withdrawETH,
+    depositUSDT,
+    withdrawUSDT
   }
 }

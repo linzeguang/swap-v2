@@ -40,17 +40,24 @@ const SwapForm: React.FC = () => {
     trade,
     isWrapETH,
     isUnwrapETH,
+    isWrapUSDT,
+    isUnwrapUSDT,
     handleSwapTokens,
     handleChangeToken,
     handleChangeAmount,
     refreshPairs,
-    deposit,
-    withdraw
+    depositETH,
+    withdrawETH,
+    depositUSDT,
+    withdrawUSDT
   } = useSwapForm()
 
   const { spender, swap } = useSwap()
 
-  const { approve: approveCurrencyAmount } = useApprove(spender, currencyAmountInput)
+  const { approve: approveCurrencyAmount } = useApprove(
+    isWrapUSDT || isUnwrapUSDT ? tokenConfig!.UCO.address : spender,
+    currencyAmountInput
+  )
 
   const insufficientBalance = useMemo(() => {
     return !!(currencyAmountInput && currencyBalanceInput) && currencyBalanceInput.lessThan(currencyAmountInput)
@@ -75,10 +82,17 @@ const SwapForm: React.FC = () => {
     try {
       setLoading(true)
       if (isWrapETH) {
-        await deposit()
+        await depositETH()
       } else if (isUnwrapETH) {
         await approveCurrencyAmount()
-        await withdraw()
+        await withdrawETH()
+      } else if (isWrapUSDT) {
+        console.log('>>>>>> isWrapUSDT: ', isWrapUSDT)
+        await approveCurrencyAmount()
+        await depositUSDT()
+      } else if (isUnwrapUSDT) {
+        await approveCurrencyAmount()
+        await withdrawUSDT()
       } else {
         if (!trade) throw false
         await approveCurrencyAmount()
@@ -90,7 +104,21 @@ const SwapForm: React.FC = () => {
     }
 
     setLoading(false)
-  }, [approveCurrencyAmount, deposit, isUnwrapETH, isWrapETH, refreshTokens, swap, tokenConfig, trade, withdraw])
+  }, [
+    approveCurrencyAmount,
+    depositETH,
+    depositUSDT,
+    isUnwrapETH,
+    isUnwrapUSDT,
+    isWrapETH,
+    isWrapUSDT,
+    refreshTokens,
+    swap,
+    tokenConfig,
+    trade,
+    withdrawETH,
+    withdrawUSDT
+  ])
 
   return (
     <Card>
@@ -147,7 +175,7 @@ const SwapForm: React.FC = () => {
       <SubmitButton
         className="mt-6"
         walletConnect={isConnected}
-        disabled={isWrapETH || isUnwrapETH ? false : !!pairsLoading || !route}
+        disabled={isWrapETH || isUnwrapETH || isWrapUSDT || isUnwrapUSDT ? false : !!pairsLoading || !route}
         insufficientBalance={insufficientBalance}
         isLoading={loading}
         onClick={handleSwap}
@@ -155,7 +183,9 @@ const SwapForm: React.FC = () => {
         <KanitText>
           {pairsLoading ? (
             <Trans>Fetching Swap Route</Trans>
-          ) : isWrapETH || isUnwrapETH || route ? (
+          ) : currencyAmountInput?.lessThan(0) ? (
+            <Trans>Input Amount</Trans>
+          ) : isWrapETH || isUnwrapETH || isWrapUSDT || isUnwrapUSDT || route ? (
             <Trans>Swap</Trans>
           ) : (
             <Trans>Not Route to swap</Trans>

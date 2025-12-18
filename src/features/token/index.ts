@@ -8,6 +8,7 @@ export default {
   [bscTestnet.id]: {
     ETH: BSC_TESTNET.BNB,
     WETH: BSC_TESTNET.WBNB,
+    UCO: BSC_TESTNET.UCO,
     USDT: BSC_TESTNET.USDT,
     TOKEN_LIST: BSC_TESTNET.TOKEN_LIST,
     POPULAR_TOKENS: BSC_TESTNET.POPULAR_TOKENS
@@ -15,8 +16,12 @@ export default {
   [bsc.id]: {
     ETH: BSC.BNB,
     WETH: BSC.WBNB,
+    UCO: BSC.UCO,
     USDT: BSC.USDT,
     TOKEN_LIST: BSC.TOKEN_LIST,
     POPULAR_TOKENS: BSC.POPULAR_TOKENS
   }
-} as Record<number, { ETH: Currency; WETH: Token; USDT: Token; TOKEN_LIST: Currency[]; POPULAR_TOKENS: Currency[] }>
+} as Record<
+  number,
+  { ETH: Currency; WETH: Token; UCO: Token; USDT: Token; TOKEN_LIST: Currency[]; POPULAR_TOKENS: Currency[] }
+>

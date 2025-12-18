@@ -24,6 +24,7 @@ export class Native extends NativeCurrency {
 
 export const BNB = Native.onChain(bscTestnet.id)
 export const WBNB = BNB.wrapped
+export const UCO = new Token(bscTestnet.id, '0x94779bD538e1c689827A4eA5a300713C34673582', 18, 'UCO', 'UCO Coin')
 export const USDT = new Token(bscTestnet.id, '0x59e4842651F17823c990f54d14c149a41c558845', 18, 'USDT', 'Tether USD')
 export const USDC = new Token(bscTestnet.id, '0x64544969ed7EBf5f083679233325356EbE738930', 18, 'USDC', 'USD Coin')
 export const ETH = new Token(bscTestnet.id, '0xd66c6B4F0be8CE5b39D52E0Fd1344c389929B378', 18, 'ETH', 'Ethereum Token')
@@ -39,6 +40,7 @@ export const TOKEN_LIST = [
   WBNB,
   // TOKENA, TOKENB, TOKENC, TOKEND,
   USDT,
+  UCO,
   USDC,
   ETH
 ]
