@@ -1,12 +1,16 @@
 import { Trade } from '@pippyswap/v2-sdk'
 import { Currency, CurrencyAmount, TradeType } from '@uniswap/sdk-core'
 import { useCallback, useEffect, useMemo, useState } from 'react'
+import toast from 'react-hot-toast'
 import { useSearchParams } from 'react-router'
 import { useDebounce } from 'react-use'
-import { parseUnits, zeroAddress } from 'viem'
+import { Address, parseUnits, zeroAddress } from 'viem'
+import { useWriteContract } from 'wagmi'
 
-import { areTokensIdentical } from '@/features/utils'
+import { areTokensIdentical, jsbiToBigInt } from '@/features/utils'
+import { waitForTransactionReceipt } from '@/reown'
 
+import { WETH_ABI } from '../abis'
 import { useV2Context } from '../provider'
 import { usePairs } from './usePair'
 import { useRoute } from './useSwap'
@@ -17,6 +21,7 @@ export enum TokenType {
 }
 
 export const useSwapForm = () => {
+  const { writeContractAsync } = useWriteContract()
   const { tokenConfig } = useV2Context()
   const [searchParams, setSearchParams] = useSearchParams()
 
@@ -29,6 +34,15 @@ export const useSwapForm = () => {
   const { pairs, isLoaing: pairsLoading, refreshPairs } = usePairs(inputToken, outputToken)
 
   const route = useRoute(pairs, inputToken, outputToken)
+
+  const [isWrapETH, isUnwrapETH] = useMemo(() => {
+    if (!tokenConfig) return []
+
+    return [
+      inputToken?.isNative && outputToken?.wrapped.equals(tokenConfig?.WETH),
+      outputToken?.isNative && inputToken?.wrapped.equals(tokenConfig?.WETH)
+    ]
+  }, [inputToken, outputToken, tokenConfig])
 
   const currencyAmountInput = useMemo(
     () =>
@@ -51,22 +65,26 @@ export const useSwapForm = () => {
       inputToken &&
       CurrencyAmount.fromRawAmount(inputToken, parseUnits(inputAmount || '0', inputToken.decimals).toString())
 
+    if ((isWrapETH || isUnwrapETH) && currencyAmount?.greaterThan(0))
+      return [undefined, currencyAmount?.toSignificant()]
     if (!currencyAmount?.greaterThan(0) || !route) return []
     const trade = new Trade(route, currencyAmount, TradeType.EXACT_INPUT)
 
     return [trade, trade.outputAmount.toSignificant()]
-  }, [inputAmount, inputToken, route])
+  }, [inputAmount, inputToken, isUnwrapETH, isWrapETH, route])
 
   const [tradeByOutputToken, inputOptimal] = useMemo(() => {
     const currencyAmount =
       outputToken &&
       CurrencyAmount.fromRawAmount(outputToken, parseUnits(outputAmount || '0', outputToken.decimals).toString())
 
+    if ((isWrapETH || isUnwrapETH) && currencyAmount?.greaterThan(0))
+      return [undefined, currencyAmount?.toSignificant()]
     if (!currencyAmount?.greaterThan(0) || !route) return []
     const trade = new Trade(route, currencyAmount, TradeType.EXACT_OUTPUT)
 
     return [trade, trade.inputAmount.toSignificant()]
-  }, [outputAmount, outputToken, route])
+  }, [isUnwrapETH, isWrapETH, outputAmount, outputToken, route])
 
   const handleSwapTokens = useCallback(() => {
     const [nextInputToken, nextOutputToken] = [outputToken, inputToken]
@@ -124,6 +142,46 @@ export const useSwapForm = () => {
     }
   }, [])
 
+  const deposit = useCallback(async () => {
+    if (!tokenConfig) return
+
+    const toastId = toast.loading('Depositing, please confirm in your wallet.')
+    try {
+      const txHash = await writeContractAsync({
+        abi: WETH_ABI,
+        address: tokenConfig?.WETH.address as Address,
+        functionName: 'deposit',
+        value: jsbiToBigInt(currencyAmountInput?.quotient)
+      })
+      toast.loading('Waiting for blockchain confirmation...', { id: toastId })
+      await waitForTransactionReceipt(txHash)
+      toast.success('Depositing Successful.', { id: toastId })
+    } catch (error) {
+      toast.error('Depositing Failed.', { id: toastId })
+      throw error
+    }
+  }, [currencyAmountInput, tokenConfig, writeContractAsync])
+
+  const withdraw = useCallback(async () => {
+    if (!tokenConfig) return
+
+    const toastId = toast.loading('Withdrawing, please confirm in your wallet.')
+    try {
+      const txHash = await writeContractAsync({
+        abi: WETH_ABI,
+        address: tokenConfig?.WETH.address as Address,
+        functionName: 'withdraw',
+        args: [jsbiToBigInt(currencyAmountInput?.quotient)]
+      })
+      toast.loading('Waiting for blockchain confirmation...', { id: toastId })
+      await waitForTransactionReceipt(txHash)
+      toast.success('Withdraw Successful.', { id: toastId })
+    } catch (error) {
+      toast.error('Withdraw Failed.', { id: toastId })
+      throw error
+    }
+  }, [currencyAmountInput, tokenConfig, writeContractAsync])
+
   useEffect(() => {
     // load url token
     const addressA = searchParams.get('inputToken')
@@ -171,10 +229,14 @@ export const useSwapForm = () => {
     currencyAmountOutput,
     pairsLoading,
     route,
+    isWrapETH,
+    isUnwrapETH,
     trade: tokenType ? (tokenType === TokenType.Input ? tradeByInputToken : tradeByOutputToken) : undefined,
     handleSwapTokens,
     handleChangeToken,
     handleChangeAmount,
-    refreshPairs
+    refreshPairs,
+    deposit,
+    withdraw
   }
 }

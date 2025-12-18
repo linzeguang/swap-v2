@@ -4,7 +4,7 @@ import { zeroAddress } from 'viem'
 
 export const isZeroAddress = (address: string) => address === zeroAddress
 
-export const jsbiToBigInt = (value: JSBI) => BigInt(value.toString())
+export const jsbiToBigInt = (value?: JSBI) => BigInt(value?.toString() || 0)
 
 export const areTokensIdentical = (currencyA: Currency | undefined, currencyB: Currency | undefined) => {
   if (!currencyA || !currencyB) return false
