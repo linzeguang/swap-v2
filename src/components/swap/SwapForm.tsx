@@ -24,7 +24,7 @@ const SwapForm: React.FC = () => {
 
   const [loading, setLoading] = useState(false)
   const [currencyBalanceInput, setCurrencyBalanceInput] = useState<CurrencyAmount<Currency>>()
-  const [currencyBalanceOutput, setCurrencyBalanceOutput] = useState<CurrencyAmount<Currency>>()
+  // const [currencyBalanceOutput, setCurrencyBalanceOutput] = useState<CurrencyAmount<Currency>>()
   const balanceInputRef = useRef<ComponentRef<typeof TokenBalance>>(null)
   const balanceOutputRef = useRef<ComponentRef<typeof TokenBalance>>(null)
 
@@ -35,7 +35,6 @@ const SwapForm: React.FC = () => {
     outputToken,
     outputAmount,
     currencyAmountInput,
-    currencyAmountOutput,
     pairsLoading,
     route,
     trade,
@@ -128,7 +127,11 @@ const SwapForm: React.FC = () => {
               <Trans>To</Trans>
             </KanitText>
             <KanitText variant={'tertiary'} className="flex items-center space-x-2">
-              <TokenBalance ref={balanceOutputRef} token={outputToken} onBalanceChange={setCurrencyBalanceOutput} />
+              <TokenBalance
+                ref={balanceOutputRef}
+                token={outputToken}
+                //  onBalanceChange={setCurrencyBalanceOutput}
+              />
               <Wallet />
             </KanitText>
           </Flex>
