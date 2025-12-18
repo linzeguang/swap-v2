@@ -54,12 +54,13 @@ const SwapForm: React.FC = () => {
   const { approve: approveCurrencyAmount } = useApprove(spender, currencyAmountInput)
 
   const insufficientBalance = useMemo(() => {
-    if (tokenType === TokenType.Input)
-      return !!(currencyAmountInput && currencyBalanceInput) && currencyBalanceInput.lessThan(currencyAmountInput)
-    if (tokenType === TokenType.Output)
-      return !!(currencyAmountOutput && currencyBalanceOutput) && currencyBalanceOutput.lessThan(currencyAmountOutput)
-    return false
-  }, [currencyAmountInput, currencyAmountOutput, currencyBalanceInput, currencyBalanceOutput, tokenType])
+    return !!(currencyAmountInput && currencyBalanceInput) && currencyBalanceInput.lessThan(currencyAmountInput)
+    // if (tokenType === TokenType.Input)
+    //   return !!(currencyAmountInput && currencyBalanceInput) && currencyBalanceInput.lessThan(currencyAmountInput)
+    // if (tokenType === TokenType.Output)
+    //   return !!(currencyAmountOutput && currencyBalanceOutput) && currencyBalanceOutput.lessThan(currencyAmountOutput)
+    // return false
+  }, [currencyAmountInput, currencyBalanceInput])
 
   const refreshTokens = useCallback(() => {
     balanceInputRef.current?.refreshBalance()
