@@ -30,7 +30,7 @@ export function formatNumber(
  * @returns 格式化后的数字字符串。
  */
 export const formatLargeNumber = (
-  num: number,
+  num: BigNumber.Value,
   nums: number = 4,
   precision: number = 4,
   i18nUnits?: Record<'k' | 'M' | 'B', string>

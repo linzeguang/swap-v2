@@ -5,7 +5,7 @@ import React, { useCallback } from 'react'
 import { useSearchParams } from 'react-router'
 
 import { useCopy } from '@/hooks/useCopy'
-import { formatAddress } from '@/lib/format'
+import { formatAddress, formatLargeNumber } from '@/lib/format'
 import { pairListAtom } from '@/stores/trade'
 
 import KeyValue from '../common/KeyValue'
@@ -29,7 +29,7 @@ const PairCard: React.FC<{ pair: Pair }> = ({ pair }) => {
   }, [pair.token0.address, pair.token1.address, searchParams, setSearchParams])
 
   return (
-    <Card className="space-y-2">
+    <Card className="min-w-[350px] space-y-2">
       <Flex className="items-center justify-between">
         <Flex className="items-center">
           <Flex>
@@ -51,10 +51,10 @@ const PairCard: React.FC<{ pair: Pair }> = ({ pair }) => {
       </Flex>
       <KanitText variant={'tertiary'} className="flex justify-between text-sm">
         <span>
-          1 {pair.token0.symbol} = {pair.token0Price.toSignificant()} {pair.token1.symbol}
+          1 {pair.token0.symbol} = {formatLargeNumber(pair.token0Price.toSignificant(6))} {pair.token1.symbol}
         </span>
         <span>
-          1 {pair.token1.symbol} = {pair.token1Price.toSignificant()} {pair.token0.symbol}
+          1 {pair.token1.symbol} = {formatLargeNumber(pair.token1Price.toSignificant(6))} {pair.token0.symbol}
         </span>
       </KanitText>
       <KeyValue

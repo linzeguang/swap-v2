@@ -20,7 +20,6 @@ createAppKit({
     socials: false
   },
   allWallets: 'ONLY_MOBILE',
-
   enableAuthLogger: false,
   enableCoinbase: false,
   enableWalletGuide: false
