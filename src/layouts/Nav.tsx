@@ -54,8 +54,8 @@ const AccordionTriggerChildren: React.FC<{
   const [hoverable] = useHover((hovered) => (
     <Flex
       className={cn(
-        'hover:gradient-text flex-1 cursor-pointer items-center text-text-primary',
-        pathname === option.path && 'gradient-text',
+        'hover:gradient-text flex-1 cursor-pointer items-center px-6 py-2.5 text-text-primary',
+        pathname === option.path && 'gradient-text bg-red-100',
         collapsed && 'justify-center'
       )}
       onClick={() => {
@@ -86,6 +86,16 @@ const Nav = React.forwardRef<
 
   const accordionOptions: Array<React.ComponentPropsWithRef<typeof AccordionTriggerChildren>['option'] | undefined> = [
     {
+      name: t`Home`,
+      value: 'home',
+      icon: Sidebar.Home,
+      iconActive: Sidebar.HomeActive,
+      path: RoutePath.Home,
+      onClick: () => {
+        closeMenu?.()
+      }
+    },
+    {
       name: t`Swap`,
       value: 'swap',
       icon: Sidebar.Swap,
@@ -115,7 +125,7 @@ const Nav = React.forwardRef<
     //     closeMenu?.()
     //   }
     // },
-    undefined,
+    // undefined,
     // {
     //   name: t`Theme`,
     //   value: 'theme',
@@ -163,7 +173,7 @@ const Nav = React.forwardRef<
 
   return (
     <AccordionRoot
-      className={cn('space-y-3.5', className)}
+      className={cn('', className)}
       type="single"
       collapsible
       value={accordionValue}

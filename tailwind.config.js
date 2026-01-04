@@ -10,6 +10,9 @@ module.exports = {
         18: '4.5rem'
       },
       colors: {
+        background: {
+          DEFAULT: 'hsl(var(--color-background))'
+        },
         primary: {
           DEFAULT: 'hsl(var(--color-primary))',
           foreground: 'hsl(var(--color-primary-foreground))'

@@ -11,10 +11,13 @@ const RootLayout: React.FC = () => {
   const { isMobile } = useMediaQuery()
   return (
     <section
-      className={cn('grid h-screen grid-cols-[auto_1fr]', isMobile ? 'grid-rows-[4rem_1fr]' : 'grid-rows-[4.5rem_1fr]')}
+      className={cn(
+        'grid h-screen grid-cols-[18.75rem_1fr]',
+        isMobile ? 'grid-rows-[4rem_1fr]' : 'grid-rows-[5.5rem_1fr]'
+      )}
     >
-      <Header className="col-span-full" />
-      {!isMobile && <SideBar className="" />}
+      {!isMobile && <SideBar className="row-span-full" />}
+      <Header />
       <Main />
     </section>
   )

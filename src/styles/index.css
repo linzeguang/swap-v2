@@ -13,14 +13,14 @@
   }
 
   html {
-    @apply bg-[#191A2E];
+    @apply bg-background;
   }
 
   header {
-    @apply border-b border-border bg-[#191A2E];
+    @apply border-b border-border-thin;
   }
   aside {
-    @apply border-r border-border bg-[#191A2E];
+    @apply bg-[#191A2E];
   }
 
   footer {

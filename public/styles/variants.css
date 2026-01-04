@@ -1,4 +1,6 @@
 :root {
+  --color-background: 237 45% 10%; /* #0E0F25 */
+
   /* 取 hsl 的值 去除中间的逗号，方便tailwindcss控制透明度 */
   --color-primary: 18 98% 62%; /* #FD773E */
   --color-primary-foreground: 0 0% 100%; /* #fff */
@@ -32,7 +34,7 @@
 
   /* border */
   --color-border: 244 18% 17%; /* #252434 */
-  --color-border-thin: 244 18% 17%; /* #252434 */
+  --color-border-thin: 237 30% 14%; /* #191A2E */
 
   /* tip */
   --color-icon: 218 12% 64%; /* #99A1AF */
