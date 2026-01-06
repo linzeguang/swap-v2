@@ -19,6 +19,7 @@ export const useLiquidityForm = () => {
 
   const [searchParams, setSearchParams] = useSearchParams()
 
+  const [removeAmount, setRemoveAmount] = useState('')
   const [tokenA, setTokenA] = useState<Currency>()
   const [tokenB, setTokenB] = useState<Currency>()
   const [amountA, setAmountA] = useState('')
@@ -147,12 +148,14 @@ export const useLiquidityForm = () => {
     tokenB,
     amountA,
     amountB,
+    removeAmount,
     currencyAmountA,
     currencyAmountB,
     pair,
     isEmpty,
     ...pairInfo,
     handleChangeToken,
-    handleChangeAmount
+    handleChangeAmount,
+    setRemoveAmount
   }
 }

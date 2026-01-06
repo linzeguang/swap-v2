@@ -177,6 +177,8 @@ export const usePair = ({
     pair: isEmpty ? mockPair : pair,
     currencyAmountA,
     currencyAmountB,
+    reserve0,
+    reserve1,
     getAmountOptimal,
     refreshPair: () => {
       refreshPair()

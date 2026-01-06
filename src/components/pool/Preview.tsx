@@ -5,31 +5,24 @@ import React, { useMemo } from 'react'
 
 import { useCopy } from '@/hooks/useCopy'
 import { formatAddress } from '@/lib/format'
+import { cn } from '@/lib/utils'
 
 import KeyValue from '../common/KeyValue'
 import { Copy, Tip } from '../svgr/icons'
 import { Flex } from '../ui/Box'
 import { KanitText } from '../ui/Text'
 
-type Preview = {
-  tokenA?: Currency
-  tokenB?: Currency
-  totalSupply: bigint
-  lpTokenBalance: bigint
-  pair?: Pair
-  liquidityMinted?: CurrencyAmount<Token>
-  isCreated?: boolean
-}
-
-const Preview: React.FC<Preview> = ({
-  tokenA,
-  tokenB,
-  pair,
-  totalSupply,
-  lpTokenBalance,
-  isCreated,
-  liquidityMinted
-}) => {
+export const AddLiquidityPreview: React.FC<
+  {
+    tokenA?: Currency
+    tokenB?: Currency
+    totalSupply: bigint
+    lpTokenBalance: bigint
+    pair?: Pair
+    liquidityMinted?: CurrencyAmount<Token>
+    isCreated?: boolean
+  } & React.HTMLAttributes<HTMLDivElement>
+> = ({ tokenA, tokenB, pair, totalSupply, lpTokenBalance, isCreated, liquidityMinted, ...props }) => {
   const { buttonRef } = useCopy(pair?.liquidityToken.address || '')
 
   const [token0, token1] = useMemo(() => {
@@ -85,7 +78,7 @@ const Preview: React.FC<Preview> = ({
 
   if (!pair) return null
   return (
-    <div className="space-y-2.5 rounded-2xl border border-border-thin p-4">
+    <div {...props} className={cn('space-y-2.5 rounded-2xl border border-border-thin p-4', props.className)}>
       <KeyValue
         classname="lg:flex-row flex-col lg:items-center items-start space-x-0 lg:space-x-4"
         keyNode={`1 ${token0?.symbol} = ${pair.token0Price.toSignificant() || '--'} ${token1?.symbol}`}
@@ -161,4 +154,47 @@ const Preview: React.FC<Preview> = ({
   )
 }
 
-export default Preview
+export const RemoveLiquidityPreview: React.FC<
+  {
+    pair: Pair
+    removeCurrencyAmount1?: CurrencyAmount<Token>
+    removeCurrencyAmount0?: CurrencyAmount<Token>
+  } & React.HTMLAttributes<HTMLDivElement>
+> = ({ pair, removeCurrencyAmount1, removeCurrencyAmount0, ...props }) => {
+  return (
+    <div {...props} className={cn('space-y-2.5 rounded-2xl border border-border-thin p-4', props.className)}>
+      <KeyValue
+        keyNode={
+          <Flex className="items-center space-x-1">
+            {/* <Tip className="text-icon" /> */}
+            {/* <Tooltip trigger={{ children: <Tip className="text-icon" /> }}>
+              <KanitText>
+                <Trans>Slippage Tolerance</Trans>
+              </KanitText>
+            </Tooltip> */}
+            <KanitText variant={'tertiary'} className="text-xs">
+              <Trans>Receive</Trans> {pair.token0.symbol}
+            </KanitText>
+          </Flex>
+        }
+        valueNode={removeCurrencyAmount0?.toSignificant() || '--'}
+      />
+      <KeyValue
+        keyNode={
+          <Flex className="items-center space-x-1">
+            {/* <Tip className="text-icon" /> */}
+            {/* <Tooltip trigger={{ children: <Tip className="text-icon" /> }}>
+              <KanitText>
+                <Trans>Slippage Tolerance</Trans>
+              </KanitText>
+            </Tooltip> */}
+            <KanitText variant={'tertiary'} className="text-xs">
+              <Trans>Receive</Trans> {pair.token1.symbol}
+            </KanitText>
+          </Flex>
+        }
+        valueNode={removeCurrencyAmount1?.toSignificant() || '--'}
+      />
+    </div>
+  )
+}

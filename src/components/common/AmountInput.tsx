@@ -96,3 +96,25 @@ export const LiquidityAmountInputFixed: React.FC<Omit<ProInputProps, 'onTokenSel
     </div>
   )
 }
+
+export const LiquidityPrecentInput: React.FC<React.ComponentPropsWithRef<typeof NumberInput>> = ({
+  className,
+  suffixNode,
+  ...props
+}) => {
+  return (
+    <div className="space-y-3 rounded-3xl bg-secondary p-4">
+      <NumberInput
+        size={'md'}
+        decimals={2}
+        min={0}
+        max={100}
+        placeholder="0.00"
+        className={cn('text-text-primary', className)}
+        suffixNode="%"
+        {...props}
+      />
+      {suffixNode}
+    </div>
+  )
+}

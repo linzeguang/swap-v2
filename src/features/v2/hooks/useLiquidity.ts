@@ -1,9 +1,10 @@
+import { Pair } from '@pippyswap/v2-sdk'
 import { useAppKitAccount } from '@reown/appkit/react'
 import { CurrencyAmount, NativeCurrency, Token } from '@uniswap/sdk-core'
 import { useCallback } from 'react'
 import toast from 'react-hot-toast'
-import { Address, erc20Abi } from 'viem'
-import { useReadContract, useWriteContract } from 'wagmi'
+import { Address } from 'viem'
+import { useWriteContract } from 'wagmi'
 
 import { waitForTransactionReceipt } from '@/reown'
 
@@ -13,78 +14,94 @@ import { ONE, ROUTER_02_ADDRESS } from '../constants'
 import { useV2Context } from '../provider'
 import { getRemoveLiquidityMinAmounts } from '../utils'
 
-export const useRemoveLiquidity = (pairAddress: Address, reserveA: bigint, reserveB: bigint, totalSupply: bigint) => {
+export const useRemoveLiquidity = (pair: Pair, totalSupply: bigint) => {
   const { address } = useAppKitAccount()
   const { slippage, createDeadline } = useV2Context()
   const { writeContractAsync } = useWriteContract()
 
-  const liquidity = useReadContract({
-    address: pairAddress,
-    abi: erc20Abi,
-    functionName: 'balanceOf',
-    args: [address as Address],
-    query: {
-      enabled: !!address
-    }
-  })
-
   const removeLiquidity = useCallback(
-    async (tokenA: Token | NativeCurrency, tokenB: Token | NativeCurrency, liquidity: bigint) => {
-      const { amountAMin, amountBMin } = getRemoveLiquidityMinAmounts({
+    async (liquidity: bigint) => {
+      const { amount0Min, amount1Min } = getRemoveLiquidityMinAmounts({
         liquidity,
-        reserveA,
-        reserveB,
+        reserve0: jsbiToBigInt(pair.reserve0.quotient),
+        reserve1: jsbiToBigInt(pair.reserve1.quotient),
         totalSupply,
         slippage
       })
-      const currencyAmountAMin = CurrencyAmount.fromRawAmount(tokenA, amountAMin.toString())
-      const currencyAmountBMin = CurrencyAmount.fromRawAmount(tokenB, amountAMin.toString())
+      const currencyAmount0Min = CurrencyAmount.fromRawAmount(pair.token0, amount0Min.toString())
+      const currencyAmount1Min = CurrencyAmount.fromRawAmount(pair.token1, amount1Min.toString())
 
       let txHash: Address
-      if (currencyAmountAMin.currency.isNative || currencyAmountBMin.currency.isNative) {
-        const [nativeAmountMin, tokenAmountMin] = currencyAmountAMin.currency.isNative
-          ? [currencyAmountAMin, currencyAmountBMin]
-          : [currencyAmountBMin, currencyAmountAMin]
-        const amountTokenMin = jsbiToBigInt(tokenAmountMin.quotient)
-        const amountETHMin = jsbiToBigInt(nativeAmountMin.quotient)
+      const toastId = toast.loading('Removing Liquidity, please confirm in your wallet.')
+      try {
+        if (currencyAmount0Min.currency.isNative || currencyAmount1Min.currency.isNative) {
+          const [nativeAmountMin, tokenAmountMin] = currencyAmount0Min.currency.isNative
+            ? [currencyAmount0Min, currencyAmount1Min]
+            : [currencyAmount1Min, currencyAmount0Min]
+          const amountTokenMin = jsbiToBigInt(tokenAmountMin.quotient)
+          const amountETHMin = jsbiToBigInt(nativeAmountMin.quotient)
 
-        txHash = await writeContractAsync({
-          abi: ROUTER_02_ABI,
-          address: ROUTER_02_ADDRESS,
-          functionName: 'removeLiquidityETH',
-          args: [
+          console.log('>>>>>> removeLiquidityETH: ', [
             tokenAmountMin.currency.wrapped.address as Address,
             liquidity,
             amountTokenMin,
             amountETHMin,
             address as Address,
             createDeadline()
-          ]
-        })
-      } else {
-        txHash = await writeContractAsync({
-          abi: ROUTER_02_ABI,
-          address: ROUTER_02_ADDRESS,
-          functionName: 'removeLiquidity',
-          args: [
-            tokenA.wrapped.address as Address,
-            tokenB.wrapped.address as Address,
+          ])
+          txHash = await writeContractAsync({
+            abi: ROUTER_02_ABI,
+            address: ROUTER_02_ADDRESS,
+            functionName: 'removeLiquidityETH',
+            args: [
+              tokenAmountMin.currency.wrapped.address as Address,
+              liquidity,
+              amountTokenMin,
+              amountETHMin,
+              address as Address,
+              createDeadline()
+            ]
+          })
+        } else {
+          console.log('>>>>>> removeLiquidity: ', [
+            pair.token0.wrapped.address as Address,
+            pair.token1.wrapped.address as Address,
             liquidity,
-            amountAMin,
-            amountBMin,
+            amount0Min,
+            amount1Min,
             address as Address,
             createDeadline()
-          ]
-        })
+          ])
+          txHash = await writeContractAsync({
+            abi: ROUTER_02_ABI,
+            address: ROUTER_02_ADDRESS,
+            functionName: 'removeLiquidity',
+            args: [
+              pair.token0.wrapped.address as Address,
+              pair.token1.wrapped.address as Address,
+              liquidity,
+              amount0Min,
+              amount1Min,
+              address as Address,
+              createDeadline()
+            ]
+          })
+        }
+
+        toast.loading('Waiting for blockchain confirmation...', { id: toastId })
+        await waitForTransactionReceipt(txHash)
+        toast.success('Remove Liquidity Successful.', { id: toastId })
+      } catch (error) {
+        toast.error('Remove Liquidity Failed.', { id: toastId })
+        throw error
       }
-      console.log('>>>>>> txHash: ', txHash)
     },
-    [address, createDeadline, reserveA, reserveB, slippage, totalSupply, writeContractAsync]
+    [address, createDeadline, pair, slippage, totalSupply, writeContractAsync]
   )
 
   return {
-    liquidity,
-    removeLiquidity
+    removeLiquidity,
+    spender: ROUTER_02_ADDRESS
   }
 }
 
@@ -113,6 +130,14 @@ export const useAddLiquidity = () => {
           const amountTokenMin = isInit ? 0n : jsbiToBigInt(tokenAmount.multiply(ONE.subtract(slippage)).quotient)
           const amountETHMin = isInit ? 0n : jsbiToBigInt(nativeAmount.multiply(ONE.subtract(slippage)).quotient)
 
+          console.log('>>>>>> addLiquidityETH: ', [
+            tokenAmount.currency.wrapped.address as Address,
+            amountTokenDesired,
+            amountTokenMin,
+            amountETHMin,
+            address as Address,
+            createDeadline()
+          ])
           txHash = await writeContractAsync({
             abi: ROUTER_02_ABI,
             address: ROUTER_02_ADDRESS,

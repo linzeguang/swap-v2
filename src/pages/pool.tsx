@@ -1,17 +1,12 @@
 import { t } from '@lingui/core/macro'
 import { Trans } from '@lingui/react/macro'
 import { Pair } from '@pippyswap/v2-sdk'
-import { useAppKitAccount } from '@reown/appkit/react'
-import { CurrencyAmount } from '@uniswap/sdk-core'
 import { useAtomValue } from 'jotai/react'
-import React, { useMemo, useState } from 'react'
+import React, { useState } from 'react'
 import { useNavigate } from 'react-router'
-import { Address, erc20Abi } from 'viem'
-import { useReadContract } from 'wagmi'
 
 import TokenImage from '@/components/common/TokenImage'
 import LiquidityForm from '@/components/pool/LiquidityForm'
-import { Setting } from '@/components/svgr/icons'
 import { Add } from '@/components/svgr/pool'
 import { Card, Flex, Grid } from '@/components/ui/Box'
 import { Button, ButtonRadioGroup } from '@/components/ui/Button'
@@ -29,7 +24,6 @@ enum Tabs {
 
 const Pool: React.FC = () => {
   const navigate = useNavigate()
-  const { address } = useAppKitAccount()
   const [tab, setTab] = useState(Tabs.AddLiquidity)
   const [currentPair, setCurrentPair] = useState<Pair>()
 
@@ -38,21 +32,6 @@ const Pool: React.FC = () => {
   const handleCreatePool = () => {
     navigate(RoutePath.AddLiquidity)
   }
-
-  const { data: lpTokenBalance } = useReadContract({
-    abi: erc20Abi,
-    address: currentPair?.liquidityToken.address as Address,
-    functionName: 'balanceOf',
-    args: [address as Address],
-    query: {
-      enabled: !!(address && currentPair)
-    }
-  })
-
-  const lpTokenCurrency = useMemo(() => {
-    if (!lpTokenBalance || !currentPair) return
-    return CurrencyAmount.fromRawAmount(currentPair.liquidityToken, lpTokenBalance.toString())
-  }, [currentPair, lpTokenBalance])
 
   return (
     <Grid className="grid-cols-[1fr,390px] items-start gap-6">
@@ -144,42 +123,7 @@ const Pool: React.FC = () => {
         />
       </Card>
       {currentPair ? (
-        <div className="space-y-6">
-          <Card>
-            <KanitText variant={'tertiary'} className="border-b border-border pb-4 text-2xl">
-              <Trans>Liquidity</Trans>
-            </KanitText>
-            <Flex className="items-center justify-between py-2.5">
-              <div>
-                <KanitText variant={'primary'} className="text-base font-semibold">
-                  <span>{currentPair.token0.wrapped.symbol}</span>
-                  <span> / </span>
-                  <span>{currentPair.token1.wrapped.symbol}</span>
-                </KanitText>
-                <KanitText variant={'tertiary'} className="text-xs">
-                  {formatAddress(currentPair.liquidityToken.address)}
-                </KanitText>
-              </div>
-              <Setting />
-            </Flex>
-            <div className="border-t border-border py-2.5">
-              <KanitText variant={'tertiary'} className="text-sm">
-                <Trans>My Liquidity</Trans>
-              </KanitText>
-              <Flex className="items-center justify-between">
-                <KanitText variant={'primary'} className="text-base font-semibold">
-                  <span>{currentPair.token0.wrapped.symbol}</span>
-                  <span>/</span>
-                  <span>{currentPair.token1.wrapped.symbol}</span>
-                </KanitText>
-                <KanitText variant={'primary'} className="text-base font-semibold">
-                  {lpTokenCurrency?.toSignificant() || '--'}
-                </KanitText>
-              </Flex>
-            </div>
-          </Card>
-          <LiquidityForm pair={currentPair} />
-        </div>
+        <LiquidityForm pair={currentPair} />
       ) : (
         <Card className="flex h-60 items-center justify-center">
           <KanitText variant={'tertiary'} className="text-xl">

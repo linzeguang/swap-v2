@@ -17,7 +17,7 @@ import { Wallet } from '../svgr/icons'
 import { Add } from '../svgr/pool'
 import { Card, Flex } from '../ui/Box'
 import { KanitText } from '../ui/Text'
-import Preview from './Preview'
+import { AddLiquidityPreview } from './Preview'
 
 const AddLiquidityForm: React.FC = () => {
   const { isConnected } = useAppKitAccount()
@@ -163,7 +163,7 @@ const AddLiquidityForm: React.FC = () => {
             onChange={(ev) => handleChangeAmount(ev.target.value, TokenType.TokenB)}
           />
         </div>
-        <Preview
+        <AddLiquidityPreview
           tokenA={tokenA}
           tokenB={tokenB}
           pair={pair}

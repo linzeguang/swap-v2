@@ -5,27 +5,27 @@ import { ONE } from './constants'
 
 export function getRemoveLiquidityMinAmounts({
   liquidity,
-  reserveA,
-  reserveB,
+  reserve0,
+  reserve1,
   totalSupply,
   slippage
 }: {
   liquidity: bigint
-  reserveA: bigint
-  reserveB: bigint
+  reserve0: bigint
+  reserve1: bigint
   totalSupply: bigint
   slippage: Percent
 }) {
-  const amountA = (liquidity * reserveA) / totalSupply
-  const amountB = (liquidity * reserveB) / totalSupply
+  const amount0 = (liquidity * reserve0) / totalSupply
+  const amount1 = (liquidity * reserve1) / totalSupply
 
-  const amountAMin = ONE.subtract(slippage).multiply(amountA.toString())
-  const amountBMin = ONE.subtract(slippage).multiply(amountB.toString())
+  const amount0Min = ONE.subtract(slippage).multiply(amount0.toString())
+  const amount1Min = ONE.subtract(slippage).multiply(amount1.toString())
 
   return {
-    amountA,
-    amountB,
-    amountAMin: jsbiToBigInt(amountAMin.quotient),
-    amountBMin: jsbiToBigInt(amountBMin.quotient)
+    amount0,
+    amount1,
+    amount0Min: jsbiToBigInt(amount0Min.quotient),
+    amount1Min: jsbiToBigInt(amount1Min.quotient)
   }
 }
