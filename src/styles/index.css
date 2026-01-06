@@ -35,7 +35,7 @@
   }
 
   .gradient-button {
-    background: linear-gradient(
+    background-image: linear-gradient(
       var(--color-gradient-button-deg),
       var(--color-gradient-button-from),
       var(--color-gradient-button-to)
@@ -43,7 +43,7 @@
   }
 
   .gradient-text {
-    background: linear-gradient(
+    background-image: linear-gradient(
       var(--color-gradient-button-deg),
       var(--color-gradient-button-from),
       var(--color-gradient-button-to)

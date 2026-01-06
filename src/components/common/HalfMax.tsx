@@ -13,7 +13,7 @@ const HalfMax: React.FC<{
     <Grid className="grid-cols-2 gap-2">
       <Button
         size={'sm'}
-        onHoveredVariant={(hovered) => (hovered ? 'gradient' : 'secondary')}
+        onHoveredVariant={(hovered) => (hovered ? 'gradient' : 'tertiary')}
         onHoveredOutline={(hovered) => !hovered}
         onClick={() => {
           onClick?.(0.5)
@@ -24,7 +24,7 @@ const HalfMax: React.FC<{
       </Button>
       <Button
         size={'sm'}
-        onHoveredVariant={(hovered) => (hovered ? 'gradient' : 'secondary')}
+        onHoveredVariant={(hovered) => (hovered ? 'gradient' : 'tertiary')}
         onHoveredOutline={(hovered) => !hovered}
         onClick={() => {
           onClick?.(1)

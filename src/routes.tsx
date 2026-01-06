@@ -7,6 +7,8 @@ export enum RoutePath {
   Home = '/',
   Swap = '/swap',
   Pool = '/pool',
+  AddLiquidity = '/pool/add-liquidity',
+  Mining = '/mining',
   Positions = '/positions',
   Tools = '/tools'
 }
@@ -23,6 +25,14 @@ export const router = createBrowserRouter([
       {
         path: RoutePath.Pool,
         Component: lazy(() => import('@/pages/pool'))
+      },
+      {
+        path: RoutePath.AddLiquidity,
+        Component: lazy(() => import('@/pages/addLiquidity'))
+      },
+      {
+        path: RoutePath.Mining,
+        Component: lazy(() => import('@/pages/mining'))
       },
       {
         path: RoutePath.Tools,

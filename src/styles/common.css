@@ -17,9 +17,3 @@
 .tip-card {
   @apply rounded-xl border border-border bg-content p-2;
 }
-
-.pool {
-  /* background-image: linear-gradient(92deg, #8de4ff 0%, #ffdccd 100%);
-  background-size: auto 235px;
-  background-repeat: no-repeat; */
-}

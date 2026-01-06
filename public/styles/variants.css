@@ -2,9 +2,9 @@
   --color-background: 237 45% 10%; /* #0E0F25 */
 
   /* 取 hsl 的值 去除中间的逗号，方便tailwindcss控制透明度 */
-  --color-primary: 18 98% 62%; /* #FD773E */
+  --color-primary: 263 99% 49%; /* #6101F8 */
   --color-primary-foreground: 0 0% 100%; /* #fff */
-  --color-secondary: 218 12% 64%; /* #99A1AF */
+  --color-secondary: 243 22% 18%; /* #242337 */
   --color-secondary-foreground: 0 0% 100%; /* #fff */
 
   --color-info: 215 100% 64%; /* #4994FF */
@@ -17,12 +17,12 @@
   --color-warning-background: 39 100% 95%; /* #FFF7E8 */
 
   /* bg */
-  --color-content: 243 23% 16%; /* #201F31 */
+  --color-content: 237 30% 14%; /* #191A2E */
   --color-overlay: rgba(51, 51, 51, 0.1); /* #3333331a */
   --color-disabled: 244 18% 17%; /* #252434 */
 
   /* input */
-  --color-input-bg: 237 30% 14%; /* #191A2E */
+  --color-input-bg: 237 45% 10%; /* #0E0F25 */
   --color-input-border: var(--color-border); /* #fff */
   --color-input-border-focus: var(--color-secondary);
 

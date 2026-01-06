@@ -52,7 +52,7 @@ export const LiquidityAmountInput: React.FC<ProInputProps> = ({
   ...props
 }) => {
   return (
-    <div className="space-y-3 rounded-3xl bg-input-bg p-4 lg:px-6 lg:py-4">
+    <div className="space-y-3 rounded-3xl bg-background p-4 lg:px-6 lg:py-4">
       <NumberInput
         prefixNode={<TokenSelect dialogProps={{ title }} token={token} onTokenSelect={onTokenSelect} />}
         size={'xl'}
@@ -63,6 +63,33 @@ export const LiquidityAmountInput: React.FC<ProInputProps> = ({
         wrapperProps={{
           className: 'bg-transparent px-0 py-0'
         }}
+        {...props}
+      />
+      {suffixNode}
+    </div>
+  )
+}
+
+export const LiquidityAmountInputFixed: React.FC<Omit<ProInputProps, 'onTokenSelect'>> = ({
+  title,
+  token,
+  suffixNode,
+  className,
+  ...props
+}) => {
+  return (
+    <div className="space-y-3 rounded-3xl bg-secondary p-4">
+      {React.isValidElement(title) || Array.isArray(title) ? (
+        title
+      ) : (
+        <KanitText className="text-xs text-secondary">{title}</KanitText>
+      )}
+      <NumberInput
+        size={'md'}
+        decimals={token?.decimals}
+        min={0}
+        placeholder="0.00"
+        className={cn('text-text-primary', className)}
         {...props}
       />
       {suffixNode}

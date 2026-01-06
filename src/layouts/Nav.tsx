@@ -14,9 +14,7 @@ import {
 import { Flex } from '@/components/ui/Box'
 import { Dividing } from '@/components/ui/Dividing'
 import { KanitText } from '@/components/ui/Text'
-import { LOCALES } from '@/i18n'
 import { cn } from '@/lib/utils'
-import { useI18nLocaleProviderContext } from '@/providers/I18nLocaleProvider'
 import { RoutePath } from '@/routes'
 
 const AccordionTriggerChildren: React.FC<{
@@ -55,7 +53,6 @@ const AccordionTriggerChildren: React.FC<{
     <Flex
       className={cn(
         'hover:gradient-text flex-1 cursor-pointer items-center px-6 py-2.5 text-text-primary',
-        pathname === option.path && 'gradient-text bg-red-100',
         collapsed && 'justify-center'
       )}
       onClick={() => {
@@ -65,7 +62,12 @@ const AccordionTriggerChildren: React.FC<{
         }
       }}
     >
-      {hovered || pathname === option.path ? <option.iconActive className="w-10" /> : <option.icon className="w-10" />}
+      {hovered ||
+      (option.path && option.path !== RoutePath.Home ? pathname.includes(option.path) : pathname === option.path) ? (
+        <option.iconActive className="w-10" />
+      ) : (
+        <option.icon className="w-10" />
+      )}
       <KanitText className={cn('text flex-1 overflow-hidden whitespace-nowrap text-sm', collapsed && 'w-0')}>
         {option.name}
       </KanitText>
@@ -80,9 +82,10 @@ const Nav = React.forwardRef<
   { closeAccordion: () => void },
   { collapsed: boolean; className?: string; closeMenu?: () => void }
 >(({ collapsed, className, closeMenu }, ref) => {
+  const { pathname } = useLocation()
   const [accordionValue, setAccordionValue] = useState<string>('')
 
-  const { changeLocale } = useI18nLocaleProviderContext()
+  // const { changeLocale } = useI18nLocaleProviderContext()
 
   const accordionOptions: Array<React.ComponentPropsWithRef<typeof AccordionTriggerChildren>['option'] | undefined> = [
     {
@@ -115,6 +118,16 @@ const Nav = React.forwardRef<
         closeMenu?.()
       }
     },
+    {
+      name: t`Mining`,
+      value: 'mining',
+      icon: Sidebar.Mining,
+      iconActive: Sidebar.MiningActive,
+      path: RoutePath.Mining,
+      onClick: () => {
+        closeMenu?.()
+      }
+    }
     // {
     //   name: 'Tools',
     //   value: 'tools',
@@ -148,19 +161,19 @@ const Nav = React.forwardRef<
     //     }
     //   ]
     // },
-    {
-      name: t`Locale`,
-      value: 'locale',
-      icon: Sidebar.Locale,
-      iconActive: Sidebar.LocaleActive,
-      childrens: Object.values(LOCALES).map(({ name, locale }) => ({
-        name,
-        onClick: () => {
-          closeMenu?.()
-          changeLocale(locale)
-        }
-      }))
-    }
+    // {
+    //   name: t`Locale`,
+    //   value: 'locale',
+    //   icon: Sidebar.Locale,
+    //   iconActive: Sidebar.LocaleActive,
+    //   childrens: Object.values(LOCALES).map(({ name, locale }) => ({
+    //     name,
+    //     onClick: () => {
+    //       closeMenu?.()
+    //       changeLocale(locale)
+    //     }
+    //   }))
+    // }
   ]
 
   useImperativeHandle(
@@ -183,7 +196,11 @@ const Nav = React.forwardRef<
         !option ? (
           <Dividing key={index} />
         ) : (
-          <AccordionItem key={option.value} value={option.value}>
+          <AccordionItem
+            key={option.value}
+            value={option.value}
+            className={cn(pathname === option.path && 'bg-background')}
+          >
             {option.childrens ? (
               <>
                 <AccordionTrigger showArrow={false}>

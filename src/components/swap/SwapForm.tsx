@@ -125,7 +125,7 @@ const SwapForm: React.FC = () => {
       <TokenAmountInput
         title={
           <Flex className="items-center justify-between">
-            <KanitText className="text-xs text-secondary">
+            <KanitText className="text-xs font-bold text-text-tertiary">
               <Trans>From</Trans>
             </KanitText>
             <KanitText variant={'tertiary'} className="flex items-center space-x-2">
@@ -151,7 +151,7 @@ const SwapForm: React.FC = () => {
       <TokenAmountInput
         title={
           <Flex className="items-center justify-between">
-            <KanitText className="text-xs text-secondary">
+            <KanitText className="text-xs font-bold text-text-tertiary">
               <Trans>To</Trans>
             </KanitText>
             <KanitText variant={'tertiary'} className="flex items-center space-x-2">

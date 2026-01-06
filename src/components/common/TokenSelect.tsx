@@ -75,7 +75,11 @@ const TokenSelect: React.FC<{
       trigger={{
         asChild: true,
         children: (
-          <Button className={cn(token ? 'lg:px-2' : 'lg:px-4', 'space-x-2 px-2')} size={'lg'} variant={'default'}>
+          <Button
+            className={cn(token ? 'lg:px-2' : 'lg:px-4', 'space-x-2 px-2')}
+            size={'lg'}
+            variant={token ? 'default' : 'gradient'}
+          >
             {token ? (
               <>
                 <TokenImage token={token} className="size-6 lg:size-7" />

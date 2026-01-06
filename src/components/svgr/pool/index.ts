@@ -1,3 +1,4 @@
 export { default as Add } from './add.svg?react'
+export { default as Add2 } from './add2.svg?react'
 export { default as Arrow } from './arrow.svg?react'
 export { default as TopIcon } from './top-icon.svg?react'

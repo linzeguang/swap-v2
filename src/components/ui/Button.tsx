@@ -14,17 +14,18 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        default: 'bg-content text-secondary border-content',
+        default: 'bg-content text-primary-foreground border-content',
         gradient: 'gradient-button border-0 text-text-primary',
         primary: 'bg-primary text-primary-foreground border-primary',
         secondary: 'bg-secondary text-secondary-foreground border-secondary',
+        tertiary: 'bg-text-tertiary text-primary-foreground border-text-tertiary',
         radio: 'bg-input-bg text-secondary border-input-bg hover:bg-secondary hover:text-secondary-foreground'
       },
       size: {
         xs: 'h-5 px-2  text-xs',
-        sm: 'h-6 px-3 space-x-1.5 [&_.loading]:size-2',
+        sm: 'h-6 px-3 text-xs space-x-1.5 [&_.loading]:size-2',
         md: 'h-8 px-4 space-x-2 [&_.loading]:size-3 rounded-lg',
-        lg: 'h-10 px-5 space-x-3 [&_.loading]:size-4 rounded-xl',
+        lg: 'h-10 px-5 space-x-3 [&_.loading]:size-4 rounded-2xl',
         xl: 'h-12 px-6 space-x-4 [&_.loading]:size-6 rounded-2xl'
       },
       ghost: {
@@ -44,6 +45,11 @@ const buttonVariants = cva(
         ghost: true,
         variant: 'secondary',
         className: 'text-secondary'
+      },
+      {
+        outline: true,
+        variant: 'tertiary',
+        className: 'text-text-tertiary'
       },
       {
         outline: true,
@@ -125,15 +131,17 @@ export const Button = React.forwardRef<
   }
 )
 
-export function ButtonRadioGroup<V>(props: {
-  value: Exclude<V, undefined>
-  options: Array<ComponentProps<typeof Button> & { label: React.ReactNode; value: Exclude<V, undefined> }>
-  onChangeValue?: (value: Exclude<V, undefined>) => void
-}) {
-  const { options, value: currentValue, onChangeValue } = props
+export function ButtonRadioGroup<V>(
+  props: {
+    value: Exclude<V, undefined>
+    options: Array<ComponentProps<typeof Button> & { label: React.ReactNode; value: Exclude<V, undefined> }>
+    onChangeValue?: (value: Exclude<V, undefined>) => void
+  } & ComponentProps<typeof Flex>
+) {
+  const { options, value: currentValue, className, onChangeValue, ...rest } = props
 
   return (
-    <Flex className="rounded-2xl border border-border bg-input-bg">
+    <Flex className={cn('rounded-2xl border border-border bg-input-bg', className)} {...rest}>
       {options.map(({ label, value, className, onClick, ...buttonProps }) => (
         <Button
           key={value?.toString()}

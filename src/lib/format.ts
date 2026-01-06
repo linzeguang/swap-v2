@@ -2,7 +2,7 @@ import BigNumber from 'bignumber.js'
 
 export function formatAddress(
   address: string = '',
-  startChars: number = 4,
+  startChars: number = 6,
   endChars: number = -4,
   separator: string = '...'
 ) {
