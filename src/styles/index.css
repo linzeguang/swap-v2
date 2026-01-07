@@ -13,12 +13,17 @@
   }
 
   html {
-    @apply bg-background;
+    @apply bg-[#191A2E];
   }
 
   header {
-    @apply border-b border-border-thin;
+    @apply border-b border-border-thin bg-background lg:rounded-tl-[3rem];
   }
+
+  main {
+    @apply bg-background lg:rounded-bl-[3rem];
+  }
+
   aside {
     @apply bg-[#191A2E];
   }

@@ -11,7 +11,7 @@ const Header: React.FC<React.HTMLAttributes<HTMLElement>> = (props) => {
   const { isMobile } = useMediaQuery()
 
   return (
-    <header className={cn('flex items-center justify-between', props.className)}>
+    <header className={cn('header flex items-center justify-between', props.className)}>
       <Viewport className="flex items-center justify-end space-x-3">
         <ConnectWallet />
         {isMobile && <Menu />}

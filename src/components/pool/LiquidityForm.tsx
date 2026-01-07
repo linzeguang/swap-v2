@@ -35,6 +35,7 @@ const LiquidityForm: React.FC<{ pair: Pair }> = ({ pair }) => {
   ]
   const { isConnected } = useAppKitAccount()
 
+  const liquidityRef = useRef<React.ComponentRef<typeof KanitText>>(null)
   const [action, setAction] = useState(LiquidityAction.Add)
   const [loading, setLoading] = useState(false)
 
@@ -183,10 +184,19 @@ const LiquidityForm: React.FC<{ pair: Pair }> = ({ pair }) => {
     handleChangeToken(pair.token1, TokenType.TokenB)
   }, [handleChangeToken, pair.token0, pair.token1])
 
+  useEffect(() => {
+    if (pair) {
+      liquidityRef.current?.scrollIntoView({
+        behavior: 'smooth', // 平滑滚动
+        block: 'start' // 元素停在中间
+      })
+    }
+  }, [pair])
+
   return (
     <div className="space-y-6">
       <Card>
-        <KanitText variant={'tertiary'} className="border-b border-border pb-4 text-2xl">
+        <KanitText ref={liquidityRef} variant={'tertiary'} className="border-b border-border pb-4 text-2xl">
           <Trans>Liquidity</Trans>
         </KanitText>
         <Flex className="items-center justify-between py-2.5">

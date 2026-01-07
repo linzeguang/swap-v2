@@ -12,8 +12,8 @@ const RootLayout: React.FC = () => {
   return (
     <section
       className={cn(
-        'grid h-screen grid-cols-[18.75rem_1fr]',
-        isMobile ? 'grid-rows-[4rem_1fr]' : 'grid-rows-[5.5rem_1fr]'
+        'grid h-screen',
+        isMobile ? 'grid-rows-[4rem_1fr]' : 'grid-cols-[18.75rem_1fr] grid-rows-[5.5rem_1fr]'
       )}
     >
       {!isMobile && <SideBar className="row-span-full" />}

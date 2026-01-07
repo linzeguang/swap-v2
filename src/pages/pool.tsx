@@ -13,6 +13,7 @@ import { Button, ButtonRadioGroup } from '@/components/ui/Button'
 import { Input } from '@/components/ui/Input'
 import { Table } from '@/components/ui/Table'
 import { KanitText } from '@/components/ui/Text'
+import useMediaQuery from '@/hooks/useMediaQuery'
 import { formatAddress } from '@/lib/format'
 import { RoutePath } from '@/routes'
 import { pairListAtom } from '@/stores/trade'
@@ -24,6 +25,7 @@ enum Tabs {
 
 const Pool: React.FC = () => {
   const navigate = useNavigate()
+  const { isMobile } = useMediaQuery()
   const [tab, setTab] = useState(Tabs.AddLiquidity)
   const [currentPair, setCurrentPair] = useState<Pair>()
 
@@ -34,8 +36,8 @@ const Pool: React.FC = () => {
   }
 
   return (
-    <Grid className="grid-cols-[1fr,390px] items-start gap-6">
-      <Card className="flex-1 space-y-6">
+    <Grid className="items-start gap-4 lg:grid-cols-[1fr,390px] lg:gap-6">
+      <Card className="flex-1 space-y-4 lg:space-y-6">
         <Flex className="items-center justify-between">
           <ButtonRadioGroup
             className="inline-flex rounded-full"
@@ -45,20 +47,20 @@ const Pool: React.FC = () => {
                 label: <Trans>Add Liquidity</Trans>,
                 value: Tabs.AddLiquidity,
                 variant: tab === Tabs.AddLiquidity ? 'gradient' : 'default',
-                className: 'rounded-full flex-auto px-8'
+                className: 'rounded-full flex-auto lg:px-8'
               },
               {
                 label: <Trans>My Liquidity</Trans>,
                 value: Tabs.MyLiquidity,
                 variant: tab === Tabs.MyLiquidity ? 'gradient' : 'default',
-                className: 'rounded-full flex-auto px-8'
+                className: 'rounded-full flex-auto lg:px-8'
               }
             ]}
             onChangeValue={setTab}
           />
           <Button variant={'gradient'} className="space-x-2" onClick={handleCreatePool}>
-            <Add className="size-4" />
-            <span>
+            <Add className="size-5 lg:size-4" />
+            <span className="hidden lg:inline-block">
               <Trans>Create Pool</Trans>
             </span>
           </Button>
@@ -71,7 +73,7 @@ const Pool: React.FC = () => {
             {
               name: 'Price',
               field: 'liquidityToken',
-              width: '300px',
+              width: isMobile ? undefined : '300px',
               render: (_, pair) => (
                 <Flex className="items-center">
                   <Flex>
@@ -94,7 +96,7 @@ const Pool: React.FC = () => {
             {
               name: 'Pair',
               field: 'token0',
-              width: '300px',
+              width: isMobile ? undefined : '300px',
               render: (_, pair) => (
                 <div>
                   <KanitText variant={'tertiary'} className="text-xs">
@@ -108,7 +110,7 @@ const Pool: React.FC = () => {
             },
             {
               name: '',
-              width: 120,
+              width: isMobile ? undefined : 120,
               align: 'right',
               field: 'chainId',
               render: (_, pair) => (
