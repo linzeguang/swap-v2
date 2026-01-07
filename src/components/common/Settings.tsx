@@ -106,7 +106,7 @@ export const SlippageField: React.FC<Partial<ComponentPropsWithRef<typeof Field>
               size={'lg'}
               onHoveredOutline={(hovered) => (hovered ? false : slippage !== option.value)}
               onHoveredVariant={(hovered) =>
-                hovered ? 'gradient' : slippage === option.value ? 'gradient' : 'secondary'
+                hovered ? 'gradient' : slippage === option.value ? 'gradient' : 'tertiary'
               }
               onClick={() => handleSlippage(option.value)}
             >
@@ -121,7 +121,7 @@ export const SlippageField: React.FC<Partial<ComponentPropsWithRef<typeof Field>
           size={'md'}
           decimals={2}
           max={100}
-          suffixNode={<KanitText className="text-secondary">%</KanitText>}
+          suffixNode={<KanitText className="text-text-tertiary">%</KanitText>}
           value={slippageValue}
           onChange={(ev) => {
             handleSlippageValue(ev.target.value)
@@ -160,7 +160,7 @@ export const DeadlineField: React.FC<Partial<ComponentPropsWithRef<typeof Field>
         decimals={0}
         max={100}
         suffixNode={
-          <KanitText className="text-secondary">
+          <KanitText className="text-text-tertiary">
             <Trans>minutes</Trans>
           </KanitText>
         }

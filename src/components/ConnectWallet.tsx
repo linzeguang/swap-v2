@@ -23,7 +23,7 @@ const ConnectWallet: React.FC = () => {
 
   if (!isConnected)
     return (
-      <Button variant={'gradient'} onClick={connect}>
+      <Button variant={'gradient'} size={'lg'} onClick={connect}>
         <KanitText>
           <Trans>Connect Wallet</Trans>
         </KanitText>
@@ -33,7 +33,7 @@ const ConnectWallet: React.FC = () => {
   return (
     <DrawerRoot direction="right">
       <DrawerTrigger asChild>
-        <Button variant={'gradient'} suffixNode={<ArrowDown className="-rotate-90" />}>
+        <Button variant={'gradient'} size={'lg'} suffixNode={<ArrowDown className="-rotate-90" />}>
           {formatAddress(address)}
         </Button>
       </DrawerTrigger>

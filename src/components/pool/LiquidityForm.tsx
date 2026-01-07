@@ -11,10 +11,10 @@ import { TokenType, useLiquidityForm } from '@/features/v2/hooks/useLiquidityFor
 import { formatAddress } from '@/lib/format'
 
 import { LiquidityAmountInputFixed, LiquidityPrecentInput } from '../common/AmountInput'
+import Settings from '../common/Settings'
 import SubmitButton from '../common/SubmitButton'
 import TokenBalance from '../common/TokenBalance'
 import TokenImage from '../common/TokenImage'
-import { Setting } from '../svgr/icons'
 import { Add2 } from '../svgr/pool'
 import { Card, Flex, Grid } from '../ui/Box'
 import { Button, ButtonRadioGroup } from '../ui/Button'
@@ -200,7 +200,7 @@ const LiquidityForm: React.FC<{ pair: Pair }> = ({ pair }) => {
               {formatAddress(pair.liquidityToken.address)}
             </KanitText>
           </div>
-          <Setting />
+          <Settings />
         </Flex>
         <div className="border-t border-border py-2.5">
           <KanitText variant={'tertiary'} className="text-sm">
