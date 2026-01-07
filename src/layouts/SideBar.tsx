@@ -4,6 +4,7 @@ import { LogoName } from '@/components/svgr/logo'
 import { Flex } from '@/components/ui/Box'
 import { cn } from '@/lib/utils'
 
+import MoreAction from './MoreAction'
 import Nav from './Nav'
 
 const SideBar: React.FC<React.HTMLAttributes<HTMLDivElement>> = (props) => {
@@ -14,7 +15,7 @@ const SideBar: React.FC<React.HTMLAttributes<HTMLDivElement>> = (props) => {
     <div {...props} className={cn('relative w-[18.75rem]', props.className)}>
       <aside
         className={cn(
-          'absolute z-10 h-full',
+          'absolute z-10 flex h-full flex-col',
           'aside transition-all [&_*]:transition-all',
           'data-[collapsed=false]:w-50 data-[collapsed=true]:w-[18.75rem]'
         )}
@@ -30,7 +31,10 @@ const SideBar: React.FC<React.HTMLAttributes<HTMLDivElement>> = (props) => {
         <Flex className="h-28 items-center justify-center">
           <LogoName />
         </Flex>
-        <Nav ref={navRef} collapsed={collapsed} />
+        <div className="flex-1">
+          <Nav ref={navRef} collapsed={collapsed} />
+        </div>
+        <MoreAction />
       </aside>
     </div>
   )
