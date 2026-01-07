@@ -37,6 +37,7 @@ module.exports = {
           DEFAULT: 'hsl(var(--color-warning))',
           background: 'hsl(var(--color-warning-background))'
         },
+        bsc: 'hsl(var(--color-bsc))',
         icon: 'hsl(var(--color-icon))',
         overlay: 'var(--color-overlay)',
         content: 'hsl(var(--color-content))',

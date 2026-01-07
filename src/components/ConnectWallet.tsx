@@ -30,6 +30,30 @@ const ConnectWallet: React.FC = () => {
       </Button>
     )
 
+  // return (
+  //   <Dialog
+  //     trigger={{
+  //       children: (
+  //         <Button variant={'gradient'} size={'lg'} suffixNode={<ArrowDown className="-rotate-90" />}>
+  //           {formatAddress(address)}
+  //         </Button>
+  //       ),
+  //       asChild: true
+  //     }}
+  //     title={
+  //       <Card className="!p-2">
+  //         <Flex className="items-center space-x-2">
+  //           <KanitText className="text-sm">{formatAddress(address)}</KanitText>
+  //           <button ref={buttonRef}>
+  //             <Copy />
+  //           </button>
+  //         </Flex>
+  //       </Card>
+  //     }
+  //     content={{ className: 'max-w-[372px]' }}
+  //   ></Dialog>
+  // )
+
   return (
     <DrawerRoot direction="right">
       <DrawerTrigger asChild>
@@ -38,7 +62,7 @@ const ConnectWallet: React.FC = () => {
         </Button>
       </DrawerTrigger>
       <DrawerContent className="w-[20rem]">
-        <Card className="h-full !rounded-r-none border-r-0">
+        <Card className="h-full border-none">
           <Flex className="justify-end">
             <Button variant={'secondary'} onClick={() => disconnect()}>
               disconnect

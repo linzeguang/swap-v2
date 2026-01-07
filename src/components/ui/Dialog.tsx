@@ -134,7 +134,7 @@ export const Dialog = React.forwardRef<DialogMethods, DialogProps>((props, metho
             {closeable && (
               <DialogClose asChild>
                 <Button className={cn('size-auto border-0 !p-2')}>
-                  <Close className="text-secondary" />
+                  <Close className="text-text-tertiary" />
                 </Button>
               </DialogClose>
             )}
