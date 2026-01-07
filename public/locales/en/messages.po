@@ -21,6 +21,8 @@ msgid "{0}"
 msgstr "{0}"
 
 #: src/components/pool/AddLiquidityForm.tsx:188
+#: src/components/pool/LiquidityForm.tsx:237
+#: src/components/pool/LiquidityForm.tsx:339
 msgid "Add"
 msgstr "Add"
 
@@ -32,8 +34,14 @@ msgstr "Add Initial Liquidity"
 #: src/components/pool/AddLiquidityForm.tsx:125
 #: src/components/pool/AddLiquidityForm.tsx:146
 #: src/components/pool/PoolList.tsx:49
+#: src/pages/pool.tsx:47
 msgid "Add Liquidity"
 msgstr "Add Liquidity"
+
+#: src/components/pool/LiquidityForm.tsx:264
+#: src/components/pool/LiquidityForm.tsx:302
+msgid "Balance: "
+msgstr "Balance: "
 
 #: src/components/common/SubmitButton.tsx:40
 #: src/components/ConnectWallet.tsx:28
@@ -44,16 +52,20 @@ msgstr "Connect Wallet"
 msgid "copied"
 msgstr "copied"
 
+#: src/pages/pool.tsx:64
+msgid "Create Pool"
+msgstr "Create Pool"
+
 #: src/components/pool/AddLiquidityForm.tsx:184
 msgid "Create pool and add liquidity"
 msgstr "Create pool and add liquidity"
 
-#: src/components/swap/SwapForm.tsx:137
+#: src/components/swap/SwapForm.tsx:185
 msgid "Fetching Swap Route"
 msgstr "Fetching Swap Route"
 
-#: src/components/swap/SwapForm.tsx:85
-#: src/components/swap/SwapForm.tsx:93
+#: src/components/swap/SwapForm.tsx:129
+#: src/components/swap/SwapForm.tsx:137
 msgid "From"
 msgstr "From"
 
@@ -61,17 +73,25 @@ msgstr "From"
 msgid "Half"
 msgstr "Half"
 
+#: src/layouts/Nav.tsx:92
+msgid "Home"
+msgstr "Home"
+
 #: src/components/pool/PoolList.tsx:114
 msgid "Hot Pool"
 msgstr "Hot Pool"
 
-#: src/components/common/TokenSelect.tsx:162
+#: src/components/common/TokenSelect.tsx:166
 msgid "Import"
 msgstr "Import"
 
 #: src/components/common/Settings.tsx:192
 msgid "Infinite Approval"
 msgstr "Infinite Approval"
+
+#: src/components/swap/SwapForm.tsx:187
+msgid "Input Amount"
+msgstr "Input Amount"
 
 #: src/components/common/SubmitButton.tsx:50
 msgid "Insufficient Balance"
@@ -81,16 +101,20 @@ msgstr "Insufficient Balance"
 msgid "Limit"
 msgstr "Limit"
 
+#: src/components/pool/LiquidityForm.tsx:200
+msgid "Liquidity"
+msgstr "Liquidity"
+
 #: src/layouts/Nav.tsx:142
-msgid "Locale"
-msgstr "Locale"
+#~ msgid "Locale"
+#~ msgstr "Locale"
 
 #: src/components/pool/PoolList.tsx:63
-#: src/components/pool/Preview.tsx:146
+#: src/components/pool/Preview.tsx:139
 msgid "LP address"
 msgstr "LP address"
 
-#: src/components/pool/Preview.tsx:129
+#: src/components/pool/Preview.tsx:122
 msgid "LP Tokens Received"
 msgstr "LP Tokens Received"
 
@@ -98,21 +122,34 @@ msgstr "LP Tokens Received"
 msgid "Max"
 msgstr "Max"
 
+#: src/layouts/Nav.tsx:122
+msgid "Mining"
+msgstr "Mining"
+
 #: src/components/common/Settings.tsx:164
 msgid "minutes"
 msgstr "minutes"
 
-#: src/components/swap/SwapForm.tsx:139
+#: src/components/pool/LiquidityForm.tsx:217
+#: src/pages/pool.tsx:53
+msgid "My Liquidity"
+msgstr "My Liquidity"
+
+#: src/components/ui/Table.tsx:118
+msgid "No Data"
+msgstr "No Data"
+
+#: src/components/swap/SwapForm.tsx:191
 msgid "Not Route to swap"
 msgstr "Not Route to swap"
 
-#: src/layouts/Nav.tsx:99
+#: src/layouts/Nav.tsx:112
 #: src/layouts/Navs.tsx:17
-#: src/pages/pool.tsx:15
+#: src/pages/addLiquidity.tsx:14
 msgid "Pool"
 msgstr "Pool"
 
-#: src/components/common/TokenSelect.tsx:113
+#: src/components/common/TokenSelect.tsx:117
 msgid "Popular Tokens"
 msgstr "Popular Tokens"
 
@@ -120,11 +157,25 @@ msgstr "Popular Tokens"
 msgid "Price impact"
 msgstr "Price impact"
 
-#: src/components/common/TokenSelect.tsx:107
+#: src/components/pool/Preview.tsx:176
+#: src/components/pool/Preview.tsx:192
+msgid "Receive"
+msgstr "Receive"
+
+#: src/components/pool/LiquidityForm.tsx:243
+#: src/components/pool/LiquidityForm.tsx:386
+msgid "Remove"
+msgstr "Remove"
+
+#: src/components/common/TokenSelect.tsx:111
 msgid "Search name / address"
 msgstr "Search name / address"
 
-#: src/components/common/TokenSelect.tsx:88
+#: src/pages/pool.tsx:68
+msgid "Search name /address"
+msgstr "Search name /address"
+
+#: src/components/common/TokenSelect.tsx:92
 msgid "Select Token"
 msgstr "Select Token"
 
@@ -136,9 +187,9 @@ msgstr "Settings"
 msgid "Slippage Tolerance"
 msgstr "Slippage Tolerance"
 
-#: src/components/swap/SwapForm.tsx:141
+#: src/components/swap/SwapForm.tsx:189
 #: src/components/swap/TradeType.tsx:22
-#: src/layouts/Nav.tsx:89
+#: src/layouts/Nav.tsx:102
 #: src/layouts/Navs.tsx:13
 #: src/pages/swap.tsx:12
 msgid "Swap"
@@ -148,8 +199,8 @@ msgstr ""
 msgid "The current browser environment does not support copying to the clipboard"
 msgstr "The current browser environment does not support copying to the clipboard"
 
-#: src/components/swap/SwapForm.tsx:111
-#: src/components/swap/SwapForm.tsx:119
+#: src/components/swap/SwapForm.tsx:155
+#: src/components/swap/SwapForm.tsx:167
 msgid "To"
 msgstr "To"
 
@@ -169,10 +220,14 @@ msgstr "Transaction Deadline"
 msgid "TWAP"
 msgstr "TWAP"
 
-#: src/components/pool/Preview.tsx:104
+#: src/components/pool/Preview.tsx:97
 msgid "Your Pool Share"
 msgstr "Your Pool Share"
 
 #: src/components/pool/PositionNav.tsx:14
 msgid "Your positions"
 msgstr "Your positions"
+
+#: src/pages/pool.tsx:132
+msgid "广告位招租"
+msgstr "广告位招租"
