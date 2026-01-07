@@ -12,7 +12,7 @@ const Menu: React.FC = () => {
       <DrawerTrigger>
         <Icon.Menu className="text-text-primary" />
       </DrawerTrigger>
-      <DrawerContent className="grid grid-rows-[auto_1fr] p-4">
+      <DrawerContent className="grid grid-rows-[auto_1fr] py-4">
         <Nav
           collapsed={false}
           className="overflow-y-scroll"
