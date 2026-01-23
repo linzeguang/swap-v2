@@ -12,6 +12,7 @@ const textVariants = cva('', {
       secondary: 'text-text-secondary',
       tertiary: 'text-text-tertiary',
       disabled: 'text-text-disabled',
+      active: 'text-text-active',
       info: 'text-info',
       success: 'text-success',
       destructive: 'text-destructive',

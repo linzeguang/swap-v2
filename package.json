@@ -13,7 +13,8 @@
     "lint:fix": "eslint src --fix",
     "format:fix": "prettier --write \"./src/**/*.{ts,tsx,css}\" --cache",
     "locale:extract": "npx lingui extract",
-    "locale:compile": "npx lingui compile"
+    "locale:compile": "npx lingui compile",
+    "search-chinese": "npx ts-node scripts/search-chinese.ts"
   },
   "dependencies": {
     "@ethersproject/address": "^5.8.0",

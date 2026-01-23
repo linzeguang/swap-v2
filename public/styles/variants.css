@@ -33,6 +33,7 @@
   --color-text-secondary: 0 0% 12%; /* #1E1E1E */
   --color-text-tertiary: 218 12% 64%; /* #99A1AF */
   --color-text-disabled: 218 11% 81%; /* #C9CDD4 */
+  --color-text-active: 171 100% 41%; /* #00D1B2 */
 
   /* border */
   --color-border: 244 18% 17%; /* #252434 */

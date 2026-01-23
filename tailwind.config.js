@@ -53,7 +53,8 @@ module.exports = {
           primary: 'hsl(var(--color-text-primary))',
           secondary: 'hsl(var(--color-text-secondary))',
           tertiary: 'hsl(var(--color-text-tertiary))',
-          disabled: 'hsl(var(--color-text-disabled))'
+          disabled: 'hsl(var(--color-text-disabled))',
+          active: 'hsl(var(--color-text-active))'
         },
         border: {
           DEFAULT: 'hsl(var(--color-border))',
