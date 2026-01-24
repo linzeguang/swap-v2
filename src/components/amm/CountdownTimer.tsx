@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
-import { Flex, Grid } from '../ui/Box'
+
+import { Grid } from '../ui/Box'
 import { KanitText } from '../ui/Text'
 
 const unitClassName = 'text-xs font-bold text-text-tertiary'

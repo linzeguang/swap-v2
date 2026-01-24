@@ -91,6 +91,6 @@ export const formatLargeNumber = (
   return `${formattedScaledNum}${unit}`
 }
 
-export function formatWithCommas(value: BigNumber.Value) {
-  return new BigNumber(value).toFormat() // 默认每三位加一个逗号
+export function formatWithCommas(value: BigNumber.Value | '--') {
+  return value === '--' ? value : new BigNumber(value).toFormat() // 默认每三位加一个逗号
 }

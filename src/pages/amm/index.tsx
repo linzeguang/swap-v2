@@ -1,11 +1,12 @@
+import { Trans } from '@lingui/react/macro'
+import React from 'react'
+
 import AmmCard from '@/components/amm/AmmCard'
 import CountdownTimer from '@/components/amm/CountdownTimer'
 import KeyValue from '@/components/common/KeyValue'
 import { Card } from '@/components/ui/Box'
 import { Button } from '@/components/ui/Button'
 import { KanitText } from '@/components/ui/Text'
-import { Trans } from '@lingui/react/macro'
-import React from 'react'
 
 const Amm: React.FC = () => {
   return (
@@ -24,7 +25,7 @@ const Amm: React.FC = () => {
         }
         subTitle={
           <KanitText className="flex items-center space-x-1 text-xs font-bold" variant={'active'}>
-            <span className="bg-text-active size-1.5 rounded-full"></span>
+            <span className="size-1.5 rounded-full bg-text-active"></span>
             <span>100%</span>
           </KanitText>
         }

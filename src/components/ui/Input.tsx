@@ -9,7 +9,7 @@ const inputVariants = cva(cn('flex items-center bg-input-bg text-text-primary'),
       xs: '',
       sm: 'h-8 px-4 rounded-full text-sm space-x-2',
       md: 'h-10 px-4 rounded-full space-x-2',
-      lg: '',
+      lg: 'h-12 px-4 rounded-2xl text-lg space-x-3',
       xl: 'p-4 rounded-3xl text-lg lg:text-2xl  font-semibold space-x-4'
     },
     border: {
