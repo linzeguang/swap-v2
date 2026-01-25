@@ -4,11 +4,9 @@ import React, { useCallback } from 'react'
 
 import { formatAddress } from '@/lib/format'
 
-import { DeadlineField, InfiniteApprovalField, SlippageField } from './common/Settings'
 import { ArrowDown } from './svgr/icons'
-import { Card, Flex } from './ui/Box'
 import { Button } from './ui/Button'
-import { DrawerContent, DrawerRoot, DrawerTrigger } from './ui/Drawer'
+import { Dialog } from './ui/Dialog'
 import { KanitText } from './ui/Text'
 
 const ConnectWallet: React.FC = () => {
@@ -55,25 +53,24 @@ const ConnectWallet: React.FC = () => {
   // )
 
   return (
-    <DrawerRoot direction="right">
-      <DrawerTrigger asChild>
-        <Button variant={'gradient'} size={'lg'} suffixNode={<ArrowDown className="-rotate-90" />}>
-          {formatAddress(address)}
+    <Dialog
+      title={
+        <Button variant={'secondary'} onClick={() => disconnect()}>
+          disconnect
         </Button>
-      </DrawerTrigger>
-      <DrawerContent className="w-[20rem]">
-        <Card className="h-full border-none">
-          <Flex className="justify-end">
-            <Button variant={'secondary'} onClick={() => disconnect()}>
-              disconnect
-            </Button>
-          </Flex>
-          <SlippageField inSide />
-          <DeadlineField />
-          <InfiniteApprovalField />
-        </Card>
-      </DrawerContent>
-    </DrawerRoot>
+      }
+      trigger={{
+        asChild: true,
+        children: (
+          <Button variant={'gradient'} size={'lg'} suffixNode={<ArrowDown className="-rotate-90" />}>
+            {formatAddress(address)}
+          </Button>
+        )
+      }}
+      content={{
+        className: 'max-w-[372px]'
+      }}
+    ></Dialog>
   )
 }
 

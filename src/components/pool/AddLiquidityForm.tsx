@@ -174,7 +174,7 @@ const AddLiquidityForm: React.FC = () => {
         />
         <SubmitButton
           walletConnect={isConnected}
-          disabled={!(currencyAmountA && currencyAmountB)}
+          disabled={isConnected ? !(currencyAmountA && currencyAmountB) : false}
           insufficientBalance={insufficientBalance}
           isLoading={loading}
           onClick={handleAddLiquidity}
