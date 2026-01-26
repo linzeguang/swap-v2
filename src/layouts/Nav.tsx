@@ -99,6 +99,16 @@ const Nav = React.forwardRef<
       }
     },
     {
+      name: t`Amm`,
+      value: 'amm',
+      icon: Sidebar.Swap,
+      iconActive: Sidebar.SwapActive,
+      path: RoutePath.Amm,
+      onClick: () => {
+        closeMenu?.()
+      }
+    },
+    {
       name: t`Swap`,
       value: 'swap',
       icon: Sidebar.Swap,

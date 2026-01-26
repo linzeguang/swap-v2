@@ -1,18 +1,42 @@
+import { t } from '@lingui/core/macro'
 import { Trans } from '@lingui/react/macro'
-import React from 'react'
+import React, { ComponentRef, useCallback, useMemo, useRef } from 'react'
+import { parseUnits } from 'viem'
 
 import AmmCard from '@/components/amm/AmmCard'
 import CountdownTimer from '@/components/amm/CountdownTimer'
 import KeyValue from '@/components/common/KeyValue'
 import { Card } from '@/components/ui/Box'
 import { Button } from '@/components/ui/Button'
+import { Dialog } from '@/components/ui/Dialog'
+import { NumberInput } from '@/components/ui/Input'
 import { KanitText } from '@/components/ui/Text'
-import { useTransferInfo, useUserTotalTransfer } from '@/features/amm/hooks/useTransferUSDT'
+import { useTransferInfo, useTransferUSDT, useUserTotalTransfer } from '@/features/amm/hooks/useTransferUSDT'
 import { formatWithCommas } from '@/lib/format'
 
 const Amm: React.FC = () => {
   const userTotalTransfer = useUserTotalTransfer()
-  const { endBlock, totalTransferredAmount } = useTransferInfo()
+  const { endBlock, totalTransferredAmount, maxDepositAmount } = useTransferInfo()
+
+  const { transferValue, setTransferValue, transferUSDT, loading: transferLoading } = useTransferUSDT()
+
+  const transferDialog = useRef<ComponentRef<typeof Dialog>>(null)
+
+  const limit = useMemo(
+    () => ({
+      min: '20',
+      max: maxDepositAmount
+    }),
+    [maxDepositAmount]
+  )
+
+  const handleTranfer = useCallback(() => {
+    const value = parseUnits(transferValue, 18)
+    if (!value) return
+    transferUSDT(value).then(() => {
+      transferDialog.current?.close()
+    })
+  }, [])
 
   return (
     <div className="mx-auto mt-[42px] w-full max-w-[424px] space-y-6">
@@ -70,9 +94,38 @@ const Amm: React.FC = () => {
             </KanitText>
           }
         />
-        <Button variant={'gradient'} className="mt-6 w-full" size={'lg'}>
-          <Trans>共建</Trans>
-        </Button>
+
+        <Dialog
+          trigger={{
+            asChild: true,
+            children: (
+              <Button variant={'gradient'} className="mt-6 w-full" size={'lg'}>
+                <Trans>共建</Trans>
+              </Button>
+            )
+          }}
+          closeable={false}
+          content={{ className: 'max-w-[424px] ' }}
+        >
+          <NumberInput
+            size={'lg'}
+            max={limit.max}
+            min={limit.min}
+            placeholder={t`请输入...`}
+            value={transferValue}
+            onChange={(ev) => setTransferValue(ev.target.value)}
+          />
+          <Button
+            className="mt-6 w-full"
+            size={'xl'}
+            variant={'gradient'}
+            isLoading={transferLoading}
+            disabled={transferLoading}
+            onClick={handleTranfer}
+          >
+            <Trans>共建</Trans>
+          </Button>
+        </Dialog>
       </AmmCard>
     </div>
   )

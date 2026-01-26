@@ -1,4 +1,8 @@
 import BigNumber from 'bignumber.js'
+import dayjs from 'dayjs'
+import duration from 'dayjs/plugin/duration'
+
+dayjs.extend(duration)
 
 export function formatAddress(
   address: string = '',
@@ -93,4 +97,28 @@ export const formatLargeNumber = (
 
 export function formatWithCommas(value: BigNumber.Value | '--') {
   return value === '--' ? value : new BigNumber(value).toFormat() // 默认每三位加一个逗号
+}
+
+export function formatCountdown(targetTimestamp: number) {
+  const now = dayjs()
+  const target = dayjs(targetTimestamp)
+  const diff = target.diff(now)
+
+  if (diff <= 0)
+    return {
+      days: '00',
+      hours: '00',
+      minutes: '00',
+      seconds: '00'
+    }
+
+  const dur = dayjs.duration(diff)
+
+  // 格式化输出
+  return {
+    days: Math.floor(dur.asDays()) < 10 ? `0${Math.floor(dur.asDays())}` : `${Math.floor(dur.asDays())}`,
+    hours: dur.hours() < 10 ? `0${dur.hours()}` : `${dur.hours()}`,
+    minutes: dur.minutes() < 10 ? `0${dur.minutes()}` : `${dur.minutes()}`,
+    seconds: dur.seconds() < 10 ? `0${dur.seconds()}` : `${dur.seconds()}`
+  }
 }
