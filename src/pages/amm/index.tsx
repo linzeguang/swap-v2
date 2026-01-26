@@ -7,13 +7,18 @@ import KeyValue from '@/components/common/KeyValue'
 import { Card } from '@/components/ui/Box'
 import { Button } from '@/components/ui/Button'
 import { KanitText } from '@/components/ui/Text'
+import { useTransferInfo, useUserTotalTransfer } from '@/features/amm/hooks/useTransferUSDT'
+import { formatWithCommas } from '@/lib/format'
 
 const Amm: React.FC = () => {
+  const userTotalTransfer = useUserTotalTransfer()
+  const { endBlock, totalTransferredAmount } = useTransferInfo()
+
   return (
     <div className="mx-auto mt-[42px] w-full max-w-[424px] space-y-6">
       <Card className="space-y-2.5 text-center">
         <KanitText className="text-xl font-semibold text-text-primary">
-          <Trans>截止区块高度</Trans> 60,000
+          <Trans>截止区块高度</Trans> {formatWithCommas(endBlock ?? '--')}
         </KanitText>
         <CountdownTimer />
       </Card>
@@ -39,7 +44,7 @@ const Amm: React.FC = () => {
           }
           valueNode={
             <KanitText className="text-4xl font-bold" variant={'primary'}>
-              3,000,0000
+              {formatWithCommas(totalTransferredAmount ?? '--')}
             </KanitText>
           }
         />
@@ -60,7 +65,8 @@ const Amm: React.FC = () => {
           }
           valueNode={
             <KanitText className="text-4xl font-bold" variant={'primary'}>
-              3,000,0000
+              {userTotalTransfer}
+              {formatWithCommas(userTotalTransfer ?? '--')}
             </KanitText>
           }
         />
