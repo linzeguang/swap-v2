@@ -37,7 +37,7 @@ const Amm: React.FC = () => {
     transferUSDT(value).then(() => {
       transferDialog.current?.close()
     })
-  }, [])
+  }, [transferUSDT, transferValue])
 
   return (
     <div className="mx-auto mt-[42px] w-full max-w-[424px] space-y-6">

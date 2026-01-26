@@ -95,8 +95,8 @@ const MoreAction: React.FC = () => {
       </div>
       <Flex className="items-center justify-center border-t border-border py-2">
         <Grid className="grid-cols-5 gap-3">
-          {contacts.map(({ Icon }) => (
-            <Icon />
+          {contacts.map(({ Icon }, index) => (
+            <Icon key={index} />
           ))}
         </Grid>
       </Flex>

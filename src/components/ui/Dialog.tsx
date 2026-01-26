@@ -130,7 +130,11 @@ export const Dialog = React.forwardRef<DialogMethods, DialogProps>((props, metho
               titleClassName
             )}
           >
-            <label className="font-Kanit text-xl font-bold text-text-primary">{title}</label>
+            {React.isValidElement(title) ? (
+              title
+            ) : (
+              <label className="font-Kanit text-xl font-bold text-text-primary">{title}</label>
+            )}
             {closeable && (
               <DialogClose asChild>
                 <Button className={cn('size-auto border-0 !p-2')}>

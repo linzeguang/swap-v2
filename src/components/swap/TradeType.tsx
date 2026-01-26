@@ -10,7 +10,7 @@ export enum Trade {
   Limit
 }
 
-const TradeType = () => {
+const TradeType: React.FC = () => {
   const [trade, setTrade] = useState(Trade.Swap)
 
   return (
