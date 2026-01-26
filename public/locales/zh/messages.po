@@ -38,13 +38,17 @@ msgstr ""
 msgid "Add Liquidity"
 msgstr ""
 
+#: src/layouts/Nav.tsx:102
+msgid "Amm"
+msgstr ""
+
 #: src/components/pool/LiquidityForm.tsx:264
 #: src/components/pool/LiquidityForm.tsx:302
 msgid "Balance: "
 msgstr ""
 
 #: src/components/common/SubmitButton.tsx:40
-#: src/components/ConnectWallet.tsx:28
+#: src/components/ConnectWallet.tsx:26
 msgid "Connect Wallet"
 msgstr ""
 
@@ -60,12 +64,12 @@ msgstr ""
 msgid "Create pool and add liquidity"
 msgstr ""
 
-#: src/components/swap/SwapForm.tsx:185
+#: src/components/swap/SwapForm.tsx:211
 msgid "Fetching Swap Route"
 msgstr ""
 
-#: src/components/swap/SwapForm.tsx:129
 #: src/components/swap/SwapForm.tsx:137
+#: src/components/swap/SwapForm.tsx:145
 msgid "From"
 msgstr ""
 
@@ -89,7 +93,7 @@ msgstr ""
 msgid "Infinite Approval"
 msgstr ""
 
-#: src/components/swap/SwapForm.tsx:187
+#: src/components/swap/SwapForm.tsx:213
 msgid "Input Amount"
 msgstr ""
 
@@ -118,11 +122,15 @@ msgstr ""
 msgid "LP Tokens Received"
 msgstr ""
 
+#: src/pages/amm/dividend.tsx:99
+msgid "LP 质押"
+msgstr ""
+
 #: src/components/common/HalfMax.tsx:34
 msgid "Max"
 msgstr ""
 
-#: src/layouts/Nav.tsx:122
+#: src/layouts/Nav.tsx:132
 msgid "Mining"
 msgstr ""
 
@@ -139,11 +147,11 @@ msgstr ""
 msgid "No Data"
 msgstr ""
 
-#: src/components/swap/SwapForm.tsx:191
+#: src/components/swap/SwapForm.tsx:217
 msgid "Not Route to swap"
 msgstr ""
 
-#: src/layouts/Nav.tsx:112
+#: src/layouts/Nav.tsx:122
 #: src/layouts/Navs.tsx:17
 #: src/pages/addLiquidity.tsx:14
 msgid "Pool"
@@ -184,12 +192,13 @@ msgid "Settings"
 msgstr ""
 
 #: src/components/common/Settings.tsx:89
+#: src/components/swap/SwapForm.tsx:186
 msgid "Slippage Tolerance"
 msgstr ""
 
-#: src/components/swap/SwapForm.tsx:189
+#: src/components/swap/SwapForm.tsx:215
 #: src/components/swap/TradeType.tsx:22
-#: src/layouts/Nav.tsx:102
+#: src/layouts/Nav.tsx:112
 #: src/layouts/Navs.tsx:13
 #: src/pages/swap.tsx:12
 msgid "Swap"
@@ -199,8 +208,8 @@ msgstr "Swap"
 msgid "The current browser environment does not support copying to the clipboard"
 msgstr ""
 
-#: src/components/swap/SwapForm.tsx:155
-#: src/components/swap/SwapForm.tsx:167
+#: src/components/swap/SwapForm.tsx:163
+#: src/components/swap/SwapForm.tsx:175
 msgid "To"
 msgstr ""
 
@@ -220,6 +229,10 @@ msgstr ""
 msgid "TWAP"
 msgstr ""
 
+#: src/pages/amm/dividend.tsx:184
+msgid "USDT 质押"
+msgstr ""
+
 #: src/components/pool/Preview.tsx:97
 msgid "Your Pool Share"
 msgstr ""
@@ -228,6 +241,60 @@ msgstr ""
 msgid "Your positions"
 msgstr ""
 
+#: src/pages/amm/dividend.tsx:56
+#: src/pages/amm/index.tsx:80
+msgid "个人已共建USDT"
+msgstr ""
+
+#: src/pages/amm/index.tsx:53
+msgid "全网累计共建USDT"
+msgstr ""
+
+#: src/pages/amm/dividend.tsx:77
+msgid "全网质押 LP"
+msgstr ""
+
+#: src/pages/amm/index.tsx:104
+#: src/pages/amm/index.tsx:127
+msgid "共建"
+msgstr ""
+
+#: src/pages/amm/dividend.tsx:225
+msgid "已累计领取分红"
+msgstr ""
+
 #: src/pages/pool.tsx:132
 msgid "广告位招租"
+msgstr ""
+
+#: src/pages/amm/dividend.tsx:246
+msgid "待领取分红"
+msgstr ""
+
+#: src/pages/amm/index.tsx:46
+msgid "截止区块高度"
+msgstr ""
+
+#: src/pages/amm/dividend.tsx:132
+#: src/pages/amm/dividend.tsx:164
+#: src/pages/amm/index.tsx:115
+msgid "请输入..."
+msgstr ""
+
+#: src/pages/amm/dividend.tsx:123
+#: src/pages/amm/dividend.tsx:144
+msgid "质押"
+msgstr ""
+
+#: src/pages/amm/dividend.tsx:154
+#: src/pages/amm/dividend.tsx:176
+msgid "赎回"
+msgstr ""
+
+#: src/pages/amm/dividend.tsx:216
+msgid "赎回 USDT"
+msgstr ""
+
+#: src/pages/amm/dividend.tsx:270
+msgid "领取"
 msgstr ""

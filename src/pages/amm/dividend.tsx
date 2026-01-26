@@ -45,6 +45,8 @@ const Dividend: React.FC = () => {
     })
   }, [depositValue, depositLPTokens])
 
+  console.log('>>>>>> userInfo: ', userInfo)
+
   return (
     <>
       <div className="mx-auto mt-[42px] w-full max-w-[508px] space-y-6">

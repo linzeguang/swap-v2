@@ -16,7 +16,7 @@ import { formatWithCommas } from '@/lib/format'
 
 const Amm: React.FC = () => {
   const userTotalTransfer = useUserTotalTransfer()
-  const { endBlock, totalTransferredAmount, maxDepositAmount } = useTransferInfo()
+  const { endBlock, totalTransferredAmount, maxDepositAmount, percentage } = useTransferInfo()
 
   const { transferValue, setTransferValue, transferUSDT, loading: transferLoading } = useTransferUSDT()
 
@@ -30,9 +30,10 @@ const Amm: React.FC = () => {
     [maxDepositAmount]
   )
 
-  const handleTranfer = useCallback(() => {
+  const handleTransfer = useCallback(() => {
     const value = parseUnits(transferValue, 18)
     if (!value) return
+    console.log('>>>>>> value: ', value)
     transferUSDT(value).then(() => {
       transferDialog.current?.close()
     })
@@ -55,7 +56,7 @@ const Amm: React.FC = () => {
         subTitle={
           <KanitText className="flex items-center space-x-1 text-xs font-bold" variant={'active'}>
             <span className="size-1.5 rounded-full bg-text-active"></span>
-            <span>100%</span>
+            <span>{percentage || '--'}%</span>
           </KanitText>
         }
       >
@@ -121,7 +122,7 @@ const Amm: React.FC = () => {
             variant={'gradient'}
             isLoading={transferLoading}
             disabled={transferLoading}
-            onClick={handleTranfer}
+            onClick={handleTransfer}
           >
             <Trans>共建</Trans>
           </Button>

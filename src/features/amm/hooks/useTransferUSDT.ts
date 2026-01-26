@@ -9,6 +9,7 @@ import { waitForTransactionReceipt } from '@/reown'
 
 import { TRANSFER_USDT_ABI } from '../abis'
 import { TRANSFER_USDT_ADDRESS } from '../constants'
+import BigNumber from 'bignumber.js'
 
 export const useUserTotalTransfer = () => {
   const { address } = useAppKitAccount()
@@ -55,13 +56,6 @@ export const useTransferInfo = () => {
     if (!data) return {}
     const [{ result: totalTransferredAmount }, { result: maxTotalTransferAmount }, { result: endBlock }] = data
 
-    console.log(
-      '>>>>>> currentBlock: ',
-      currentBlock?.number,
-      endBlock,
-      currentBlock?.number && endBlock && endBlock - currentBlock?.number
-    )
-
     return {
       totalTransferredAmount: !isUndefined(totalTransferredAmount)
         ? formatUnits(totalTransferredAmount, 18)
@@ -72,6 +66,13 @@ export const useTransferInfo = () => {
       maxDepositAmount:
         !isUndefined(maxTotalTransferAmount) && !isUndefined(totalTransferredAmount)
           ? formatUnits(maxTotalTransferAmount - totalTransferredAmount, 18)
+          : undefined,
+      percentage:
+        !isUndefined(maxTotalTransferAmount) && !isUndefined(totalTransferredAmount)
+          ? new BigNumber(Number(totalTransferredAmount))
+              .dividedBy(Number(maxTotalTransferAmount))
+              .multipliedBy(100)
+              .toFixed(2)
           : undefined,
       endBlock: Number(endBlock)
     }
