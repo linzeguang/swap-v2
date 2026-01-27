@@ -3,7 +3,8 @@ export default [
     inputs: [
       { internalType: 'address', name: '_ucoToken', type: 'address' },
       { internalType: 'address', name: '_usdtToken', type: 'address' },
-      { internalType: 'address', name: '_uniswapRouter', type: 'address' }
+      { internalType: 'address', name: '_uniswapRouter', type: 'address' },
+      { internalType: 'address', name: '_devloperAddress', type: 'address' }
     ],
     stateMutability: 'nonpayable',
     type: 'constructor'
@@ -70,6 +71,13 @@ export default [
     name: 'depositLPTokens',
     outputs: [],
     stateMutability: 'nonpayable',
+    type: 'function'
+  },
+  {
+    inputs: [],
+    name: 'devloperAddress',
+    outputs: [{ internalType: 'address', name: '', type: 'address' }],
+    stateMutability: 'view',
     type: 'function'
   },
   {
@@ -158,6 +166,27 @@ export default [
     type: 'function'
   },
   { inputs: [], name: 'renounceOwnership', outputs: [], stateMutability: 'nonpayable', type: 'function' },
+  {
+    inputs: [{ internalType: 'address', name: '_devloperAddress', type: 'address' }],
+    name: 'setDeveloperAddress',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function'
+  },
+  {
+    inputs: [{ internalType: 'address', name: '_ucoToken', type: 'address' }],
+    name: 'setUCOToken',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function'
+  },
+  {
+    inputs: [{ internalType: 'address', name: '_usdtToken', type: 'address' }],
+    name: 'setUSDToken',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function'
+  },
   {
     inputs: [{ internalType: 'address', name: 'pair', type: 'address' }],
     name: 'setUniswapPair',
