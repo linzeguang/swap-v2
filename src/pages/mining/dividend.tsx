@@ -209,7 +209,7 @@ const Dividend: React.FC = () => {
               variant={'primary'}
               outline
               isLoading={withdrawInitLPTokensLoading}
-              disabled={!userInfo?.usdtEstimated || withdrawInitLPTokensLoading}
+              disabled={!!userInfo?.usdtEstimated || withdrawInitLPTokensLoading}
               onClick={withdrawInitLPTokens}
             >
               <span className="gradient-text">
@@ -264,7 +264,7 @@ const Dividend: React.FC = () => {
               className="mt-6 w-full rounded-2xl text-sm"
               variant={'gradient'}
               isLoading={claimDividendsLoading}
-              disabled={!userInfo?.pendingDividends || claimDividendsLoading}
+              disabled={!!userInfo?.pendingDividends || claimDividendsLoading}
               onClick={claimDividends}
             >
               <Trans>领取</Trans>

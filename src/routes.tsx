@@ -9,9 +9,8 @@ export enum RoutePath {
   Pool = '/pool',
   AddLiquidity = '/pool/add-liquidity',
   Mining = '/mining',
+  MiningDividend = '/mining/dividend',
   Positions = '/positions',
-  Amm = '/amm',
-  AmmDividend = '/amm/dividend',
   Tools = '/tools'
 }
 
@@ -37,12 +36,8 @@ export const router = createBrowserRouter([
         Component: lazy(() => import('@/pages/mining'))
       },
       {
-        path: RoutePath.Amm,
-        Component: lazy(() => import('@/pages/amm/index'))
-      },
-      {
-        path: RoutePath.AmmDividend,
-        Component: lazy(() => import('@/pages/amm/dividend'))
+        path: RoutePath.MiningDividend,
+        Component: lazy(() => import('@/pages/mining/dividend'))
       },
       {
         path: RoutePath.Tools,

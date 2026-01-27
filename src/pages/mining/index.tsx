@@ -15,8 +15,14 @@ import { useTransferInfo, useTransferUSDT, useUserTotalTransfer } from '@/featur
 import { formatWithCommas } from '@/lib/format'
 
 const Amm: React.FC = () => {
-  const userTotalTransfer = useUserTotalTransfer()
-  const { endBlock, totalTransferredAmount, maxDepositAmount, percentage } = useTransferInfo()
+  const { userTotalTransfer, refetch: refetchUserTotalTransfer } = useUserTotalTransfer()
+  const {
+    endBlock,
+    totalTransferredAmount,
+    maxDepositAmount,
+    percentage,
+    refetch: refetchTransferInfo
+  } = useTransferInfo()
 
   const { transferValue, setTransferValue, transferUSDT, loading: transferLoading } = useTransferUSDT()
 
@@ -36,8 +42,10 @@ const Amm: React.FC = () => {
     console.log('>>>>>> value: ', value)
     transferUSDT(value).then(() => {
       transferDialog.current?.close()
+      refetchUserTotalTransfer()
+      refetchTransferInfo()
     })
-  }, [transferUSDT, transferValue])
+  }, [refetchTransferInfo, refetchUserTotalTransfer, transferUSDT, transferValue])
 
   return (
     <div className="mx-auto mt-[42px] w-full max-w-[424px] space-y-6">
@@ -90,13 +98,13 @@ const Amm: React.FC = () => {
           }
           valueNode={
             <KanitText className="text-4xl font-bold" variant={'primary'}>
-              {userTotalTransfer}
               {formatWithCommas(userTotalTransfer ?? '--')}
             </KanitText>
           }
         />
 
         <Dialog
+          ref={transferDialog}
           trigger={{
             asChild: true,
             children: (

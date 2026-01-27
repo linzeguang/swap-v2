@@ -1,19 +1,22 @@
 import { useAppKitAccount } from '@reown/appkit/react'
+import { CurrencyAmount } from '@uniswap/sdk-core'
+import BigNumber from 'bignumber.js'
 import { useCallback, useMemo, useState } from 'react'
 import toast from 'react-hot-toast'
-import { Address, formatUnits } from 'viem'
-import { useBlock, useReadContract, useReadContracts, useWriteContract } from 'wagmi'
+import { Address, formatUnits, parseUnits } from 'viem'
+import { useReadContract, useReadContracts, useWriteContract } from 'wagmi'
 
+import { useApprove } from '@/features/hooks/useApprove'
+import { useV2Context } from '@/features/v2/provider'
 import { isUndefined } from '@/lib/utils'
 import { waitForTransactionReceipt } from '@/reown'
 
 import { TRANSFER_USDT_ABI } from '../abis'
 import { TRANSFER_USDT_ADDRESS } from '../constants'
-import BigNumber from 'bignumber.js'
 
 export const useUserTotalTransfer = () => {
   const { address } = useAppKitAccount()
-  const { data } = useReadContract({
+  const { data, refetch } = useReadContract({
     abi: TRANSFER_USDT_ABI,
     address: TRANSFER_USDT_ADDRESS,
     functionName: 'getTotalTransferred',
@@ -23,16 +26,15 @@ export const useUserTotalTransfer = () => {
     }
   })
 
-  return useMemo(() => {
+  const userTotalTransfer = useMemo(() => {
     return data !== undefined ? formatUnits(data, 18) : undefined
   }, [data])
+
+  return { userTotalTransfer, refetch }
 }
 
 export const useTransferInfo = () => {
-  const { data: currentBlock } = useBlock({
-    watch: true
-  })
-  const { data } = useReadContracts({
+  const { data, refetch } = useReadContracts({
     contracts: [
       {
         abi: TRANSFER_USDT_ABI,
@@ -52,7 +54,7 @@ export const useTransferInfo = () => {
     ]
   })
 
-  return useMemo(() => {
+  const transferInfo = useMemo(() => {
     if (!data) return {}
     const [{ result: totalTransferredAmount }, { result: maxTotalTransferAmount }, { result: endBlock }] = data
 
@@ -76,20 +78,35 @@ export const useTransferInfo = () => {
           : undefined,
       endBlock: Number(endBlock)
     }
-  }, [currentBlock, data])
+  }, [data])
+
+  return {
+    ...transferInfo,
+    refetch
+  }
 }
 
 export const useTransferUSDT = () => {
   const { writeContractAsync } = useWriteContract()
+
+  const { tokenConfig } = useV2Context()
+
   const [loading, setLoading] = useState(false)
   const [transferValue, setTransferValue] = useState('')
+
+  const { approve } = useApprove(
+    TRANSFER_USDT_ADDRESS,
+    tokenConfig && CurrencyAmount.fromRawAmount(tokenConfig.USDT, parseUnits(transferValue, 18).toString())
+  )
 
   const transferUSDT = useCallback(
     async (amount: bigint) => {
       let txHash: Address
+
+      setLoading(true)
+      await approve()
       const toastId = toast.loading('Depositing Init LPTokens, please confirm in your wallet.')
       try {
-        setLoading(true)
         txHash = await writeContractAsync({
           abi: TRANSFER_USDT_ABI,
           address: TRANSFER_USDT_ADDRESS,
@@ -107,7 +124,7 @@ export const useTransferUSDT = () => {
         throw error
       }
     },
-    [writeContractAsync]
+    [approve, writeContractAsync]
   )
 
   return {

@@ -39,8 +39,8 @@ msgid "Add Liquidity"
 msgstr "Add Liquidity"
 
 #: src/layouts/Nav.tsx:102
-msgid "Amm"
-msgstr "Amm"
+#~ msgid "Amm"
+#~ msgstr "Amm"
 
 #: src/components/pool/LiquidityForm.tsx:264
 #: src/components/pool/LiquidityForm.tsx:302
@@ -48,7 +48,7 @@ msgid "Balance: "
 msgstr "Balance: "
 
 #: src/components/common/SubmitButton.tsx:40
-#: src/components/ConnectWallet.tsx:26
+#: src/components/ConnectWallet.tsx:44
 msgid "Connect Wallet"
 msgstr "Connect Wallet"
 
@@ -122,7 +122,7 @@ msgstr "LP address"
 msgid "LP Tokens Received"
 msgstr "LP Tokens Received"
 
-#: src/pages/amm/dividend.tsx:99
+#: src/pages/mining/dividend.tsx:99
 msgid "LP 质押"
 msgstr "LP 质押"
 
@@ -130,7 +130,7 @@ msgstr "LP 质押"
 msgid "Max"
 msgstr "Max"
 
-#: src/layouts/Nav.tsx:132
+#: src/layouts/Nav.tsx:122
 msgid "Mining"
 msgstr "Mining"
 
@@ -151,7 +151,7 @@ msgstr "No Data"
 msgid "Not Route to swap"
 msgstr "Not Route to swap"
 
-#: src/layouts/Nav.tsx:122
+#: src/layouts/Nav.tsx:112
 #: src/layouts/Navs.tsx:17
 #: src/pages/addLiquidity.tsx:14
 msgid "Pool"
@@ -198,7 +198,7 @@ msgstr "Slippage Tolerance"
 
 #: src/components/swap/SwapForm.tsx:215
 #: src/components/swap/TradeType.tsx:22
-#: src/layouts/Nav.tsx:112
+#: src/layouts/Nav.tsx:102
 #: src/layouts/Navs.tsx:13
 #: src/pages/swap.tsx:12
 msgid "Swap"
@@ -229,7 +229,7 @@ msgstr "Transaction Deadline"
 msgid "TWAP"
 msgstr "TWAP"
 
-#: src/pages/amm/dividend.tsx:184
+#: src/pages/mining/dividend.tsx:184
 msgid "USDT 质押"
 msgstr "USDT 质押"
 
@@ -241,25 +241,25 @@ msgstr "Your Pool Share"
 msgid "Your positions"
 msgstr "Your positions"
 
-#: src/pages/amm/dividend.tsx:56
-#: src/pages/amm/index.tsx:80
+#: src/pages/mining/dividend.tsx:56
+#: src/pages/mining/index.tsx:88
 msgid "个人已共建USDT"
 msgstr "个人已共建USDT"
 
-#: src/pages/amm/index.tsx:53
+#: src/pages/mining/index.tsx:61
 msgid "全网累计共建USDT"
 msgstr "全网累计共建USDT"
 
-#: src/pages/amm/dividend.tsx:77
+#: src/pages/mining/dividend.tsx:77
 msgid "全网质押 LP"
 msgstr "全网质押 LP"
 
-#: src/pages/amm/index.tsx:104
-#: src/pages/amm/index.tsx:127
+#: src/pages/mining/index.tsx:112
+#: src/pages/mining/index.tsx:135
 msgid "共建"
 msgstr "共建"
 
-#: src/pages/amm/dividend.tsx:225
+#: src/pages/mining/dividend.tsx:225
 msgid "已累计领取分红"
 msgstr "已累计领取分红"
 
@@ -267,34 +267,34 @@ msgstr "已累计领取分红"
 msgid "广告位招租"
 msgstr "广告位招租"
 
-#: src/pages/amm/dividend.tsx:246
+#: src/pages/mining/dividend.tsx:246
 msgid "待领取分红"
 msgstr "待领取分红"
 
-#: src/pages/amm/index.tsx:46
+#: src/pages/mining/index.tsx:54
 msgid "截止区块高度"
 msgstr "截止区块高度"
 
-#: src/pages/amm/dividend.tsx:132
-#: src/pages/amm/dividend.tsx:164
-#: src/pages/amm/index.tsx:115
+#: src/pages/mining/dividend.tsx:132
+#: src/pages/mining/dividend.tsx:164
+#: src/pages/mining/index.tsx:123
 msgid "请输入..."
 msgstr "请输入..."
 
-#: src/pages/amm/dividend.tsx:123
-#: src/pages/amm/dividend.tsx:144
+#: src/pages/mining/dividend.tsx:123
+#: src/pages/mining/dividend.tsx:144
 msgid "质押"
 msgstr "质押"
 
-#: src/pages/amm/dividend.tsx:154
-#: src/pages/amm/dividend.tsx:176
+#: src/pages/mining/dividend.tsx:154
+#: src/pages/mining/dividend.tsx:176
 msgid "赎回"
 msgstr "赎回"
 
-#: src/pages/amm/dividend.tsx:216
+#: src/pages/mining/dividend.tsx:216
 msgid "赎回 USDT"
 msgstr "赎回 USDT"
 
-#: src/pages/amm/dividend.tsx:270
+#: src/pages/mining/dividend.tsx:270
 msgid "领取"
 msgstr "领取"
